@@ -192,6 +192,7 @@ set completeopt-=preview " disable popup on top
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set noautoindent
 set showcmd
 set nostartofline
 set clipboard+=unnamedplus
@@ -243,6 +244,8 @@ let g:ale_sign_warning = '!'
 " let g:neomake_javascript_enabled_makers = ['eslint']
 " let g:neomake_jsx_enabled_makers = ['eslint']
 " au BufWritePost * Neomake
+
+autocmd FileType javascript set formatprg=eslint-fix-stdin
 
 au BufNewFile,BufRead *.ejs set filetype=html
 

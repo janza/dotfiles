@@ -87,6 +87,9 @@ function mch() {
     ssh -f -N -R 4040:localhost:$1 jjanzic.com
 }
 
+function gg() {
+  git branch --no-color | cut -c 3- | fzf | xargs git checkout
+}
 
 # KEYBINDINGS
 #
@@ -129,6 +132,7 @@ bindkey -s '^O' "vim -c ':GitFiles!?'\n"
 bindkey -s '^F' "vim -c ':Ag '\n"
 # bindkey '^O' changed-file-widget
 bindkey -s '^K' 'cd_fzf_exec\n'
+bindkey -s '^G' 'git branch --no-color | cut -c 3- | fzf | xargs git checkout\n'
 
 c() {
   local cols sep
@@ -299,3 +303,5 @@ then
   cd $(fzf_fasd)
   pwd
 fi
+
+export PATH="$HOME/.yarn/bin:$PATH"
