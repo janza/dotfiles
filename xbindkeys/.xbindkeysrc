@@ -1,0 +1,59 @@
+"maim"
+    m:0x0 + c:107
+
+# "light -A 5 -p"
+#     XF86MonBrightnessUp
+#
+# "light -U 5 -p"
+#     XF86MonBrightnessDown
+
+"kbdlight up"
+    XF86KbdBrightnessUp
+
+"kbdlight down"
+    XF86KbdBrightnessDown
+
+"start_remote_tmux"
+    mod4 + backslash
+
+"open_dir_in_terminal"
+    mod4 + m
+
+"open_dir_in_terminal scratch"
+    mod4 + Return
+
+"pamixer --increase 5"
+    XF86AudioRaiseVolume
+
+"pamixer --decrease 5"
+    XF86AudioLowerVolume
+
+"pulseaudio-ctl mute"
+    XF86AudioMute
+
+"pamixer --increase 5"
+    Mod4 + b:4
+
+"pamixer --decrease 5"
+    Mod4 + b:5
+
+"mpc toggle -h localhost"
+    Mod4 + comma
+
+"fzf_run"
+    Mod4 + d
+
+"emoji_picker"
+    Mod4 + u
+
+"pass_fzf"
+    Mod4 + o
+
+"~/.bin/ssaver 0.2"
+    Mod4 + n
+
+"systemctl suspend"
+    Mod4 + XF86PowerOff
+
+"thunar" # thunar
+    Mod4 + grave
