@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+f=$(ag --vimgrep $1 | fzf)
+
+filename=$(echo "$f" | cut -d ':' -f 1)
+linenum=$(echo "$f" | cut -d ':' -f 2)
+colnum=$(echo "$f" | cut -d ':' -f 3)
+
+vim "+cal cursor($linenum,$colnum)" "$filename"

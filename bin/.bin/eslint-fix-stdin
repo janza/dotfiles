@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+tmpfile="/tmp/eslint-fix-tmp-file"
+
+cat - > "$tmpfile"
+eslint "$tmpfile" --fix > /dev/null 2>&1
+cat "$tmpfile"

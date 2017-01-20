@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+current_dpi=$(xrdb -query -all | grep dpi| cut -f2)
+hi_dpi=184
+low_dpi=92
+
+
+if [[ "${current_dpi}" == "${hi_dpi}" ]]; then
+    current_dpi=${low_dpi}
+else
+    current_dpi=${hi_dpi}
+fi
+
+set_dpi.sh ${current_dpi}

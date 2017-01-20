@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+export XKB_DEFAULT_LAYOUT=hr
+export XKB_DEFAULT_VARIANT=us
+export XKB_DEFAULT_OPTIONS=caps:escape
+export WLC_REPEAT_DELAY=200
+export WLC_REPEAT_RATE=50
+export WLC_LIBINPUT=1
+
+export GDK_BACKEND=wayland
+export GTK_BACKEND=wayland
+export CLUTTER_BACKEND=wayland
+export QT_QPA_PLATFORM=wayland
+export SDL_VIDEODRIVER=wayland
+export QT_QPA_PLATFORM=wayland-egl
+export GTK_CSD=0
+
+exec sway -d

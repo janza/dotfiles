@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+# term_name="termite"
+# if [ "$1" = "scratch" ]; then
+#     term_name="unipicker"
+# fi
+exec myterm "zsh -si fasd"

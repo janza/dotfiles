@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+puush -c -a
+
+# set -e
+# maim -s /tmp/sshot.png
+# img_hash=$(ipfs add -q /tmp/sshot.png)
+# img_link="https://ipfs.io/ipfs/${img_hash}"
+# export PUUSH_API_KEY="E7A7AAA700316969E126077305ACBAB"
+# puush /tmp/sshot.png
+# xdg-open "${img_link}"
+# echo -n "${img_link}" | xsel -b -p

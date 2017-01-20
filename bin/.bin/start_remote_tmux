@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+myterm 'mosh --bind-server=any jjanzic.com -- tmux attach -d'

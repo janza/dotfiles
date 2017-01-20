@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# lights-off
+# xsecurelock auth_pam_x11 saver_mplayer
+i3lock -n -c 000000 -i /home/josip/.i3lock.png
+# lights-on

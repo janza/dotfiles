@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# cd ~/code/oos/kitty
+# exec konsole --separate "$@"
+if [[ "$#" == "0" ]]; then
+    exec termite
+    # exec konsole --separate
+else
+    exec termite -e "$@"
+    # exec konsole --separate -e $@
+fi

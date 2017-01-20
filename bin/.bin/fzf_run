@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+autoset_dpi
+
+cmd_file="/tmp/fzf_cmd_to_run"
+myterm "history_and_commands ${cmd_file}"
+if [[ ! -z ${cmd_file} ]]; then
+    nohup /bin/sh > /dev/null < ${cmd_file} &
+fi

@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+screen_width=$(i3-msg -t get_workspaces | jq '.[] | select (.focused == true).rect.width')
+# res=$(get_current_monitor)
+
+if [ "$screen_width" == "2880" ]; then
+    set_dpi_retina
+else
+    set_dpi_normal
+fi

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -e
+# set -x
+
+rawurlencode() {
+    local string="${1}"
+    local strlen=${#string}
+    local encoded=""
+    local pos c o
+
+    for (( pos=0 ; pos<strlen ; pos++ )); do
+        c=${string:$pos:1}
+        case "$c" in
+            [-_.~a-zA-Z0-9] ) o="${c}" ;;
+            * )               printf -v o '%%%02x' "'$c"
+        esac
+
+        encoded+="${o}"
+    done
+    echo "${encoded}"    # You can either set a return variable (FASTER)
+}
+
+if [[ $1 == "" ]]; then
+    echo Specify a url that you want to minify
+    exit 1
+fi
+
+curl --silent -X POST "http://phurl.jjanzic.com/s/$(rawurlencode "$1")" | jq '.url' -r | xsel -ib

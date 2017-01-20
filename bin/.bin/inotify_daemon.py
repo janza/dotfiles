@@ -1,0 +1,347 @@
+#! /usr/bin/env python2
+# -*- coding: utf-8 -*-
+###
+# Copyright (c) 2009-2010 by Elián Hanisch <lambdae2@gmail.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+###
+
+"""\
+inotify-daemon [arguments ...]
+
+Notification daemon that supports libnotify or dbus.
+Download latest stable from:
+http://github.com/m4v/inotify-daemon/raw/stable/inotify-daemon
+
+This is intended to be used with WeeChat's inotify script, but any
+xmlrpc capable client can use it.
+
+It is recommended to use your desktop autorun settings for initialise
+the daemon on login, this saves you the problem of losing dbus with
+each login. Still you can use inotify-daemon as a detached process
+with screen, dtach or on boot with crontab, the daemon should be able
+to find a suitable dbus session if available.  inotify-daemon *must*
+be always run with your user's privileges, otherwise it will fail to
+get a dbus session if it loses it.
+
+Autostart examples:
+- In KDE make a symlink in $HOME/.kde/Autostart to inotify-daemon.
+- With crontab, add the following line: @reboot <path to
+inotify-daemon> --host <address> --port <port>
+
+Notify methods:
+- libnotify: Use libnotify for notifications, needs python-notify
+installed. This is the default method.
+
+- dbus: Uses dbus directly for notifications, this is KDE4 specific,
+might not work in other desktops. Needs python-dbus.\
+"""
+
+__version__   = '0.2'
+__author__    = 'Elián Hanisch <lambdae2@gmail.com>'
+__copyright__ = 'Copyright (c) 2009-2010 by Elián Hanisch <lambdae2@gmail.com>'
+
+import xmlrpclib, socket, os, sys, subprocess, optparse
+from SimpleXMLRPCServer import SimpleXMLRPCServer
+
+global host, port, server
+
+class NotifyError(Exception):
+    pass
+
+class Daemon(SimpleXMLRPCServer):
+    stopped = False
+    shutdown = False
+    def __init__(self, addr, passwd=''):
+        SimpleXMLRPCServer.__init__(self, addr)
+        self.passwd = passwd
+        self.register_function(self.quit)
+        self.register_function(self.restart)
+        self.register_function(lambda : __version__, 'version')
+
+    def serve_forever(self):
+        while not self.stopped:
+            self.handle_request()
+            if self.shutdown:
+                self._restart_daemon()
+
+    def quit(self, passwd=''):
+        """Allows to kill the server remotely."""
+        if self.passwd and passwd != self.passwd:
+            return 'Invalid password.'
+        print >>sys.stderr, 'Stopping server.'
+        self.server_close()
+        self.stopped = True
+        return 'OK'
+
+    def restart(self, passwd=''):
+        """Allows to restart the server remotely."""
+        if self.passwd and passwd != self.passwd:
+            return 'Invalid password.'
+        print >>sys.stderr, 'Restarting server.'
+        self.force_restart()
+        return 'OK'
+
+    def force_restart(self):
+        self.shutdown = True
+
+    def _restart_daemon(self):
+        self.server_close()
+        self.stopped = True
+        # spawn a new daemon and exit
+        subprocess.Popen(' '.join(sys.argv), shell=True)
+        sys.exit(0)
+
+
+dbus_env = 'DBUS_SESSION_BUS_ADDRESS'
+class Notifications(object):
+    def __init__(self, method, passwd=''):
+        self.method = method
+        self.passwd = passwd
+
+    def _dispatch(self, method, args):
+        passwd = args[0]
+        if self.passwd and passwd != self.passwd:
+            return 'Invalid password.'
+        if method in ('any', 'notify'):
+            method = self.method
+        if not hasattr(self, method):
+            return 'Invalid notification method.'
+        args = args[1:]
+        return getattr(self, method)(*args)
+
+    def _timeout(self, s=None):
+        if s is not None:
+            t = len(s) * 150
+            if t < 5000:
+                return 5000
+            elif t > 60000:
+                return 60000
+        else:
+            t = 10000
+        return t
+
+    def _getDBUSSession(self):
+        print >>sys.stderr, 'Lost dbus daemon, trying to find a new one... '
+        if self.method == 'dbus':
+            testMethod = lambda address : testDBUS(test_dbus, address)
+        elif self.method == 'libnotify':
+            testMethod = lambda address : testDBUS(test_libnotify, address)
+        else:
+            raise NotifyError, 'No suitable method for test dbus found.'
+
+        return getDBUS(testMethod)
+
+    def _updateDBUS(self, address):
+        os.environ[dbus_env] = address
+        global server
+        print >>sys.stderr, 'Updated dbus address, restarting daemon...'
+        server.force_restart()
+        return 'warning:Lost dbus, notification daemon is being restarted with new address.'
+
+    def dbus(self, text, channel=None):
+        global host
+        try:
+            import dbus
+        except:
+            return 'Failed to import dbus, is the module installed in %s?' %host
+
+        try:
+            bus = dbus.SessionBus()
+        except:
+            try:
+                address = self._getDBUSSession()
+            except NotifyError, e:
+                print >>sys.stderr, str(e)
+                return 'Failed to connect with the dbus daemon in %s.' %host
+            return self._updateDBUS(address)
+
+        notify_object = bus.get_object('org.freedesktop.Notifications', '/org/freedesktop/Notifications')
+        notify = dbus.Interface(notify_object, 'org.freedesktop.Notifications')
+        notify.Notify('', 0, '', channel or 'notification', text, '', {}, self._timeout(text))
+        return 'OK'
+
+    def libnotify(self, text, channel=None):
+        global host
+        try:
+            import pynotify
+        except:
+            return 'Failed to import pynotify, is the module installed in %s?' %host
+
+        try:
+            if pynotify.init('WeeChat notification'):
+                notify = pynotify.Notification(channel or 'notification', text)
+                notify.set_timeout(self._timeout(text))
+                notify.show()
+                return 'OK'
+            else:
+                raise Exception
+        except:
+            try:
+                address = self._getDBUSSession()
+            except NotifyError, e:
+                print >>sys.stderr, str(e)
+                return 'Failed to connect with the dbus daemon in %s.' %host
+            return self._updateDBUS(address)
+
+# cmd used for test dbus session with dbus module
+test_dbus = """
+python -c '
+import dbus, sys
+try:
+dbus.SessionBus()
+except:
+sys.exit(0)
+else:
+sys.exit(1)'
+"""
+
+# cmd used for test dbus session with pynotify module
+test_libnotify = """
+python -c '
+import pynotify, sys
+if pynotify.init("test"):
+sys.exit(1)
+else:
+sys.exit(0)' 2> /dev/null
+"""
+
+def testDBUS(cmd, address):
+    os.environ[dbus_env] = address
+    return subprocess.call(cmd, shell=True)
+
+def getDBUS(testMethod):
+    """
+    There might be times where the dbus daemon is restarted and its address changes, making
+    notifications impossible. Here we'll try for fetch another from our user processes. This isn't
+    nice but I couldn't find other way, dbus actually doesn't have a nice method for get a session
+    address from outside the session."""
+
+    process_list = [ s for s in os.listdir('/proc') if s.isdigit() ]
+    our_uid = os.getuid()
+    dbus_invalid_address = set()
+    dbus_address = None
+    for process in process_list:
+        environ = os.path.join('/proc', process, 'environ')
+        if os.stat(environ).st_uid == our_uid:
+            fd = open(environ)
+            for line in fd.read().split('\x00'):
+                if line.startswith(dbus_env):
+                    dbus_address = line[len(dbus_env)+1:]
+                    if dbus_address not in dbus_invalid_address:
+                        print >>sys.stderr, 'Testing with %s ... ' %dbus_address,
+                        if testMethod(dbus_address):
+                            print >>sys.stderr, 'OK'
+                            return dbus_address
+                        else:
+                            print >>sys.stderr, 'Failed'
+                            dbus_invalid_address.add(dbus_address)
+                    break
+    raise NotifyError, 'No dbus address found.'
+
+
+def main(host='localhost', port=7766, method=None, passwd=''):
+    """
+    Main daemon loop."""
+    global server
+
+    try:
+        server = Daemon((host, port), passwd=passwd)
+    except socket.error, e:
+        # another server is running? lets try to kill it
+        try:
+            daemon = xmlrpclib.Server('http://%s:%s' %(host, port))
+            rt = daemon.quit(passwd)
+            if rt == 'OK':
+                print 'Current daemon closed.'
+                server = Daemon((host, port), passwd=passwd)
+            else:
+                raise Exception(rt)
+        except Exception, e:
+            print >>sys.stderr, 'Failed to start daemon: %s' %e
+            return
+    print 'Running notification daemon...'
+    server.register_instance(Notifications(method, passwd=passwd))
+    server.serve_forever()
+
+
+def daemonize(PIDFILE='/tmp/inotify-daemon.pid'):
+    """
+    Forks current process into a daemon, there are several examples in the web for do this, but a
+    double fork is needed."""
+
+    # Do first fork.
+    try:
+        pid = os.fork()
+        if pid > 0:
+            # exit first parent
+            sys.exit(0)
+    except OSError, e:
+        print >>sys.stderr, "fork #1 failed: %d (%s)" % (e.errno, e.strerror)
+        sys.exit(1)
+
+    # make sure our executable is in absolute path
+    daemon_abs_path = os.path.join(os.path.abspath(os.curdir), sys.argv[0])
+    sys.argv[0] = daemon_abs_path
+
+    # Decouple from parent environment.
+    os.chdir("/")
+    os.setsid()
+    os.umask(0)
+
+    # Do second fork.
+    try:
+        pid = os.fork()
+        if pid > 0:
+            # exit from second parent, print eventual PID before
+            print "Daemon PID %d" % pid
+            open(PIDFILE,'w').write("%d"%pid)
+            sys.exit(0)
+    except OSError, e:
+        print >>sys.stderr, "fork #2 failed: %d (%s)" % (e.errno, e.strerror)
+        sys.exit(1)
+    # Now I am a daemon!
+
+if __name__ == '__main__':
+    # argument parsing
+    usage = __doc__
+    parser = optparse.OptionParser(usage=usage)
+    parser.add_option('-p', '--port', dest='port', type='int',
+                      help='Port to listen. [Default: %default]', default=7766)
+    parser.add_option('-H', '--host', dest='host',
+                      help='Daemon hostname. [Default: %default]', default='localhost')
+    parser.add_option('-m', '--method', dest='method',
+                      help="Notification method, available: 'libnotify', 'dbus' [Default: %default]",
+                      default='libnotify')
+    parser.add_option('-P', '--passwd', dest='passwd',
+                      help="Password for accept incoming notifications. [Default: %default]")
+    parser.add_option('-t', '--test', dest='test', action='store_true',
+                      help='Send a test notification to an already running daemon and exit.',
+                      default=False)
+    opts, args = parser.parse_args(sys.argv)
+
+    port = opts.port
+    host = opts.host
+    method = opts.method
+    passwd = opts.passwd or ''
+
+    if opts.test:
+        daemon = xmlrpclib.Server('http://%s:%s' %(host, port))
+        print getattr(daemon, method)(passwd, 'This is a test')
+        sys.exit(0)
+
+    daemonize()
+    main(host=host, port=port, method=method, passwd=passwd)
+
+# vim:set shiftwidth=4 tabstop=4 softtabstop=4 expandtab textwidth=100:

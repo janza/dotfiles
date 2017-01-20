@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+kbdlight max
+xset dpms force on
+light -S 100
