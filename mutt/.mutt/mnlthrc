@@ -1,0 +1,4 @@
+et folder=$HOME/.mail/mnlth/inbox
+set mbox_type=Maildir
+set realname = 'Josip Janzic'
+set from = 'josip@mnlth.com'

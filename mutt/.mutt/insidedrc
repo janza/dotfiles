@@ -1,0 +1,5 @@
+set folder=$HOME/.mail/insided/inbox
+set mbox_type=Maildir
+set realname = 'Josip Janzic'
+set from = 'josip.janzic@insided.com'
+set sendmail  = "/usr/bin/msmtp -a insided"
