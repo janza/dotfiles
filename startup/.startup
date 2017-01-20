@@ -1,0 +1,19 @@
+#!/bin/bash
+xbindkeys &
+# xsetroot -cursor_name left_ptr &
+nitrogen --restore &
+clipit &
+compton --backend glx --vsync opengl &
+xset r rate 200 65 &
+setxkbmap -layout hr -variant us -option caps:escape  #  && xmodmap /home/josip/.en.map &
+# xss-lock -- /home/josip/.bin/ssaver &
+# blueberry-tray &
+ssaver &
+nm-applet &
+# libinput-gestures-setup start &
+
+unclutter &
+xsetroot -cursor_name left_ptr &
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
