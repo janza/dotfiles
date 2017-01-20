@@ -1,3 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/home/josip/code/insided/dev/barebones/js/src/components/emoji-selector'
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/josip/code/mnlth/mnlth/eyedea-scanner/src'
+let g:netrw_dirhist_2='/home/josip/code/mnlth/mnlth/eyedea-scanner'
+let g:netrw_dirhist_3='/home/josip/code/mnlth/mnlth'
+let g:netrw_dirhist_4='/home/josip/code/mnlth/mnlth/eyedea-scanner'
+let g:netrw_dirhist_5='/home/josip/.password-store/192.168.5.1'
+let g:netrw_dirhist_6='/home/josip/code/oos/matterbridge/vendor/github.com/mattn'
+let g:netrw_dirhist_7='/home/josip/code/oos/matterbridge/vendor/github.com/mattn/go-xmpp'
+let g:netrw_dirhist_8='/home/josip/.zprezto'

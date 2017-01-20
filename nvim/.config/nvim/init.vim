@@ -48,6 +48,8 @@ Plug 'rust-lang/rust.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 " Plug 'carlitux/deoplete-ternjs'
+Plug 'zchee/deoplete-go'
+
 Plug 'Shougo/neosnippet.vim'
 Plug 'honza/vim-snippets'
 
@@ -69,13 +71,21 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'vim-scripts/php-annotations-syntax'
 
 Plug 'LnL7/vim-nix'
+Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul'
+
+Plug 'vim-php/vim-php-refactoring'
+
+Plug 'cespare/vim-toml'
 
 call plug#end()
 let g:neoterm_shell = "zsh"
 
 let g:coverage_json_path = 'coverage/json/coverage-final.json'
+
+let g:php_refactor_command='refactor.phar'
+
 
 
 let g:deoplete#enable_at_startup = 1
@@ -218,7 +228,7 @@ hi! link ALEWarningSign GruvboxYellowSign
 let g:gruvbox_sign_column = 'bg0'
 " let g:gruvbox_termcolors = 256
 let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_italic = 1
+" let g:gruvbox_italic = 1
 
 set inccommand=nosplit
 

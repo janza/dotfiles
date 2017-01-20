@@ -37,7 +37,7 @@ export NODE_REPL_HISTORY_FILE="$HOME/.node-repl-history"
 
 alias gq="gcalcli quick --calendar 'Josip Janzic'"
 
-alias setkbd="xset r rate 180 65 && setxkbmap hr us && xmodmap /home/josip/.en.map"
+alias setkbd="xset r rate 180 65 && setxkbmap -layout hr -variant us -option caps:escape"
 alias ipy=ipython
 
 alias gdd="git diff --color | diff-so-fancy | less"
