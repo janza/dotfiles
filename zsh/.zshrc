@@ -15,7 +15,7 @@ export HASTE_SERVER=http://paste.jjanzic.com
 export EDITOR=vim
 export VISUAL=vim
 export BROWSER=google-chrome-unstable
-export GOPATH=~/.go
+export GOPATH=~/code/go
 
 export PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin/"
 export PATH="$PATH:$HOME/.gem/ruby/2.2.0/bin/"
