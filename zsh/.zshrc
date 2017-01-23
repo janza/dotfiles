@@ -42,8 +42,6 @@ alias ipy=ipython
 
 alias gdd="git diff --color | diff-so-fancy | less"
 
-alias ag="rg -S"
-
 alias dps="docker ps"
 alias dk="docker kill"
 alias drm="docker rm -f"
