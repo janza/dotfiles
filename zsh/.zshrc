@@ -36,6 +36,7 @@ export TERM=xterm-256color
 export NODE_REPL_HISTORY_FILE="$HOME/.node-repl-history"
 
 alias gq="gcalcli quick --calendar 'Josip Janzic'"
+alias rg="rg -S"
 
 alias setkbd="xset r rate 180 65 && setxkbmap -layout hr -variant us -option caps:escape"
 alias ipy=ipython
