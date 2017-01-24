@@ -87,7 +87,6 @@ let g:coverage_json_path = 'coverage/json/coverage-final.json'
 let g:php_refactor_command='refactor.phar'
 
 
-
 let g:deoplete#enable_at_startup = 1
 
 function! s:neosnippet_complete()
@@ -183,6 +182,8 @@ let g:EasyClipAutoFormat = 1
 nmap     <C-F> :Rg<space>
 
 nmap ge :e <C-R>=expand("%:p:h") . "/" <CR>
+
+let g:netrw_dirhistmax = 0
 
 set background=dark
 
