@@ -26,15 +26,15 @@ status.register("uptime")
 
 # This would look like this:
 # Discharging 6h:51m
-# status.register("battery",
-#                 battery_ident='BAT1',
-#                 format="{status}{percentage:.2f}%",
-#                 alert=False,
-#                 status={
-#                     "DIS": "↓",
-#                     "CHR": "↑",
-#                     "FULL": "",
-#                 },)
+status.register("battery",
+                battery_ident='BAT1',
+                format="{status}{percentage:.2f}%",
+                alert=False,
+                status={
+                    "DIS": "↓",
+                    "CHR": "↑",
+                    "FULL": "",
+                },)
 status.register("battery",
                 battery_ident='BAT0',
                 format="{status}{percentage:.2f}%",
@@ -44,7 +44,6 @@ status.register("battery",
                     "CHR": "↑",
                     "FULL": "",
                 },)
-
 # Shows the address and up/down state of eth0. If it is up the address is shown in
 # green (the default value of color_up) and the CIDR-address is shown
 # (i.e. 10.10.10.42/24).
@@ -60,7 +59,7 @@ status.register("battery",
 # Note: requires both netifaces and basiciw (for essid and quality)
 status.register("network",
                 interface="wlan0",
-                format_up="{essid} {v4}",)
+                format_up="{essid} {v4} {v6}",)
 
 # Shows disk usage of /
 # Format:
