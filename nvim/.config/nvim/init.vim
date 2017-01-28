@@ -78,6 +78,7 @@ Plug 'juanpabloaj/vim-istanbul'
 Plug 'vim-php/vim-php-refactoring'
 
 Plug 'cespare/vim-toml'
+Plug 'justinmk/vim-dirvish'
 
 call plug#end()
 let g:neoterm_shell = "zsh"
