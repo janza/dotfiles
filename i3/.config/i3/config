@@ -9,7 +9,7 @@ floating_modifier $mod
 default_orientation auto
 
 
-# focus_on_window_activation none
+focus_on_window_activation none
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+h focus left
