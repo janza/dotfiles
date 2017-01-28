@@ -12,7 +12,7 @@ ssaver &
 nm-applet &
 # libinput-gestures-setup start &
 
-unclutter &
+# unclutter &
 xsetroot -cursor_name left_ptr &
 
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
