@@ -79,6 +79,7 @@ Plug 'tobyS/vmustache'
 Plug 'tobyS/pdv'
 
 Plug 'cespare/vim-toml'
+Plug 'justinmk/vim-dirvish'
 
 call plug#end()
 let g:neoterm_shell = "zsh"
