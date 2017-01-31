@@ -79,7 +79,7 @@ function search_and_replace () {
     if [[ -z "$1" ]] || [[ -z "$2" ]]; then
         return
     fi
-    ag $1 -l | xargs sed -i "s/$1/$2/g"
+    rg $1 -l | xargs sed -i "s/$1/$2/g"
 }
 
 function mch() {
