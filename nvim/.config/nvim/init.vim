@@ -68,14 +68,15 @@ Plug 'lambdatoast/elm.vim'
 
 Plug 'machakann/vim-highlightedyank'
 
-Plug 'vim-scripts/php-annotations-syntax'
-
 Plug 'LnL7/vim-nix'
 Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul'
 
+Plug 'vim-scripts/php-annotations-syntax'
 Plug 'vim-php/vim-php-refactoring'
+Plug 'tobyS/vmustache'
+Plug 'tobyS/pdv'
 
 Plug 'cespare/vim-toml'
 Plug 'justinmk/vim-dirvish'
@@ -87,6 +88,7 @@ let g:coverage_json_path = 'coverage/json/coverage-final.json'
 
 let g:php_refactor_command='refactor.phar'
 
+let g:pdv_template_dir = $HOME ."/.vim/plugged/pdv/templates_snip"
 
 let g:deoplete#enable_at_startup = 1
 
