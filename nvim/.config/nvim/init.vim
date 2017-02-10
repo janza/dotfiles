@@ -62,11 +62,11 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 " Plug 'mustache/vim-mustache-handlebars'
 
 Plug 'vim-airline/vim-airline'
-Plug 'elixir-lang/vim-elixir'
-Plug 'slashmili/alchemist.vim'
-Plug 'lambdatoast/elm.vim'
+" Plug 'elixir-lang/vim-elixir'
+" Plug 'slashmili/alchemist.vim'
+" Plug 'lambdatoast/elm.vim'
 
-Plug 'machakann/vim-highlightedyank'
+" Plug 'machakann/vim-highlightedyank'
 
 Plug 'LnL7/vim-nix'
 Plug 'fatih/vim-go'
@@ -79,7 +79,7 @@ Plug 'tobyS/vmustache'
 Plug 'tobyS/pdv'
 
 Plug 'cespare/vim-toml'
-Plug 'justinmk/vim-dirvish'
+Plug 'janko-m/vim-test'
 
 call plug#end()
 let g:neoterm_shell = "zsh"
@@ -139,15 +139,11 @@ let g:jsx_ext_required = 0
 
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 1
+let g:gitgutter_diff_args = '-w'
 
 
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep  = ''
 let g:airline_right_sep = ''
-" let g:airline_powerline_fonts = 1
-" let g:airline_theme     = 'gruvbox'
 let g:airline_mode_map = {
       \ '__' : '-',
       \ 'n'  : 'N',
@@ -192,7 +188,7 @@ set background=dark
 
 " syntax sync minlines=256
 " set synmaxcol=256 " Syntax highlight max cols
-set mouse=
+" set mouse=
 set so=999
 set modeline
 set modelines=4
@@ -234,7 +230,7 @@ let g:gruvbox_sign_column = 'bg0'
 let g:gruvbox_contrast_dark = 'hard'
 " let g:gruvbox_italic = 1
 
-set inccommand=nosplit
+" set inccommand=nosplit
 
 colorscheme gruvbox
 
@@ -321,10 +317,10 @@ fun! Semicolonfun()
   return "\<End>"
 endfunction
 
-nnoremap <silent> <C-k> :move-2<cr>
-nnoremap <silent> <C-j> :move+<cr>
-xnoremap <silent> <C-k> :move-2<cr>gv
-xnoremap <silent> <C-j> :move'>+<cr>gv
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+        \| exe "normal! g'\"" | endif
+endif
 
 au BufEnter * set noro
 
