@@ -172,7 +172,8 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 let test#strategy = "neovim"
-nmap <silent> <leader>f :TestFile<CR>
+map <leader>tn :TestNearest<CR>
+map <leader>tf :TestFile<CR>
 
 let g:EasyClipUseSubstituteDefaults = 1
 let g:EasyClipAutoFormat = 1
