@@ -222,12 +222,6 @@ let mapleader=","
 let g:mapleader=","
 set fillchars+=vert:│
 
-hi VertSplit ctermbg=NONE guibg=NONE
-" hi ALEErrorSign ctermbg=NONE guibg=NONE ctermfg='169' guifg=169
-
-hi! link ALEErrorSign GruvboxRedSign
-hi! link ALEWarningSign GruvboxYellowSign
-
 let g:gruvbox_sign_column = 'bg0'
 " let g:gruvbox_termcolors = 256
 let g:gruvbox_contrast_dark = 'hard'
@@ -236,6 +230,11 @@ let g:gruvbox_contrast_dark = 'hard'
 " set inccommand=nosplit
 
 colorscheme gruvbox
+
+hi VertSplit ctermbg=NONE guibg=NONE
+
+hi! link ALEErrorSign GruvboxRedSign
+hi! link ALEWarningSign GruvboxYellowSign
 
 let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_install_global = 1
