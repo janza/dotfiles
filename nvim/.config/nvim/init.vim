@@ -92,6 +92,8 @@ let g:pdv_template_dir = $HOME ."/.vim/plugged/pdv/templates_snip"
 
 let g:deoplete#enable_at_startup = 1
 
+let g:go_fmt_fail_silently = 1
+
 function! s:neosnippet_complete()
 "   if pumvisible()
 "     return "\<CR>"
@@ -112,7 +114,7 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 
 command! -bang -nargs=* Rg
       \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   'rg -S --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
       \   <bang>0 ? fzf#vim#with_preview('up:60%')
       \           : fzf#vim#with_preview('right:50%:hidden', '?'),
       \   <bang>0)
