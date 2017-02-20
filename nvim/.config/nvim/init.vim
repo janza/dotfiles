@@ -93,6 +93,8 @@ let g:pdv_template_dir = $HOME ."/.vim/plugged/pdv/templates_snip"
 
 let g:deoplete#enable_at_startup = 1
 
+let g:go_fmt_fail_silently = 1
+
 function! s:neosnippet_complete()
 "   if pumvisible()
 "     return "\<CR>"
@@ -113,7 +115,7 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 
 command! -bang -nargs=* Rg
       \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   'rg -S --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
       \   <bang>0 ? fzf#vim#with_preview('up:60%')
       \           : fzf#vim#with_preview('right:50%:hidden', '?'),
       \   <bang>0)
@@ -173,7 +175,8 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 let test#strategy = "neovim"
-nmap <silent> <leader>f :TestFile<CR>
+map <leader>tn :TestNearest<CR>
+map <leader>tf :TestFile<CR>
 
 let g:EasyClipUseSubstituteDefaults = 1
 let g:EasyClipAutoFormat = 1
@@ -220,20 +223,18 @@ let mapleader=","
 let g:mapleader=","
 set fillchars+=vert:│
 
-" hi VertSplit ctermbg=NONE guibg=NONE
-" hi ALEErrorSign ctermbg=NONE guibg=NONE ctermfg='169' guifg=169
-
-hi! link ALEErrorSign GruvboxRedSign
-hi! link ALEWarningSign GruvboxYellowSign
-
 " let g:gruvbox_sign_column = 'bg0'
-" let g:gruvbox_termcolors = 256
 let g:gruvbox_contrast_dark = 'hard'
 " let g:gruvbox_italic = 1
 
 " set inccommand=nosplit
 
 colorscheme gruvbox
+
+hi VertSplit ctermbg=NONE guibg=NONE
+
+hi! link ALEErrorSign GruvboxRedSign
+hi! link ALEWarningSign GruvboxYellowSign
 
 let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_install_global = 1
