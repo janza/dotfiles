@@ -241,9 +241,6 @@ hi! link ALEWarningSign GruvboxYellowSign
 let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_install_global = 1
 
-let g:ale_sign_error = 'x'
-let g:ale_sign_warning = 'x'
-
 autocmd FileType javascript set formatprg=eslint-fix-stdin
 
 au BufNewFile,BufRead *.ejs set filetype=html
