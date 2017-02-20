@@ -80,6 +80,7 @@ Plug 'tobyS/pdv'
 
 Plug 'cespare/vim-toml'
 Plug 'janko-m/vim-test'
+Plug 'https://github.com/m-kat/aws-vim'
 
 call plug#end()
 let g:neoterm_shell = "zsh"
@@ -219,13 +220,13 @@ let mapleader=","
 let g:mapleader=","
 set fillchars+=vert:│
 
-hi VertSplit ctermbg=NONE guibg=NONE
+" hi VertSplit ctermbg=NONE guibg=NONE
 " hi ALEErrorSign ctermbg=NONE guibg=NONE ctermfg='169' guifg=169
 
 hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
 
-let g:gruvbox_sign_column = 'bg0'
+" let g:gruvbox_sign_column = 'bg0'
 " let g:gruvbox_termcolors = 256
 let g:gruvbox_contrast_dark = 'hard'
 " let g:gruvbox_italic = 1
@@ -237,23 +238,8 @@ colorscheme gruvbox
 let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_install_global = 1
 
-let g:ale_sign_error = '*'
-let g:ale_sign_warning = '!'
-
-" let g:neomake_elixir_mix_maker = {
-"       \ 'exe': 'mix',
-"       \ 'args': ['compile'],
-"       \ 'errorformat':
-"       \ '%E** %s %f:%l: %m,' .
-"       \ '%W%f:%l: warning: %m'
-"       \ }
-
-" let g:neomake_elixir_enabled_makers = ['mix', 'credo']
-
-" let g:neomake_python_enabled_makers = ['flake8']
-" let g:neomake_javascript_enabled_makers = ['eslint']
-" let g:neomake_jsx_enabled_makers = ['eslint']
-" au BufWritePost * Neomake
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = 'x'
 
 autocmd FileType javascript set formatprg=eslint-fix-stdin
 
@@ -302,7 +288,6 @@ nnoremap <c-g> :Commits<CR>
 
 
 " search for word under cursor
-nnoremap L :Rg <C-R><C-W><CR>
 nnoremap <c-d> :Rg <C-R><C-W><CR>
 
 map q gq
@@ -316,11 +301,6 @@ fun! Semicolonfun()
   call setline(line('.'), substitute(getline('.'), '\s*$', ';', ''))
   return "\<End>"
 endfunction
-
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-        \| exe "normal! g'\"" | endif
-endif
 
 au BufEnter * set noro
 
