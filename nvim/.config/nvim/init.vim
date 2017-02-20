@@ -83,6 +83,53 @@ Plug 'janko-m/vim-test'
 Plug 'https://github.com/m-kat/aws-vim'
 
 call plug#end()
+
+let g:netrw_dirhistmax = 0
+
+set background=dark
+
+" syntax sync minlines=256
+" set synmaxcol=256 " Syntax highlight max cols
+" set mouse=
+set so=999
+set modeline
+set modelines=4
+set bs=2		" allow backspacing over everything in insert mode
+set whichwrap+=<,>,h,l
+set nojoinspaces
+
+set ignorecase
+set smartcase
+set completeopt-=preview " disable popup on top
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set noautoindent
+set showcmd
+set nostartofline
+set clipboard+=unnamedplus
+set autowriteall
+set grepprg=rg
+set wildignore+=*.so,*.swp,*.zip,*/node_modules/*
+set iskeyword-=.
+set gdefault
+set hidden
+set undofile
+set termguicolors
+" set leader to ,
+let mapleader=","
+let g:mapleader=","
+set fillchars+=vert:│
+
+let g:gruvbox_sign_column = 'bg0'
+let g:gruvbox_contrast_dark = 'hard'
+" let g:gruvbox_italic = 1
+
+" set inccommand=nosplit
+
+colorscheme gruvbox
+
+
 let g:neoterm_shell = "zsh"
 
 let g:coverage_json_path = 'coverage/json/coverage-final.json'
@@ -174,9 +221,9 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-let test#strategy = "neovim"
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>
+let test#strategy = "neovim"
 
 let g:EasyClipUseSubstituteDefaults = 1
 let g:EasyClipAutoFormat = 1
@@ -185,51 +232,6 @@ let g:EasyClipAutoFormat = 1
 nmap     <C-F> :Rg<space>
 
 nmap ge :e <C-R>=expand("%:p:h") . "/" <CR>
-
-let g:netrw_dirhistmax = 0
-
-set background=dark
-
-" syntax sync minlines=256
-" set synmaxcol=256 " Syntax highlight max cols
-" set mouse=
-set so=999
-set modeline
-set modelines=4
-set bs=2		" allow backspacing over everything in insert mode
-set whichwrap+=<,>,h,l
-set nojoinspaces
-
-set ignorecase
-set smartcase
-set completeopt-=preview " disable popup on top
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set noautoindent
-set showcmd
-set nostartofline
-set clipboard+=unnamedplus
-set autowriteall
-set grepprg=rg
-set wildignore+=*.so,*.swp,*.zip,*/node_modules/*
-set iskeyword-=.
-set gdefault
-set hidden
-set undofile
-set termguicolors
-" set leader to ,
-let mapleader=","
-let g:mapleader=","
-set fillchars+=vert:│
-
-" let g:gruvbox_sign_column = 'bg0'
-let g:gruvbox_contrast_dark = 'hard'
-" let g:gruvbox_italic = 1
-
-" set inccommand=nosplit
-
-colorscheme gruvbox
 
 hi VertSplit ctermbg=NONE guibg=NONE
 
