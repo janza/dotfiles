@@ -1,0 +1,39 @@
+[user]
+    email = josip.janzic@gmail.com
+    name = Josip Janžić
+[push]
+    default = tracking
+[core]
+    excludesfile = /home/josip/.gitignore_global
+    pager = diff-so-fancy | less --tabs=4 -RFX
+    editor = vim
+    attributesfile = ~/.gitattributes
+[github]
+    user = janza
+[alias]
+    cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    appraise = !/home/josip/.go/bin/git-appraise
+[diff]
+    tool = meld
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff-highlight"]
+    oldNormal = "red bold"
+    oldHighlight = "red bold 52"
+    newNormal = "green bold"
+    newHighlight = "green bold 22"
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    changed = red
+[diff "image"]
+    command = ~/.bin/git-imgdiff
+[credential]
+    helper = /usr/lib/git-core/git-credential-gnome-keyring
