@@ -25,9 +25,8 @@ export PATH="$PATH:/opt/android-sdk/platform-tools"
 export PATH="$PATH:$HOME/.bin"
 export PATH="$PATH:./node_modules/.bin"
 
-# export FZF_DEFAULT_COMMAND='ag -l --nocolor'
-export FZF_DEFAULT_COMMAND='rg --files --follow'
-export FZF_DEFAULT_OPTS='-1 -s --no-mouse --inline-info'
+export FZF_DEFAULT_COMMAND='rg --files'
+export FZF_DEFAULT_OPTS='-0 -1 -s --no-mouse --inline-info'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # export VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -73,6 +72,18 @@ function ec2 () {
     | sort -u \
     | fzf --preview "echo {} | jq ." --preview-window 'up:40%' \
     | jq -r .PublicDnsName
+}
+
+log() {
+  git log --no-merges --color --pretty=format:'%Cblue%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%C(yellow)%d' --abbrev-commit "$@" | \
+    fzf --height 100 --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` +1 \
+    --preview-window right:40% \
+    --preview "echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'" \
+    --bind "ctrl-m:execute:
+  (grep -o '[a-f0-9]\{7\}' | head -1 |
+  xargs -I % sh -c 'git show --color=always % | diff-so-fancy | /usr/bin/less --tabs=4 -+F +XR') << 'FZF-EOF'
+  {}
+  FZF-EOF"
 }
 
 function search_and_replace () {
