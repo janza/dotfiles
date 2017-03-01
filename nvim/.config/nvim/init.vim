@@ -179,10 +179,9 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 
 command! -bang -nargs=* Rg
       \ call fzf#vim#grep(
-      \   'rg -S --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
+      \   'rg -S  --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   <bang>fzf#vim#with_preview('up:50%'),
+      \   1)
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
