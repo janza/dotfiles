@@ -34,6 +34,8 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export TERM=xterm-256color
 export NODE_REPL_HISTORY_FILE="$HOME/.node-repl-history"
 
+# export NVIM_TUI_ENABLE_TRUE_COLOR=1
+
 alias gq="gcalcli quick --calendar 'Josip Janzic'"
 alias rg="rg -S"
 
@@ -134,12 +136,18 @@ cd_fzf_exec() {
   fi
 }
 
+find_in_vim() {
+  set -v
+  vim -c ":Rg $@"
+}
+
+
 zle -N file-widget
 zle -N changed-file-widget
 # bindkey '^P' file-widget
 bindkey -s '^P' "vim -c ':FZF!'\n"
 bindkey -s '^O' "vim -c ':GitFiles!?'\n"
-bindkey -s '^F' "vim -c ':Ag '\n"
+bindkey -s '^F' "find_in_vim "
 # bindkey '^O' changed-file-widget
 bindkey -s '^K' 'cd_fzf_exec\n'
 bindkey -s '^G' 'git branch --no-color | cut -c 3- | fzf | xargs git checkout\n'
