@@ -75,9 +75,9 @@ function ec2 () {
 }
 
 log() {
-  git log --no-merges --color --pretty=format:'%Cblue%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%C(yellow)%d' --abbrev-commit "$@" | \
-    fzf --height 100 --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` +1 \
-    --preview-window right:40% \
+  git log --no-merges --color --pretty=format:'%Cblue%h %Cgreen%cd %C(bold blue)%<(16,trunc)%an%Creset %s %C(yellow)%d' --abbrev-commit --date "short" "$@" | \
+    fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` +1 \
+    --preview-window right:45% \
     --preview "echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'" \
     --bind "ctrl-m:execute:
   (grep -o '[a-f0-9]\{7\}' | head -1 |
