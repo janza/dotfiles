@@ -160,28 +160,20 @@ let g:deoplete#enable_at_startup = 1
 let g:go_fmt_fail_silently = 1
 
 function! s:neosnippet_complete()
-"   if pumvisible()
-"     return "\<CR>"
-"   else
     if neosnippet#expandable_or_jumpable()
       return "\<Plug>(neosnippet_expand_or_jump)"
     endif
     return "\<C-N>"
-"   endif
 endfunction
 
 imap <expr><TAB> <SID>neosnippet_complete()
 
 let g:neosnippet#enable_snipmate_compatibility = 1
-" imap <expr><C-.> neosnippet#expandable_or_jumpable() ?
-"       \ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-,>"
-" imap <TAB> <C-N>
 
-command! -bang -nargs=* Rg
+command! -nargs=* Rg
       \ call fzf#vim#grep(
-      \   'rg -S  --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>fzf#vim#with_preview('up:50%'),
-      \   1)
+      \   'rg -S --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   fzf#vim#with_preview('up:50%'), 0)
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
