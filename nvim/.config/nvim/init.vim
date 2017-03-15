@@ -7,7 +7,7 @@ let g:python3_host_prog = '/usr/bin/python3'
 
 call plug#begin('~/.vim/plugged')
 " filetype plugin indent on
-Plug 'jceb/vim-orgmode'
+" Plug 'jceb/vim-orgmode'
 
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
@@ -43,7 +43,7 @@ Plug 'hynek/vim-python-pep8-indent'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
-Plug 'rust-lang/rust.vim'
+" Plug 'rust-lang/rust.vim'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
@@ -68,19 +68,21 @@ Plug 'vim-airline/vim-airline'
 
 " Plug 'machakann/vim-highlightedyank'
 
-Plug 'LnL7/vim-nix'
+" Plug 'LnL7/vim-nix'
 Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul'
 
 Plug 'vim-scripts/php-annotations-syntax'
-Plug 'vim-php/vim-php-refactoring'
-Plug 'tobyS/vmustache'
-Plug 'tobyS/pdv'
+" Plug 'vim-php/vim-php-refactoring'
+" Plug 'tobyS/vmustache'
+" Plug 'tobyS/pdv'
 
 Plug 'cespare/vim-toml'
 Plug 'janko-m/vim-test'
-Plug 'https://github.com/m-kat/aws-vim'
+" Plug 'https://github.com/m-kat/aws-vim'
+
+Plug 'briancollins/vim-jst'
 
 call plug#end()
 
@@ -179,6 +181,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 nmap gv :execute "!git-view % " . line(".")<CR>
 
+
 let g:enable_bold_font = 1
 
 let g:neoterm_size = 13
@@ -227,6 +230,8 @@ map '' ysiw'
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+
+nmap <leader>ss :IstanbulHide<CR>:IstanbulShow<CR>
 
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>

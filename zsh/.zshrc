@@ -70,7 +70,7 @@ alias gdw="git diff --color-words --word-diff-regex='[^[:space:]]|([[:alnum:]]|U
 
 function ec2 () {
   aws ec2 describe-instances \
-    | jq '.Reservations | [.[] | .Instances] | flatten | [.[] | {Tags: [.Tags[]? | select(.Key == "Environment" or .Key == "Name") | .Value ] | sort, PublicDnsName, InstanceId, ImageId, InstanceType}] | .[]' -c \
+    | jq '.Reservations | [.[] | .Instances] | flatten | [.[] | {Tags: [.Tags[]? | select(.Key == "Environment" or .Key == "Name") | .Value ] | sort, PrivateDnsName, PublicDnsName, InstanceId, ImageId, InstanceType}] | .[]' -c \
     | sort -u \
     | fzf --preview "echo {} | jq ." --preview-window 'up:40%' \
     | jq -r .PublicDnsName
