@@ -49,6 +49,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 " Plug 'carlitux/deoplete-ternjs'
 Plug 'zchee/deoplete-go'
+Plug 'zchee/deoplete-jedi'
 
 Plug 'Shougo/neosnippet.vim'
 Plug 'honza/vim-snippets'

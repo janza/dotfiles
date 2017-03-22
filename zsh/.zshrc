@@ -107,13 +107,11 @@ function gg() {
 #
 
 __fsel() {
-  set -e
     command git rev-parse --show-cdup &> /dev/null || exit
     command ag -l $(git rev-parse --show-cdup) | fzf
 }
 
 __gdsel() {
-    set -e
     set -o nonomatch
     command git rev-parse --show-cdup &> /dev/null || exit
     command git status -s --porcelain | awk '{print $2}' | fzf
@@ -137,7 +135,6 @@ cd_fzf_exec() {
 }
 
 find_in_vim() {
-  set -v
   vim -c ":Rg $@"
 }
 
