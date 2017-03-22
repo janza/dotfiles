@@ -174,7 +174,7 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 
 command! -nargs=* Rg
       \ call fzf#vim#grep(
-      \   'rg -S --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   'rg --column -S --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
       \   fzf#vim#with_preview('up:50%'), 0)
 
 xmap ga <Plug>(EasyAlign)
