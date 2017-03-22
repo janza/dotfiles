@@ -7,7 +7,7 @@ let g:python3_host_prog = '/usr/bin/python3'
 
 call plug#begin('~/.vim/plugged')
 " filetype plugin indent on
-Plug 'jceb/vim-orgmode'
+" Plug 'jceb/vim-orgmode'
 
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
@@ -43,7 +43,7 @@ Plug 'hynek/vim-python-pep8-indent'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
-Plug 'rust-lang/rust.vim'
+" Plug 'rust-lang/rust.vim'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
@@ -69,19 +69,21 @@ Plug 'vim-airline/vim-airline'
 
 " Plug 'machakann/vim-highlightedyank'
 
-Plug 'LnL7/vim-nix'
+" Plug 'LnL7/vim-nix'
 Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul'
 
 Plug 'vim-scripts/php-annotations-syntax'
-Plug 'vim-php/vim-php-refactoring'
-Plug 'tobyS/vmustache'
-Plug 'tobyS/pdv'
+" Plug 'vim-php/vim-php-refactoring'
+" Plug 'tobyS/vmustache'
+" Plug 'tobyS/pdv'
 
 Plug 'cespare/vim-toml'
 Plug 'janko-m/vim-test'
-Plug 'https://github.com/m-kat/aws-vim'
+" Plug 'https://github.com/m-kat/aws-vim'
+
+Plug 'briancollins/vim-jst'
 
 call plug#end()
 
@@ -161,32 +163,25 @@ let g:deoplete#enable_at_startup = 1
 let g:go_fmt_fail_silently = 1
 
 function! s:neosnippet_complete()
-"   if pumvisible()
-"     return "\<CR>"
-"   else
     if neosnippet#expandable_or_jumpable()
       return "\<Plug>(neosnippet_expand_or_jump)"
     endif
     return "\<C-N>"
-"   endif
 endfunction
 
 imap <expr><TAB> <SID>neosnippet_complete()
 
 let g:neosnippet#enable_snipmate_compatibility = 1
-" imap <expr><C-.> neosnippet#expandable_or_jumpable() ?
-"       \ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-,>"
-" imap <TAB> <C-N>
 
-command! -bang -nargs=* Rg
+command! -nargs=* Rg
       \ call fzf#vim#grep(
-      \   'rg -S  --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>fzf#vim#with_preview('up:50%'),
-      \   1)
+      \   'rg --column -S --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   fzf#vim#with_preview('up:50%'), 0)
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 nmap gv :execute "!git-view % " . line(".")<CR>
+
 
 let g:enable_bold_font = 1
 
@@ -236,6 +231,8 @@ map '' ysiw'
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+
+nmap <leader>ss :IstanbulHide<CR>:IstanbulShow<CR>
 
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>
