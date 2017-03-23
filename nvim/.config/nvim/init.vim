@@ -17,11 +17,14 @@ Plug 'tpope/vim-eunuch' " SudoWrite
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-abolish'
 
 Plug 'kassio/neoterm'
 "
 Plug 'morhetz/gruvbox'
 Plug 'mattn/emmet-vim'
+
+Plug 'yegappan/greplace'
 
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-pseudocl'
@@ -35,6 +38,8 @@ Plug 'mxw/vim-jsx'
 Plug 'svermeulen/vim-easyclip'
 " Plug 'benekastah/neomake'
 Plug 'w0rp/ale'
+
+Plug 'michaeljsmith/vim-indent-object'
 
 Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
@@ -116,7 +121,8 @@ set showcmd
 set nostartofline
 set clipboard+=unnamedplus
 set autowriteall
-set grepprg=rg
+set grepprg=rg\ --vimgrep\ --no-heading
+set grepformat=%f:%l:%c:%m,%f:%l:%m
 set wildignore+=*.so,*.swp,*.zip,*/node_modules/*
 set iskeyword-=.
 set gdefault
@@ -184,7 +190,7 @@ command! -nargs=* Rg
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-nmap gv :execute "!git-view % " . line(".")<CR>
+nmap ggv :execute "!git-view % " . line(".")<CR>
 
 
 let g:enable_bold_font = 1
