@@ -43,6 +43,8 @@ Plug 'hynek/vim-python-pep8-indent'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
+Plug 'sbdchd/neoformat'
+
 " Plug 'rust-lang/rust.vim'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -50,6 +52,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'carlitux/deoplete-ternjs'
 Plug 'zchee/deoplete-go'
 Plug 'zchee/deoplete-jedi'
+" Plug 'flowtype/vim-flow'
+Plug 'wokalski/autocomplete-flow'
 
 Plug 'Shougo/neosnippet.vim'
 Plug 'honza/vim-snippets'
