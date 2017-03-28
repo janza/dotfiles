@@ -59,7 +59,7 @@ status.register("battery",
 # Note: requires both netifaces and basiciw (for essid and quality)
 status.register("network",
                 interface="wlan0",
-                format_up="{essid} {v4} {v6}",)
+                format_up="{essid} {v4}",)
 
 # Shows disk usage of /
 # Format:
