@@ -75,7 +75,7 @@ function ec2 () {
   selected_instance=$(aws ec2 describe-instances \
     | jq '.Reservations | [.[] | .Instances] | flatten | [.[] | {Tags: [.Tags[]? | select(.Key == "Environment" or .Key == "Name") | .Value ] | sort, PrivateIpAddress, PublicIpAddress, InstanceId, ImageId, InstanceType}] | .[]' -c \
     | sort -u \
-    | fzf --preview "echo {} | jq ." --preview-window 'up:40%')
+    | fzf --sync --preview "echo {} | jq ." --preview-window 'up:40%')
 
   private_ip=$(echo $selected_instance | jq -r .PrivateIpAddress)
   ip=$(echo $selected_instance | jq -r .PublicIpAddress)
