@@ -1,4 +1,4 @@
-# ttyctl -f
+ttyctl -f
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
