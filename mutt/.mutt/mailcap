@@ -1,1 +1,5 @@
-text/html; lynx -assume_charset=%{charset} -display_charset=utf-8 -dump %s; nametemplate=%s.html; ; copiousoutput;
+text/html       ; lynx -assume_charset=%{charset} -display_charset=utf-8 -dump %s; nametemplate=%s.html; ; copiousoutput;
+application/pdf ; evince %s              ; copiousoutput
+image/*         ; viewnior %s            ; copiousoutput
+audio/*         ; /usr/bin/mplayer %s    ; copiousoutput
+video/*         ; /usr/bin/mplayer %s    ; copiousoutput

@@ -3,4 +3,4 @@ set mbox_type=Maildir
 set realname = 'Josip Janzic'
 set from = 'josip.janzic@gmail.com'
 set use_from = yes
-set sendmail  = "/usr/bin/msmtp -a personal"
+set sendmail  = "msmtp -a personal"
