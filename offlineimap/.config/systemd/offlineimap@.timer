@@ -1,9 +1,0 @@
-[Unit]
-Description=Offlineimap Query Timer for account %i
-
-[Timer]
-OnUnitInactiveSec=2m
-Unit=offlineimap@%i.service
-
-[Install]
-WantedBy=mail.target
