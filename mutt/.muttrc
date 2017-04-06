@@ -3,6 +3,8 @@ folder-hook 'insided' 'source ~/.mutt/insidedrc'
 
 source '~/.mutt/personalrc'
 
+set signature = "~/.mutt/signature"
+
 mailboxes ~/.mail/personal/inbox/ ~/.mail/personal/archive/ ~/.mail/insided/inbox/ ~/.mail/insided/archive/ ~/.mail/mnlth/inbox/ ~/.mail/mnlth/archive/
 
 set sleep_time=0
