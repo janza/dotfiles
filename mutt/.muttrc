@@ -59,13 +59,6 @@ hdr_order Date From To Cc
 alternative_order text/plain text/html *
 auto_view text/html
 
-set crypt_autosign = yes
-set crypt_replyencrypt = yes
-set crypt_verify_sig = yes
-set pgp_autosign=yes
-set pgp_sign_as = 6A69CC4C
-set pgp_timeout = 3600
-set pgp_use_gpg_agent = yes
 
 bind editor <Tab> complete-query
 bind editor ^T complete
@@ -75,4 +68,5 @@ macro index,pager Gi "<change-folder>=../inbox<enter>" "Go to Inbox"
 macro index,pager Ga "<change-folder>=../archive<enter>" "Go to All Mail"
 
 # source ~/.gpg.rc
+source ~/.mutt/gpg
 source ~/.mutt/colors
