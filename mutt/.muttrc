@@ -1,6 +1,5 @@
-folder-hook '$HOME/.mail/personal/*' 'source ~/.mutt/personalrc'
-folder-hook '$HOME/.mail/insided/*' 'source ~/.mutt/insidedrc'
-folder-hook '$HOME/.mail/insided/*' 'source ~/.mutt/mnlthrc
+folder-hook 'personal' 'source ~/.mutt/personalrc'
+folder-hook 'insided' 'source ~/.mutt/insidedrc'
 
 source '~/.mutt/personalrc'
 
