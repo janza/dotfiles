@@ -1,0 +1,43 @@
+[general]
+accounts = personal, insided
+pythonfile = ~/.bin/offlineimap_pass.py
+
+[Account personal]
+localrepository = personal-local
+remoterepository = personal-remote
+status_backend = sqlite
+
+[Repository personal-local]
+type = Maildir
+localfolders = ~/.mail/personal
+nametrans = lambda folder: {'archive': '[Gmail]/All Mail', 'inbox': 'INBOX', }.get(folder, folder)
+
+[Repository personal-remote]
+type = Gmail
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = josip.janzic@gmail.com
+remotepasseval = get_pass('josip.janzic@gmail.com')
+nametrans = lambda folder: {'[Gmail]/All Mail': 'archive', 'INBOX': 'inbox', }.get(folder, folder)
+folderfilter = lambda folder: folder in ['[Gmail]/All Mail', 'INBOX']
+auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN
+
+
+
+[Account insided]
+localrepository = insided-local
+remoterepository = insided-remote
+status_backend = sqlite
+
+[Repository insided-local]
+type = Maildir
+localfolders = ~/.mail/insided
+nametrans = lambda folder: {'archive': '[Gmail]/All Mail', 'inbox': 'INBOX', }.get(folder, folder)
+
+[Repository insided-remote]
+type = Gmail
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remoteuser = josip.janzic@insided.com
+remotepasseval = get_pass('josip.janzic@insided.com')
+nametrans = lambda folder: {'[Gmail]/All Mail': 'archive', 'INBOX': 'inbox', }.get(folder, folder)
+folderfilter = lambda folder: folder in ['[Gmail]/All Mail', 'INBOX']
+auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN

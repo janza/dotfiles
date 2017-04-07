@@ -1,8 +1,9 @@
-folder-hook '$HOME/.mail/personal/*' 'source ~/.mutt/personalrc'
-folder-hook '$HOME/.mail/insided/*' 'source ~/.mutt/insidedrc'
-folder-hook '$HOME/.mail/insided/*' 'source ~/.mutt/mnlthrc
+folder-hook 'personal' 'source ~/.mutt/personalrc'
+folder-hook 'insided' 'source ~/.mutt/insidedrc'
 
 source '~/.mutt/personalrc'
+
+set signature = "~/.mutt/signature"
 
 mailboxes ~/.mail/personal/inbox/ ~/.mail/personal/archive/ ~/.mail/insided/inbox/ ~/.mail/insided/archive/ ~/.mail/mnlth/inbox/ ~/.mail/mnlth/archive/
 
@@ -59,13 +60,6 @@ hdr_order Date From To Cc
 alternative_order text/plain text/html *
 auto_view text/html
 
-set crypt_autosign = yes
-set crypt_replyencrypt = yes
-set crypt_verify_sig = yes
-set pgp_autosign=yes
-set pgp_sign_as = 6A69CC4C
-set pgp_timeout = 3600
-set pgp_use_gpg_agent = yes
 
 bind editor <Tab> complete-query
 bind editor ^T complete
@@ -75,4 +69,5 @@ macro index,pager Gi "<change-folder>=../inbox<enter>" "Go to Inbox"
 macro index,pager Ga "<change-folder>=../archive<enter>" "Go to All Mail"
 
 # source ~/.gpg.rc
+source ~/.mutt/gpg
 source ~/.mutt/colors
