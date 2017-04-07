@@ -3,3 +3,5 @@ application/pdf ; evince %s              ; copiousoutput
 image/*         ; viewnior %s            ; copiousoutput
 audio/*         ; /usr/bin/mplayer %s    ; copiousoutput
 video/*         ; /usr/bin/mplayer %s    ; copiousoutput
+text/calendar   ; mutt-ics               ; copiousoutput
+application/ics ; mutt-ics               ; copiousoutput
