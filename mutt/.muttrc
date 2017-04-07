@@ -20,21 +20,33 @@ macro index,pager v4 '<change-folder>~/.mail/insided/archive<enter>'
 
 set editor=vim
 
-my_hdr X-Hack-The-Planet: Yes
-my_hdr X-Acid-Burn: Yes
-
-bind pager j next-line
-bind pager k previous-line
-bind pager g top
-bind pager G bottom
+bind pager        j next-line
+bind pager        k previous-line
+bind pager        g top
+bind pager        G bottom
 bind attach,index g first-entry
 bind attach,index G last-entry
+bind index,pager  R group-reply
 
 bind pager v view-attachments
+
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
+
+macro index S \
+          "<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+          <shell-escape>notmuch-mutt -r --prompt search<enter>\
+          <change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+          <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+          "notmuch: search mail"
+
+
 set mailcap_path  = ~/.mutt/mailcap
 
 set pager_context=10
 
+my_hdr X-Hack-The-Planet: Yes
+my_hdr X-Acid-Burn: Yes
 
 set date_format="%d.%m %H:%M"
 set index_format="%d | %-30.30F %s"
@@ -46,9 +58,18 @@ set fast_reply=yes
 set include=yes
 
 # set resolve = no
+set wait_key = no
+set delete  # don't ask, just do
+unset mark_old
+set beep_new
+set sendmail_wait = 0
+unset record
+set reply_to
+set reverse_name
 
-set sidebar_visible = yes
-set sidebar_short_path = yes
+set status_format = "- [ Folder: %f ] —  [%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ] %>—— %?p?( %p postponed )?"
+# set sidebar_visible = yes
+# set sidebar_short_path = yes
 # set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 
 ignore *
