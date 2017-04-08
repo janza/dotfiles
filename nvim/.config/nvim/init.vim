@@ -26,6 +26,10 @@ Plug 'mattn/emmet-vim'
 
 Plug 'yegappan/greplace'
 
+Plug 'jiangmiao/auto-pairs'
+Plug 'alvan/vim-closetag'
+Plug 'rliang/termedit.nvim'
+
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-fnr'
@@ -134,6 +138,9 @@ set termguicolors
 let mapleader=","
 let g:mapleader=","
 set fillchars+=vert:│
+if has('nvim')
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
 
 let g:gruvbox_sign_column = 'bg0'
 let g:gruvbox_contrast_dark = 'hard'
@@ -187,7 +194,7 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 command! -nargs=* Rg
       \ call fzf#vim#grep(
       \   'rg --column -S --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   fzf#vim#with_preview('up:50%'), 0)
+      \   fzf#vim#with_preview('up:30%'), 1)
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
