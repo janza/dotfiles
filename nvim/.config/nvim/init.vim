@@ -361,7 +361,7 @@ map S s$
 nnoremap Y y$
 nnoremap M m$
 
-imap <leader>; <C-R>=Semicolonfun()<CR>
+map <leader>; :call Semicolonfun()<CR>
 fun! Semicolonfun()
   call setline(line('.'), substitute(getline('.'), '\s*$', ';', ''))
   return "\<End>"
