@@ -112,7 +112,7 @@ workspace 5 output $mon_ext
 
 for_window [class="(?i)vlc"] floating enable, border normal
 for_window [class="(?i)smplayer"] floating enable, border none
-for_window [class="(?i)thunar"] floating enable , border normal,move absolute center
+# for_window [class="(?i)thunar"] floating enable , border normal,move absolute center
 for_window [class="(?i)file-roller"] floating enable , border none
 for_window [class="(?i)viewnior"] floating enable , border normal, move absolute center
 for_window [class="(?i)wicd"] floating enable , border normal
