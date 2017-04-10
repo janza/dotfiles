@@ -99,6 +99,8 @@ Plug 'janko-m/vim-test'
 
 Plug 'briancollins/vim-jst'
 
+Plug 'wakatime/vim-wakatime'
+
 call plug#end()
 
 let g:netrw_dirhistmax = 0

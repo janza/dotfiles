@@ -86,6 +86,8 @@ bind editor <Tab> complete-query
 bind editor ^T complete
 bind editor <space> noop
 
+
+bind index M    recall-message
 macro index,pager Gi "<change-folder>=../inbox<enter>" "Go to Inbox"
 macro index,pager Ga "<change-folder>=../archive<enter>" "Go to All Mail"
 
