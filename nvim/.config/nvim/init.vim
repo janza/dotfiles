@@ -328,9 +328,9 @@ au BufNewFile,BufRead *.tag setlocal ft=javascript
 
 nnoremap <leader>ga :Gwrite<cr>
 nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gc :Gcommit --verbose<cr>
 nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gg :Gstatus<cr>
+nnoremap <leader>gg :Gstatus --verbose<cr>
 nnoremap <leader>gl :Glog<cr>
 nnoremap <leader>gp :Git push<cr>
 nnoremap <leader>gs :Git status -sb<cr>
