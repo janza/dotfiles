@@ -22,6 +22,10 @@ macro index,pager v4 '<change-folder>~/.mail/insided/archive<enter>'
 macro index,pager v5 '<change-folder>~/.mail/jjanzic/inbox<enter>'
 macro index,pager v6 '<change-folder>~/.mail/jjanzic/archive<enter>'
 
+set query_command="goobook query %s"
+macro index,pager a "<pipe-message>goobook add<return>" "add sender to google contacts"
+bind editor <Tab> complete-query
+
 set editor=vim
 
 bind pager        j next-line

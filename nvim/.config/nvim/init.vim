@@ -320,6 +320,7 @@ au FileType html setl sw=2 ts=2 sts=2 et
 au FileType yaml setl sw=2 ts=2 sts=2 et
 au FileType htmldjango setl sw=2 ts=2 sts=2 et
 au FileType javascript setl sw=2 ts=2 sts=2 et
+au FileType make setl noet
 au BufNewFile,BufRead *.es6 setlocal ft=javascript
 au BufNewFile,BufRead *.tag setlocal ft=javascript
 

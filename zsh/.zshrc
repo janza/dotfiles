@@ -129,7 +129,11 @@ cd_fzf_exec() {
 }
 
 find_in_vim() {
-  vim -c ":Rg $@"
+  vim -c ":Rg $*"
+}
+
+find_in_mutt() {
+  notmuch-mutt -r search "$*" && mutt -f .cache/notmuch/mutt/results
 }
 
 
@@ -139,6 +143,7 @@ zle -N changed-file-widget
 bindkey -s '^P' "vim -c ':FZF!'\n"
 bindkey -s '^O' "vim -c ':GitFiles!?'\n"
 bindkey -s '^F' "find_in_vim "
+bindkey -s '^S' "find_in_mutt "
 # bindkey '^O' changed-file-widget
 bindkey -s '^K' 'cd_fzf_exec\n'
 bindkey -s '^G' 'git branch --no-color | cut -c 3- | fzf | xargs git checkout\n'
