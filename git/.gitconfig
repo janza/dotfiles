@@ -1,6 +1,6 @@
 [user]
-    email = josip.janzic@gmail.com
-    name = Josip Janžić
+    email = josip@jjanzic.com
+    name = Josip Janzic
 [push]
 	default = current
 	gpgSign = false
