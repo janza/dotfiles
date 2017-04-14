@@ -71,7 +71,7 @@ function ec2 () {
     ip=$private_ip
   fi
 
-  ssh -tA elmo.insided.com -- sudo -u jenkins ssh "$ip"
+  ssh -tA elmo.insided.com -- sudo -u jenkins ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$ip"
 }
 
 log() {
