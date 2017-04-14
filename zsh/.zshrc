@@ -8,35 +8,23 @@ fi
 # make time work more like bash time
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
 
-export HASTE_SERVER=http://paste.jjanzic.com
-
-# export QT_XFT=true
-# export GDK_USE_XFT=1
 export EDITOR=vim
 export VISUAL=vim
 export BROWSER=google-chrome-unstable
 export GOPATH=~/code/go
 
-export PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin/"
 export PATH="$PATH:$HOME/.gem/ruby/2.2.0/bin/"
 export PATH="$PATH:$GOPATH/bin"
-export PATH="$PATH:$HOME/.npm/bin"
-export PATH="$PATH:/opt/android-sdk/platform-tools"
 export PATH="$PATH:$HOME/.bin"
+export PATH="$PATH:$HOME/.npm/bin"
 export PATH="$PATH:./node_modules/.bin"
 
 export FZF_DEFAULT_COMMAND='rg --files'
 export FZF_DEFAULT_OPTS='-0 -1 -s --no-mouse --inline-info'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# export VIRTUAL_ENV_DISABLE_PROMPT=1
-# export WORKON_HOME=/home/josip/.virtualenvs/
 export TERM=xterm-256color
-export NODE_REPL_HISTORY_FILE="$HOME/.node-repl-history"
 
-# export NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-alias gq="gcalcli quick --calendar 'Josip Janzic'"
 alias rg="rg -S"
 
 alias setkbd="xset r rate 180 65 && setxkbmap -layout hr -variant us -option caps:escape"
@@ -53,7 +41,6 @@ alias open="xdg-open"
 alias y="yaourt"
 alias git='hub'
 alias mosh='mosh --bind-server=any'
-alias ran='ranger'
 alias ti='tig --all'
 
 alias vimt='vipe < /dev/null'
@@ -106,10 +93,6 @@ function search_and_replace () {
     rg $1 -l | xargs sed -i "s/$1/$2/g"
 }
 
-function mch() {
-    ssh -f -N -R 4040:localhost:$1 jjanzic.com
-}
-
 function gg() {
   git branch --no-color | cut -c 3- | fzf | xargs git checkout
 }
@@ -159,22 +142,6 @@ bindkey -s '^F' "find_in_vim "
 # bindkey '^O' changed-file-widget
 bindkey -s '^K' 'cd_fzf_exec\n'
 bindkey -s '^G' 'git branch --no-color | cut -c 3- | fzf | xargs git checkout\n'
-
-c() {
-  local cols sep
-  cols=$(( COLUMNS / 3 ))
-  sep='{{::}}'
-
-  # Copy History DB to circumvent the lock
-  # - See http://stackoverflow.com/questions/8936878 for the file path
-  /bin/cp -f ~/.config/google-chrome-unstable/Default/History /tmp/h
-
-  sqlite3 -separator $sep /tmp/h \
-    "select substr(title, 1, $cols), url
-  from urls order by last_visit_time desc" |
-  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\n", $1, $2}' |
-  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs xdg-open
-}
 
 # Aliases
 alias g='git'
@@ -321,7 +288,7 @@ bindkey '^[[1;3D'      cdUndoKey
 
 # autostart x
 if [ -z "$DISPLAY" ] && [ "$(fgconsole)" -eq 1 ]; then
-  exec startx
+  exec sway-jj
 fi
 
 if [[ $1 == "fasd" ]]
