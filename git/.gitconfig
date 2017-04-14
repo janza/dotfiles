@@ -2,7 +2,8 @@
     email = josip.janzic@gmail.com
     name = Josip Janžić
 [push]
-    default = tracking
+	default = current
+	gpgSign = false
 [core]
     excludesfile = /home/josip/.gitignore_global
     pager = diff-so-fancy | less --tabs=4 -RFX
@@ -37,3 +38,7 @@
     command = ~/.bin/git-imgdiff
 [credential]
     helper = /usr/lib/git-core/git-credential-gnome-keyring
+[rebase]
+	autoStash = true
+[pull]
+	rebase = true
