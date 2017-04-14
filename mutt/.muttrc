@@ -1,15 +1,17 @@
+folder-hook 'jjanzic' 'source ~/.mutt/jjanzicrc'
 folder-hook 'personal' 'source ~/.mutt/personalrc'
 folder-hook 'insided' 'source ~/.mutt/insidedrc'
 
-source '~/.mutt/personalrc'
+source '~/.mutt/jjanzicrc'
 
 set signature = "~/.mutt/signature"
 
-mailboxes ~/.mail/personal/inbox/ ~/.mail/personal/archive/ ~/.mail/insided/inbox/ ~/.mail/insided/archive/ ~/.mail/mnlth/inbox/ ~/.mail/mnlth/archive/
+mailboxes ~/.mail/jjanzic/inbox/ ~/.mail/jjanzic/archive/ ~/.mail/personal/inbox/ ~/.mail/personal/archive/ ~/.mail/insided/inbox/ ~/.mail/insided/archive/ ~/.mail/mnlth/inbox/ ~/.mail/mnlth/archive/
 
 set sleep_time=0
 set spoolfile=+/
 
+macro index <f1> '<change-folder>~/.mail/jjanzic/inbox<enter>'
 macro index <f2> '<change-folder>~/.mail/personal/inbox<enter>'
 macro index <f3> '<change-folder>~/.mail/insided/inbox<enter>'
 
@@ -17,6 +19,8 @@ macro index,pager v1 '<change-folder>~/.mail/personal/inbox<enter>'
 macro index,pager v2 '<change-folder>~/.mail/personal/archive<enter>'
 macro index,pager v3 '<change-folder>~/.mail/insided/inbox<enter>'
 macro index,pager v4 '<change-folder>~/.mail/insided/archive<enter>'
+macro index,pager v5 '<change-folder>~/.mail/jjanzic/inbox<enter>'
+macro index,pager v6 '<change-folder>~/.mail/jjanzic/archive<enter>'
 
 set editor=vim
 

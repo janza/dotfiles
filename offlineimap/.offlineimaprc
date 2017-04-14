@@ -1,11 +1,12 @@
 [general]
-accounts = personal, insided
+accounts = personal, insided, jjanzic
 pythonfile = ~/.bin/offlineimap_pass.py
 
 [Account personal]
 localrepository = personal-local
 remoterepository = personal-remote
 status_backend = sqlite
+postsynchook = notmuch new
 
 [Repository personal-local]
 type = Maildir
@@ -27,6 +28,7 @@ auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN
 localrepository = insided-local
 remoterepository = insided-remote
 status_backend = sqlite
+postsynchook = notmuch new
 
 [Repository insided-local]
 type = Maildir
@@ -40,4 +42,26 @@ remoteuser = josip.janzic@insided.com
 remotepasseval = get_pass('josip.janzic@insided.com')
 nametrans = lambda folder: {'[Gmail]/All Mail': 'archive', 'INBOX': 'inbox', }.get(folder, folder)
 folderfilter = lambda folder: folder in ['[Gmail]/All Mail', 'INBOX']
+auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN
+
+
+[Account jjanzic]
+localrepository = jjanzic-local
+remoterepository = jjanzic-remote
+status_backend = sqlite
+postsynchook = notmuch new
+
+[Repository jjanzic-local]
+type = Maildir
+localfolders = ~/.mail/jjanzic
+nametrans = lambda folder: {'inbox': 'INBOX', }.get(folder, folder)
+
+[Repository jjanzic-remote]
+type = IMAP
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remotehost = imap.mailfence.com
+remoteuser = josip@jjanzic.com
+remotepasseval = get_pass('josip@mailfence.com')
+nametrans = lambda folder: {'INBOX': 'inbox', }.get(folder, folder)
+folderfilter = lambda folder: folder in ['archive', 'INBOX']
 auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN

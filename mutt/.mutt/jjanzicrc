@@ -1,0 +1,7 @@
+set folder=$HOME/.mail/jjanzic/inbox
+set mbox_type=Maildir
+set realname = 'Josip Janzic'
+set from = 'josip@jjanzic.com'
+set use_from = yes
+set sendmail  = "msmtp -a jjanzic"
+
