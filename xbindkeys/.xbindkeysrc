@@ -7,11 +7,11 @@
 # "light -U 5 -p"
 #     XF86MonBrightnessDown
 
-"kbdlight up"
-    XF86KbdBrightnessUp
+# "kbdlight up"
+#     XF86KbdBrightnessUp
 
-"kbdlight down"
-    XF86KbdBrightnessDown
+# "kbdlight down"
+#     XF86KbdBrightnessDown
 
 "start_remote_tmux"
     mod4 + backslash
