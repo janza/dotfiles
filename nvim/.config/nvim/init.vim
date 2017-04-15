@@ -182,6 +182,13 @@ let g:deoplete#enable_at_startup = 1
 
 let g:go_fmt_fail_silently = 1
 
+let g:neoformat_javascript_prettiersingle = {
+      \ 'exe': 'prettier',
+      \ 'args': ['--single-quote'],
+      \ }
+
+let g:neoformat_enabled_javascript = ['prettiereslint', 'prettiersingle']
+
 function! s:neosnippet_complete()
     if neosnippet#expandable_or_jumpable()
       return "\<Plug>(neosnippet_expand_or_jump)"
