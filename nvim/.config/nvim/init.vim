@@ -75,8 +75,8 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 
 " Plug 'mustache/vim-mustache-handlebars'
 
-" Plug 'vim-airline/vim-airline'
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+" Plug 'itchyny/lightline.vim'
 " Plug 'elixir-lang/vim-elixir'
 " Plug 'slashmili/alchemist.vim'
 " Plug 'lambdatoast/elm.vim'
@@ -222,60 +222,25 @@ let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 1
 let g:gitgutter_diff_args = '-w'
 
-let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
-	  \ 'mode_map': {
-	  \ 'n' : 'N',
-	  \ 'i' : 'I',
-	  \ 'R' : 'R',
-	  \ 'v' : 'V',
-	  \ 'V' : 'V',
-	  \ "\<C-v>": 'V',
-	  \ 'c' : 'C',
-	  \ 's' : 'S',
-	  \ 'S' : 'S',
-	  \ "\<C-s>": 'S',
-	  \ 't': 'T',
-	  \ },
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
+let g:airline_left_sep  = ''
+let g:airline_right_sep = ''
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : 'N',
+      \ 'i'  : 'I',
+      \ 'R'  : 'R',
+      \ 'c'  : 'C',
+      \ 'v'  : 'V',
+      \ 'V'  : 'V',
+      \ '^V' : 'V',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ '^S' : 'S',
       \ }
 
-
-
-" let g:airline_left_sep  = ''
-" let g:airline_right_sep = ''
-" let g:airline_mode_map = {
-"       \ '__' : '-',
-"       \ 'n'  : 'N',
-"       \ 'i'  : 'I',
-"       \ 'R'  : 'R',
-"       \ 'c'  : 'C',
-"       \ 'v'  : 'V',
-"       \ 'V'  : 'V',
-"       \ '^V' : 'V',
-"       \ 's'  : 'S',
-"       \ 'S'  : 'S',
-"       \ '^S' : 'S',
-"       \ }
-
-" let g:airline_section_b = ''
-" let g:airline_section_x = ''
-" let g:airline_section_y = ''
+let g:airline_section_b = ''
+let g:airline_section_x = ''
+let g:airline_section_y = ''
 
 nmap gm :LivedownToggle<CR>
 map '' ysiw'
@@ -320,6 +285,7 @@ au FileType html setl sw=2 ts=2 sts=2 et
 au FileType yaml setl sw=2 ts=2 sts=2 et
 au FileType htmldjango setl sw=2 ts=2 sts=2 et
 au FileType javascript setl sw=2 ts=2 sts=2 et
+au FileType make setl noet
 au BufNewFile,BufRead *.es6 setlocal ft=javascript
 au BufNewFile,BufRead *.tag setlocal ft=javascript
 
