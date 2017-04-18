@@ -5,7 +5,7 @@ pythonfile = ~/.bin/offlineimap_pass.py
 [Account personal]
 localrepository = personal-local
 remoterepository = personal-remote
-status_backend = sqlite
+; status_backend = sqlite
 postsynchook = notmuch new
 
 [Repository personal-local]
@@ -27,7 +27,7 @@ auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN
 [Account insided]
 localrepository = insided-local
 remoterepository = insided-remote
-status_backend = sqlite
+; status_backend = sqlite
 postsynchook = notmuch new
 
 [Repository insided-local]
@@ -48,7 +48,7 @@ auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN
 [Account jjanzic]
 localrepository = jjanzic-local
 remoterepository = jjanzic-remote
-status_backend = sqlite
+; status_backend = sqlite
 postsynchook = notmuch new
 
 [Repository jjanzic-local]
