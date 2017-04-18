@@ -288,7 +288,7 @@ bindkey '^[[1;3D'      cdUndoKey
 
 # autostart x
 if [ -z "$DISPLAY" ] && [ "$(fgconsole)" -eq 1 ]; then
-  exec sway-jj
+  exec sway-jj 2>&1 > /var/log/sway.log
 fi
 
 if [[ $1 == "fasd" ]]
