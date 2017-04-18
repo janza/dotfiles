@@ -291,7 +291,12 @@ bindkey '^[[1;3D'      cdUndoKey
 
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# autostart x
+if (( $+commands[gnome-keyring-daemon] )); then
+  eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+  export SSH_AUTH_SOCK
+fi
+
+# autostart display server
 if [ -z "$DISPLAY" ] && [ "$(fgconsole)" -eq 1 ]; then
   exec sway-jj 2>&1 > /var/log/sway.log
 fi
