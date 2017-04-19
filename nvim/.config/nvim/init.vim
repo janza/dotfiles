@@ -99,7 +99,7 @@ Plug 'janko-m/vim-test'
 
 Plug 'briancollins/vim-jst'
 
-Plug 'wakatime/vim-wakatime'
+Plug 'janza/vim-wakatime'
 
 call plug#end()
 
@@ -245,9 +245,21 @@ let g:airline_mode_map = {
       \ '^S' : 'S',
       \ }
 
-let g:airline_section_b = ''
-let g:airline_section_x = ''
-let g:airline_section_y = ''
+" let g:airline_section_b = ''
+" let g:airline_section_x = ''
+" let g:airline_section_y = ''
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.notexists = ''
+let g:airline_symbols.whitespace = ''
 
 nmap gm :LivedownToggle<CR>
 map '' ysiw'
