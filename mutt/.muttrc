@@ -28,7 +28,12 @@ bind editor <Tab> complete-query
 
 set editor=vim
 
-set display_filter="t-prot -cemt -M=mutt"
+set my_tprot='t-prot -emtS -c --bigq -Mmutt --spass'
+set display_filter=$my_tprot
+
+set tilde
+
+
 
 bind pager        j next-line
 bind pager        k previous-line
@@ -59,14 +64,19 @@ my_hdr X-Hack-The-Planet: Yes
 my_hdr X-Acid-Burn: Yes
 my_hdr X-Face: 2.@)Bj+UtRj:iQzX:/=pFO\\r-S.[zlWJ851S*RE9e%S(!Uwa[8.\#(U\;v\\?VHuuQPi?,ZM}Ejs>Z{T2:}Jrw&E?\\@o-%Dt\$c<\":\`c\#IkDr=yc}xynk3!8I=\'tamtFoU}s+xGWgdi>\$\#_{q5\'wr}[v\$et79w\#h]p92z4f=CWr2~,c?Fj\`z]et<v}v=(iuF\$a|ms\\=Djf]\#j[a>\\iEa!ggp{}!Pt\#LHu?,\$%?jQXXjuZ(02N(OI68?n(\$Jmd9+W1=TmY%Ep)x~=FOfTVrpl|m-sbF]S\`Y-%,asUme<&\`LQcy<>bDFn\'f^~mO{.qr<W[
 
-set date_format="%d.%m %H:%M"
-set index_format="%d | %-30.30F %s"
+# set date_format="%d.%m %H:%M"
+# set index_format="%d | %-30.30F %s"
+
+set index_format='%<[y?%<[m?%<[d?%[%H:%M ]&%[%d %a]>&%[%b %d]>&%[%m/%y ]> %-20.20F %s'
 
 set sort=threads
 set sort_aux=reverse-last-date-received
 
 set fast_reply=yes
 set include=yes
+
+set arrow_cursor
+set narrow_tree
 
 # set resolve = no
 set wait_key = no
@@ -78,14 +88,16 @@ unset record
 set reply_to
 set reverse_name
 
-set status_format = "- [ Folder: %f ] —  [%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ] %>—— %?p?( %p postponed )?"
+set status_on_top
+set status_format       = "[%f %l] %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p drafts, ?%?t?%t +tagged, ?%?d?%d deleted, ?  %?b?%b unread messages. ?%>  %V  [%P]"
+
 # set sidebar_visible = yes
 # set sidebar_short_path = yes
 # set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 
 ignore *
-unignore date subject user-agent posted-to content-type
-unignore to cc bcc reply-to from
+unignore date subject user-agent posted-to
+unignore to cc bcc from
 set edit_headers=yes
 
 hdr_order Date From To Cc
@@ -102,6 +114,5 @@ bind index M    recall-message
 macro index,pager Gi "<change-folder>=../inbox<enter>" "Go to Inbox"
 macro index,pager Ga "<change-folder>=../archive<enter>" "Go to All Mail"
 
-# source ~/.gpg.rc
 source ~/.mutt/gpg
 source ~/.mutt/colors
