@@ -42,3 +42,5 @@
 	autoStash = true
 [pull]
 	rebase = true
+[status]
+	showUntrackedFiles = all
