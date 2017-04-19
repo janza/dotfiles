@@ -1,5 +1,5 @@
 set pgp_autosign = yes
-set pgp_sign_as = 6A69CC4C
+set pgp_sign_as = 39A30DC337A1EED15B2F2A9ED25005BA7BDA120D
 set pgp_timeout = 3600
 set pgp_use_gpg_agent = yes
 set crypt_autosign = yes
