@@ -1,6 +1,7 @@
 [general]
 accounts = personal, insided, jjanzic
 pythonfile = ~/.bin/offlineimap_pass.py
+socktimeout = 30
 
 [Account personal]
 localrepository = personal-local
