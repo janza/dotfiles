@@ -297,9 +297,9 @@ if (( $+commands[gnome-keyring-daemon] )); then
 fi
 
 # autostart display server
-if [ -z "$DISPLAY" ] && [ "$(fgconsole)" -eq 1 ]; then
-  exec sway-jj 2>&1 > /var/log/sway.log
-fi
+# if [ -z "$DISPLAY" ] && [ "$(fgconsole)" -eq 1 ]; then
+#   exec sway-jj 2>&1 > /var/log/sway.log
+# fi
 
 if [[ $1 == "fasd" ]]
 then
