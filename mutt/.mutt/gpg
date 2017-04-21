@@ -5,6 +5,7 @@ set pgp_use_gpg_agent = yes
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
 set crypt_verify_sig = yes
+set crypt_replysignencrypted=yes
 
 set pgp_decode_command       = "gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
 set pgp_verify_command       = "gpg --no-verbose --batch --output - --verify %s %f"
