@@ -1,14 +1,7 @@
 let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
 
-" filetype on           " Enable filetype detection
-" filetype indent on    " Enable filetype-specific indenting
-" filetype plugin on    " Enable filetype-specific plugins
-
 call plug#begin('~/.vim/plugged')
-" filetype plugin indent on
-" Plug 'jceb/vim-orgmode'
-
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-fugitive'
@@ -40,7 +33,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'svermeulen/vim-easyclip'
-" Plug 'benekastah/neomake'
 Plug 'w0rp/ale'
 
 Plug 'michaeljsmith/vim-indent-object'
@@ -53,8 +45,6 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'sbdchd/neoformat'
-
-" Plug 'rust-lang/rust.vim'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
@@ -73,29 +63,16 @@ Plug 'pearofducks/ansible-vim'
 Plug 'nelsyeung/twig.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 
-" Plug 'mustache/vim-mustache-handlebars'
-
 Plug 'vim-airline/vim-airline'
-" Plug 'itchyny/lightline.vim'
-" Plug 'elixir-lang/vim-elixir'
-" Plug 'slashmili/alchemist.vim'
-" Plug 'lambdatoast/elm.vim'
 
-" Plug 'machakann/vim-highlightedyank'
-
-" Plug 'LnL7/vim-nix'
 Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul'
 
 Plug 'vim-scripts/php-annotations-syntax'
-" Plug 'vim-php/vim-php-refactoring'
-" Plug 'tobyS/vmustache'
-" Plug 'tobyS/pdv'
 
 Plug 'cespare/vim-toml'
 Plug 'janko-m/vim-test'
-" Plug 'https://github.com/m-kat/aws-vim'
 
 Plug 'briancollins/vim-jst'
 
@@ -109,7 +86,6 @@ set background=dark
 
 " syntax sync minlines=256
 " set synmaxcol=256 " Syntax highlight max cols
-" set mouse=
 set so=999
 set modeline
 set modelines=4
@@ -136,7 +112,6 @@ set gdefault
 set hidden
 set undofile
 set termguicolors
-" set leader to ,
 let mapleader=","
 let g:mapleader=","
 set fillchars+=vert:│
@@ -169,23 +144,20 @@ let g:terminal_color_13 = '#d3869b'
 let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
 
-
-let g:neoterm_shell = "zsh"
-
-let g:coverage_json_path = 'coverage/json/coverage-final.json'
-
-let g:php_refactor_command='refactor.phar'
-
-let g:pdv_template_dir = $HOME ."/.vim/plugged/pdv/templates_snip"
-
-let g:deoplete#enable_at_startup = 1
-
-let g:go_fmt_fail_silently = 1
-
+let g:wakatime_InfluxHost                 = 'influx.jjanzic.com'
+let g:wakatime_BasicAuth                  = substitute(system('pass show influx.jjanzic.com'), "\n", "", "")
+let g:neoterm_shell                       = "zsh"
+let g:coverage_json_path                  = 'coverage/json/coverage-final.json'
+let g:php_refactor_command                = 'refactor.phar'
+let g:pdv_template_dir                    = $HOME ."/.vim/plugged/pdv/templates_snip"
+let g:deoplete#enable_at_startup          = 1
+let g:go_fmt_fail_silently                = 1
 let g:neoformat_javascript_prettiersingle = {
       \ 'exe': 'prettier',
       \ 'args': ['--single-quote'],
       \ }
+
+map <leader>f :Neoformat<CR>
 
 let g:neoformat_enabled_javascript = ['prettiereslint', 'prettiersingle']
 
@@ -254,11 +226,11 @@ if !exists('g:airline_symbols')
 endif
 
 " unicode symbols
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.notexists = ''
+let g:airline_symbols.crypt      = '🔒'
+let g:airline_symbols.linenr     = '¶'
+let g:airline_symbols.maxlinenr  = ''
+let g:airline_symbols.branch     = '⎇'
+let g:airline_symbols.notexists  = ''
 let g:airline_symbols.whitespace = ''
 
 nmap gm :LivedownToggle<CR>
