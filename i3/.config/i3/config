@@ -96,7 +96,7 @@ bindsym grave exec myterm
 
 set $mon_lap eDP1
 # set $mon_ext DP1
-set $mon_ext HDMI1
+set $mon_ext eDP1
 
 workspace 10 output $mon_lap
 workspace 9 output $mon_lap
