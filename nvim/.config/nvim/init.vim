@@ -45,6 +45,7 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'sbdchd/neoformat'
+Plug 'sjl/gundo.vim'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }

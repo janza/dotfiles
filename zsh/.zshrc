@@ -71,7 +71,7 @@ function ec2 () {
     ip=$private_ip
   fi
 
-  ssh -tA ssh.insided.com -- ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$ip"
+  ssh -tA ssh.insided.com -- ssh -A -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$ip"
 }
 
 log() {
