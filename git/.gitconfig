@@ -44,3 +44,5 @@
 	rebase = true
 [status]
 	showUntrackedFiles = all
+[http "https://gopkg.in"]
+	followRedirects = true
