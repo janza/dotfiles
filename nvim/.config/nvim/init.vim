@@ -54,6 +54,7 @@ Plug 'zchee/deoplete-go'
 Plug 'zchee/deoplete-jedi'
 " Plug 'flowtype/vim-flow'
 Plug 'wokalski/autocomplete-flow'
+Plug 'Quramy/tsuquyomi'
 
 Plug 'Shougo/neosnippet.vim'
 Plug 'honza/vim-snippets'
