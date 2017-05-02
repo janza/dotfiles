@@ -116,8 +116,9 @@ set termguicolors
 let mapleader=","
 let g:mapleader=","
 set fillchars+=vert:│
+
 if has('nvim')
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 endif
 
 let g:gruvbox_sign_column = 'bg0'
