@@ -33,7 +33,7 @@ status.register(
     "battery",
     battery_ident='BAT1',
     format="{status}{percentage:.0f}%",
-    alert=True,
+    alert=False,
     full_color='#ffffff',
     charging_color='#ffffff',
     status={
@@ -47,7 +47,7 @@ status.register(
     format="{status}{percentage:.0f}%",
     full_color='#ffffff',
     charging_color='#ffffff',
-    alert=True,
+    alert=False,
     status={
         "DIS": "<",
         "CHR": ">",
@@ -94,16 +94,17 @@ status.register(
 # Cloud connected▶Reroute to Remain
 status.register(
     "mpd",
-    format="{title} {status}",
+    format="{title}{status}",
     status={
-        "pause": "-",
-        "play": ">",
-        "stop": "-",
+        "pause": "",
+        "play": " >",
+        "stop": "",
     }, )
 
 for maildir in ['jjanzic', 'personal', 'insided']:
     status.register(
         "mail",
+        on_leftclick='termite -e mutt',
         backends=[
             MaildirMail(
                 account=maildir,
