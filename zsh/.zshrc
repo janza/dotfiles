@@ -5,6 +5,20 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*'   force-list always
+
+zstyle ':completion:*' squeeze-slashes true
+
 # make time work more like bash time
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
 
@@ -146,7 +160,7 @@ bindkey -s '^F' "find_in_vim "
 bindkey -s '^S' "find_in_mutt "
 # bindkey '^O' changed-file-widget
 bindkey -s '^K' 'cd_fzf_exec\n'
-bindkey -s '^G' 'git branch --no-color | cut -c 3- | fzf | xargs git checkout\n'
+bindkey -s '^G' 'git branch -a --no-merged origin/master | sed "s/remotes\\/origin\\///" | cut -c2- | sort -u | fzf | xargs git checkout\n'
 
 # Aliases
 alias g='git'

@@ -19,7 +19,6 @@ Plug 'mattn/emmet-vim'
 
 Plug 'yegappan/greplace'
 
-Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
 Plug 'rliang/termedit.nvim'
 

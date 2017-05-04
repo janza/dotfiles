@@ -115,8 +115,8 @@ for maildir in ['jjanzic', 'personal', 'insided']:
         format_plural="{account} {current_unread}",
         color_unread="#00ff00")
 
-status.register("external_ip")
-status.register("bitcoin", currency='EUR')
+# status.register("external_ip")
+# status.register("bitcoin", currency='EUR')
 # status.register("pomodoro",
 #                 sound="~/dotfiles/message.wav")
 
