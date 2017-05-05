@@ -46,3 +46,5 @@
 	showUntrackedFiles = all
 [http "https://gopkg.in"]
 	followRedirects = true
+[commit]
+	gpgsign = true
