@@ -13,10 +13,8 @@ mono index bold ~D
 # Highlights inside the body of a message.
 
 # URLs
-color body blue default "(https|http|ftp|news|telnet|finger)://[^ \"\t\r\n]*"
+color body blue default "(https|http|ftp|news|telnet|finger)://[^ \"\t\r\n\)]*"
 color body blue default "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
-mono body bold "(https|http|ftp|news|telnet|finger)://[^ \"\t\r\n]*"
-mono body bold "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
 
 # email addresses
 color body green default "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"

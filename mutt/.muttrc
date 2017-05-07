@@ -32,6 +32,9 @@ set my_tprot='t-prot -emtS -c --bigq -Mmutt --spass'
 set display_filter=$my_tprot
 
 set tilde
+set smart_wrap
+set wrap=100
+set markers=no
 
 
 
@@ -103,7 +106,7 @@ unignore to cc bcc from
 set edit_headers=yes
 
 hdr_order Date From To Cc
-alternative_order text/plain text/html *
+alternative_order text/plain text/enriched text/html *
 auto_view text/html
 
 
