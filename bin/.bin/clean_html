@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-pandoc -f html -t markdown_github-raw_html-native_spans-native_divs-link_attributes+simple_tables+multiline_tables+grid_tables+pipe_tables --normalize --columns=120 -S -s -R "$1"
+pandoc -f html -t 'markdown_github-raw_html-native_divs-native_spans-markdown_attribute-header_attributes-auto_identifiers-link_attributes+multiline_tables+simple_tables+table_captions+grid_tables-implicit_figures' --columns=100 --normalize -R -s -S "$1"
