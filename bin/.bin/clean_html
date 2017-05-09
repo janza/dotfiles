@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-markdown_options='markdown_phpextra+mmd_title_block-raw_html-native_divs-native_spans-markdown_attribute-header_attributes-auto_identifiers-link_attributes-table_captions+multiline_tables-simple_tables-pipe_tables+grid_tables+implicit_figures'
+markdown_options='markdown_github-raw_html-native_divs-native_spans-markdown_attribute-header_attributes-auto_identifiers-link_attributes+table_captions+multiline_tables+simple_tables+pipe_tables+grid_tables+implicit_figures'
 
 pandoc -f html \
   --filter ~/.bin/pandoc_remove_single_tables \

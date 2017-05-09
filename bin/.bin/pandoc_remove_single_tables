@@ -1,12 +1,35 @@
 #!/usr/bin/env python
 
-from pandocfilters import toJSONFilter, walk
+import requests
+from pandocfilters import toJSONFilter, walk, Link
+
+grl_host = 'https://grl.jjanzic.com/'
 
 
 def behead(key, value, fmt, meta):
+
+    # Remove tables with one cell
     if key == 'Table':
-        if (len(value[4]) == 1):
-            return walk(value[4][0][0], behead, fmt, meta)
+        r = []
+        if len(value[3]) == 1:
+            r += walk(value[3][0], behead, fmt, meta)
+        if len(value[4]) == 1:
+            r += walk(value[4][0][0], behead, fmt, meta)
+        if r:
+            return r
+        return None
+
+    # Trim links using url shortener
+    if key == 'Link':
+        if (len(value)) < 3:
+            return None
+        if (len(value[2])) != 2:
+            return None
+        url = value[2][0]
+        if (len(url) > 120):
+            r = requests.post(grl_host, data=url)
+            value[2][0] = grl_host + r.text
+            return Link(*value)
 
 
 if __name__ == "__main__":
