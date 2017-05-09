@@ -1,2 +1,10 @@
 #!/usr/bin/env sh
-pandoc -f html -t 'markdown_github-raw_html-native_divs-native_spans-markdown_attribute-header_attributes-auto_identifiers-link_attributes+multiline_tables+simple_tables+table_captions+grid_tables-implicit_figures' --columns=100 --normalize -R -s -S "$1"
+
+markdown_options='markdown_phpextra+mmd_title_block-raw_html-native_divs-native_spans-markdown_attribute-header_attributes-auto_identifiers-link_attributes-table_captions+multiline_tables-simple_tables-pipe_tables+grid_tables+implicit_figures'
+
+pandoc -f html \
+  --filter ~/.bin/pandoc_remove_single_tables \
+  --atx-headers \
+  -t $markdown_options \
+  --column=90 \
+  --normalize -R -s -S "$1"

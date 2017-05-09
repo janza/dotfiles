@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+from pandocfilters import toJSONFilter, walk
+
+
+def behead(key, value, fmt, meta):
+    if key == 'Table':
+        if (len(value[4]) == 1):
+            return walk(value[4][0][0], behead, fmt, meta)
+
+
+if __name__ == "__main__":
+    toJSONFilter(behead)
