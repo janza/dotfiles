@@ -17,14 +17,14 @@ Plug 'kassio/neoterm'
 Plug 'morhetz/gruvbox'
 Plug 'mattn/emmet-vim'
 
-Plug 'yegappan/greplace'
+" Plug 'yegappan/greplace'
 
 Plug 'alvan/vim-closetag'
-Plug 'rliang/termedit.nvim'
+" Plug 'rliang/termedit.nvim'
 
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/vim-fnr'
+" Plug 'junegunn/vim-pseudocl'
+" Plug 'junegunn/vim-fnr'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
@@ -34,7 +34,7 @@ Plug 'mxw/vim-jsx'
 Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
 
-Plug 'michaeljsmith/vim-indent-object'
+" Plug 'michaeljsmith/vim-indent-object'
 
 Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
@@ -43,41 +43,41 @@ Plug 'hynek/vim-python-pep8-indent'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
-Plug 'sbdchd/neoformat'
-Plug 'sjl/gundo.vim'
+Plug 'sbdchd/neoformat', { 'on':  'Neoformat' }
+Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 " Plug 'carlitux/deoplete-ternjs'
-Plug 'zchee/deoplete-go'
-Plug 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-go', { 'for': 'go' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 " Plug 'flowtype/vim-flow'
-Plug 'wokalski/autocomplete-flow'
-Plug 'Quramy/tsuquyomi'
+" Plug 'wokalski/autocomplete-flow'
+" Plug 'Quramy/tsuquyomi'
 
-Plug 'Shougo/neosnippet.vim'
-Plug 'honza/vim-snippets'
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'honza/vim-snippets'
 
-Plug 'shime/vim-livedown'
-Plug 'pearofducks/ansible-vim'
+Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
+Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
 
-Plug 'nelsyeung/twig.vim'
-Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'nelsyeung/twig.vim', { 'for': 'twig' }
+Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'jinja' }
 
 Plug 'vim-airline/vim-airline'
 
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': 'go' }
 
-Plug 'juanpabloaj/vim-istanbul'
+Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 
-Plug 'vim-scripts/php-annotations-syntax'
+Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
-Plug 'cespare/vim-toml'
+Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'janko-m/vim-test'
 
-Plug 'briancollins/vim-jst'
+" Plug 'briancollins/vim-jst'
 
-Plug 'janza/vim-wakatime'
+Plug 'janza/vim-hackatime'
 
 call plug#end()
 
@@ -146,8 +146,8 @@ let g:terminal_color_13 = '#d3869b'
 let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
 
-let g:wakatime_InfluxHost                 = 'influx.jjanzic.com'
-let g:wakatime_BasicAuth                  = substitute(system('pass show influx.jjanzic.com'), "\n", "", "")
+let g:hackatime_InfluxHost                 = 'influx.jjanzic.com'
+let g:hackatime_BasicAuth                  = substitute(system('pass show influx.jjanzic.com'), "\n", "", "")
 let g:neoterm_shell                       = "zsh"
 let g:coverage_json_path                  = 'coverage/json/coverage-final.json'
 let g:php_refactor_command                = 'refactor.phar'
