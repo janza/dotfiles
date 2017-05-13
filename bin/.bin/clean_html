@@ -26,4 +26,4 @@ pandoc -f html \
   --atx-headers \
   -t "$markdown_options" \
   --column=90 \
-  --normalize -R -s -S "$1"
+  --normalize -R -s -S "${1:-/dev/stdin}"
