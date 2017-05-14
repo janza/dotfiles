@@ -28,5 +28,5 @@ pandoc "${1:-/dev/stdin}" \
   -t "$markdown_options" \
   --column=90 \
   --normalize -R -s -S |
-  sed 's/^\s*||ig' |
+  sed 's/^\s*//ig' |
   cat -s
