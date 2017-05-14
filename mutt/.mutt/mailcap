@@ -1,7 +1,7 @@
 text/html       ; clean_html %s          ; copiousoutput
 application/pdf ; evince %s
 image/*         ; viewnior %s
-audio/*         ; /usr/bin/mplayer %s    ; copiousoutput
-video/*         ; /usr/bin/mplayer %s    ; copiousoutput
+audio/*         ; /usr/bin/mplayer %s
+video/*         ; /usr/bin/mplayer %s
 text/calendar   ; mutt-ics               ; copiousoutput
 application/ics ; mutt-ics               ; copiousoutput
