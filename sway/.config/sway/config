@@ -99,6 +99,8 @@ bindsym XF86AudioRaiseVolume exec pamixer --increase 5
 bindsym XF86AudioLowerVolume exec pamixer --decrease 5
 bindsym $mod+button4 exec pamixer --increase 5
 bindsym $mod+button5 exec pamixer --decrease 5
+floating_scroll up exec pamixer --increase 5
+floating_scroll down exec pamixer --decrease 5
 
 new_window none
 
