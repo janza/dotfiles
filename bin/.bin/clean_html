@@ -21,9 +21,12 @@ for option in 'markdown_github
   markdown_options="$markdown_options${option//[[:space:]]}"
 done
 
-pandoc -f html \
+pandoc "${1:-/dev/stdin}" \
+  -f html \
   --filter ~/.bin/pandoc_remove_single_tables \
   --atx-headers \
   -t "$markdown_options" \
   --column=90 \
-  --normalize -R -s -S "${1:-/dev/stdin}"
+  --normalize -R -s -S |
+  sed 's/^\s*||ig' |
+  cat -s
