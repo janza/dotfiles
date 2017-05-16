@@ -1,4 +1,4 @@
-text/html       ; w3m -I %{charset} -T text/html  ; copiousoutput
+text/html       ; clean_html %s          ; copiousoutput
 application/pdf ; evince %s
 image/*         ; viewnior %s
 audio/*         ; /usr/bin/mplayer %s
