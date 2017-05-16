@@ -30,7 +30,7 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
 Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
 
@@ -39,7 +39,7 @@ Plug 'w0rp/ale'
 Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
 Plug 'wellle/targets.vim'
-Plug 'hynek/vim-python-pep8-indent'
+Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 Plug 'AndrewRadev/splitjoin.vim'
 
@@ -73,7 +73,7 @@ Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
 Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'janko-m/vim-test'
+Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
 " Plug 'briancollins/vim-jst'
 
@@ -164,15 +164,15 @@ map <leader>f :Neoformat<CR>
 let g:neoformat_enabled_javascript = ['prettiereslint', 'prettiersingle']
 
 function! s:neosnippet_complete()
-    if neosnippet#expandable_or_jumpable()
-      return "\<Plug>(neosnippet_expand_or_jump)"
-    endif
+    " if neosnippet#expandable_or_jumpable()
+    "   return "\<Plug>(neosnippet_expand_or_jump)"
+    " endif
     return "\<C-N>"
 endfunction
 
 imap <expr><TAB> <SID>neosnippet_complete()
 
-let g:neosnippet#enable_snipmate_compatibility = 1
+" let g:neosnippet#enable_snipmate_compatibility = 1
 
 command! -nargs=* Rg
       \ call fzf#vim#grep(
@@ -188,16 +188,14 @@ let g:enable_bold_font = 1
 
 let g:neoterm_size = 13
 
-augroup omnifuncs
-  autocmd!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup end
-
-let g:jsx_ext_required = 0
+" augroup omnifuncs
+"   autocmd!
+"   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+"   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" augroup end
 
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 1
@@ -268,7 +266,7 @@ let g:user_emmet_install_global = 1
 
 autocmd FileType javascript set formatprg=eslint-fix-stdin
 
-au BufNewFile,BufRead *.ejs set filetype=html
+" au BufNewFile,BufRead *.ejs set filetype=html
 
 au BufWritePre * :%s/\s\+$//e  " remove trailing whitespace
 " au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
