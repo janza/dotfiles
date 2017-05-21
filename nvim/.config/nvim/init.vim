@@ -11,8 +11,6 @@ Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-abolish'
-
-Plug 'kassio/neoterm'
 "
 Plug 'morhetz/gruvbox'
 Plug 'mattn/emmet-vim'
@@ -22,14 +20,16 @@ Plug 'mattn/emmet-vim'
 Plug 'alvan/vim-closetag'
 " Plug 'rliang/termedit.nvim'
 
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)', 'EasyAlign' ] }
 " Plug 'junegunn/vim-pseudocl'
 " Plug 'junegunn/vim-fnr'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'kassio/neoterm', { 'on': [ 'T', 'Tmap' ] }
+
 Plug 'airblade/vim-gitgutter'
-Plug 'pangloss/vim-javascript'
+Plug 'isRuslan/vim-es6'
 " Plug 'mxw/vim-jsx'
 Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
@@ -53,7 +53,6 @@ Plug 'zchee/deoplete-go', { 'for': 'go' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 " Plug 'flowtype/vim-flow'
 " Plug 'wokalski/autocomplete-flow'
-" Plug 'Quramy/tsuquyomi'
 
 " Plug 'Shougo/neosnippet.vim'
 " Plug 'honza/vim-snippets'
@@ -61,8 +60,8 @@ Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
 
-Plug 'nelsyeung/twig.vim', { 'for': 'twig' }
-Plug 'Glench/Vim-Jinja2-Syntax', { 'for': 'jinja' }
+Plug 'nelsyeung/twig.vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
 
 Plug 'vim-airline/vim-airline'
 
@@ -107,7 +106,6 @@ set clipboard+=unnamedplus
 set autowriteall
 set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
-set wildignore+=*.so,*.swp,*.zip,*/node_modules/*
 set iskeyword-=.
 set gdefault
 set hidden
@@ -116,6 +114,23 @@ set termguicolors
 let mapleader=","
 let g:mapleader=","
 set fillchars+=vert:│
+set foldmethod=manual
+
+set wildmode=list:longest
+set wildignore=*.o,*.obj,*~
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=node_modules/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
+set wildignore+=*.class,*.jar
+set wildignore+=*.pdf
+set wildignore+=*/tmp/*,*.o,*.so,*.swp,*.zip,*/node_modules/*,*/bower_components/*
 
 if has('nvim')
   set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
@@ -123,7 +138,7 @@ endif
 
 let g:gruvbox_sign_column = 'bg0'
 let g:gruvbox_contrast_dark = 'hard'
-" let g:gruvbox_italic = 1
+let g:gruvbox_italic = 1
 
 " set inccommand=nosplit
 
@@ -150,9 +165,10 @@ let g:hackatime_InfluxHost                 = 'influx.jjanzic.com'
 let g:hackatime_BasicAuth                  = substitute(system('pass show influx.jjanzic.com'), "\n", "", "")
 let g:neoterm_shell                       = "zsh"
 let g:coverage_json_path                  = 'coverage/json/coverage-final.json'
-let g:php_refactor_command                = 'refactor.phar'
-let g:pdv_template_dir                    = $HOME ."/.vim/plugged/pdv/templates_snip"
-let g:deoplete#enable_at_startup          = 1
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
 let g:go_fmt_fail_silently                = 1
 let g:neoformat_javascript_prettiersingle = {
       \ 'exe': 'prettier',
@@ -236,13 +252,13 @@ let g:airline_symbols.whitespace = ''
 nmap gm :LivedownToggle<CR>
 map '' ysiw'
 
-" inoremap <Tab> <C-n>
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-nmap <leader>ss :IstanbulHide<CR>:IstanbulShow<CR>
+nmap <leader>i :IstanbulHide<CR>:IstanbulShow<CR>
 
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>
