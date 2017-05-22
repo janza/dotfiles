@@ -75,6 +75,7 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
 " Plug 'briancollins/vim-jst'
+Plug 'elixir-lang/vim-elixir'
 
 Plug 'janza/vim-hackatime'
 
