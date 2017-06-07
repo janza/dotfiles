@@ -29,13 +29,12 @@ TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
 
 export EDITOR=vim
 export VISUAL=vim
-export BROWSER=google-chrome-unstable
+export BROWSER=brwsr
 export GOPATH=~/code/go
 
-export PATH="$PATH:$HOME/.gem/ruby/2.2.0/bin/"
+export PATH="$HOME/.bin:$PATH"
+export PATH="$HOME/.npm/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin"
-export PATH="$PATH:$HOME/.bin"
-export PATH="$PATH:$HOME/.npm/bin"
 export PATH="$PATH:./node_modules/.bin"
 
 export FZF_DEFAULT_COMMAND='rg --files'

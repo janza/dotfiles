@@ -29,12 +29,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'kassio/neoterm', { 'on': [ 'T', 'Tmap' ] }
 
 Plug 'airblade/vim-gitgutter'
-Plug 'isRuslan/vim-es6'
-" Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+
 Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
-
-" Plug 'michaeljsmith/vim-indent-object'
 
 Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
@@ -46,16 +44,15 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'sbdchd/neoformat', { 'on':  'Neoformat' }
 Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-" Plug 'carlitux/deoplete-ternjs'
-Plug 'zchee/deoplete-go', { 'for': 'go' }
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-" Plug 'flowtype/vim-flow'
-" Plug 'wokalski/autocomplete-flow'
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
+Plug 'othree/csscomplete.vim'
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'honza/vim-snippets'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'zchee/deoplete-go', { 'for': 'go' }
+" Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
@@ -74,10 +71,12 @@ Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
-" Plug 'briancollins/vim-jst'
 Plug 'elixir-lang/vim-elixir'
+Plug 'slashmili/alchemist.vim'
 
 Plug 'janza/vim-hackatime'
+
+Plug 'posva/vim-vue'
 
 call plug#end()
 
@@ -87,12 +86,18 @@ set background=dark
 
 " syntax sync minlines=256
 " set synmaxcol=256 " Syntax highlight max cols
-set so=999
+set scrolloff=999
 set modeline
-set modelines=4
-set bs=2		" allow backspacing over everything in insert mode
-set whichwrap+=<,>,h,l
+set backspace=2		" allow backspacing over everything in insert mode
+" set whichwrap+=<,>,h,l
 set nojoinspaces
+
+set nobackup
+set nowritebackup
+" set noswapfile
+set gdefault
+set hidden
+set undofile
 
 set ignorecase
 set smartcase
@@ -101,16 +106,13 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set noautoindent
-set showcmd
-set nostartofline
+" set showcmd
+" set nostartofline
 set clipboard+=unnamedplus
 set autowriteall
 set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set iskeyword-=.
-set gdefault
-set hidden
-set undofile
 set termguicolors
 let mapleader=","
 let g:mapleader=","
@@ -119,7 +121,6 @@ set foldmethod=manual
 
 set wildmode=list:longest
 set wildignore=*.o,*.obj,*~
-set wildignore+=*vim/backups*
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
 set wildignore+=vendor/rails/**
@@ -139,10 +140,6 @@ endif
 
 let g:gruvbox_sign_column = 'bg0'
 let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_italic = 1
-
-" set inccommand=nosplit
-
 colorscheme gruvbox
 
 let g:terminal_color_0  = '#282828'
@@ -180,39 +177,17 @@ map <leader>f :Neoformat<CR>
 
 let g:neoformat_enabled_javascript = ['prettiereslint', 'prettiersingle']
 
-function! s:neosnippet_complete()
-    " if neosnippet#expandable_or_jumpable()
-    "   return "\<Plug>(neosnippet_expand_or_jump)"
-    " endif
-    return "\<C-N>"
-endfunction
-
-imap <expr><TAB> <SID>neosnippet_complete()
-
-" let g:neosnippet#enable_snipmate_compatibility = 1
-
 command! -nargs=* Rg
       \ call fzf#vim#grep(
       \   'rg --column -S --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
       \   fzf#vim#with_preview('up:30%'), 1)
 
-xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 nmap ggv :execute "!git-view % " . line(".")<CR>
-
 
 let g:enable_bold_font = 1
 
 let g:neoterm_size = 13
-
-" augroup omnifuncs
-"   autocmd!
-"   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-"   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-"   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-"   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" augroup end
 
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 1
@@ -253,7 +228,9 @@ let g:airline_symbols.whitespace = ''
 nmap gm :LivedownToggle<CR>
 map '' ysiw'
 
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+noremap 0 ^
 
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
@@ -281,7 +258,9 @@ hi! link ALEWarningSign GruvboxYellowSign
 let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_install_global = 1
 
-autocmd FileType javascript set formatprg=eslint-fix-stdin
+autocmd FileType php LanguageClientStart
+autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
 " au BufNewFile,BufRead *.ejs set filetype=html
 
@@ -327,11 +306,9 @@ nnoremap <c-l> :Buffers<CR>
 nnoremap <c-t> :History<CR>
 nnoremap <c-g> :Commits<CR>
 
-
 " search for word under cursor
 nnoremap <c-d> :Rg <C-R><C-W><CR>
 
-map q gq
 map q gq
 map S s$
 nnoremap Y y$
@@ -353,7 +330,6 @@ nmap <silent> <leader>l :vsplit<CR>
 nmap <leader>/ :nohl<CR>
 noremap j gj
 noremap k gk
-cmap w!! :SudoWrite
 if has("user_commands")
     command! -bang -nargs=* -complete=file E e<bang> <args>
     command! -bang -nargs=* -complete=file W w<bang> <args>
@@ -370,34 +346,3 @@ cnoremap <C-E>      <End>
 nmap <leader>p :set paste!<BAR>set paste?<CR>
 vnoremap < <gv
 vnoremap > >gv
-
-
-" Transparent editing of gpg encrypted files.
-" By Wouter Hanegraaff
-augroup encrypted
-  au!
-
-  " First make sure nothing is written to ~/.viminfo while editing
-  " an encrypted file.
-  autocmd BufReadPre,FileReadPre *.gpg set viminfo=
-  " We don't want a various options which write unencrypted data to disk
-  autocmd BufReadPre,FileReadPre *.gpg set noswapfile noundofile nobackup
-
-  " Switch to binary mode to read the encrypted file
-  autocmd BufReadPre,FileReadPre *.gpg set bin
-  autocmd BufReadPre,FileReadPre *.gpg let ch_save = &ch|set ch=2
-  " (If you use tcsh, you may need to alter this line.)
-  autocmd BufReadPost,FileReadPost *.gpg '[,']!gpg --decrypt 2> /dev/null
-
-  " Switch to normal mode for editing
-  autocmd BufReadPost,FileReadPost *.gpg set nobin
-  autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
-  autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
-
-  " Convert all text to encrypted text before writing
-  " (If you use tcsh, you may need to alter this line.)
-  autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
-  " Undo the encryption so we are back in the normal text, directly
-  " after the file has been written.
-  autocmd BufWritePost,FileWritePost *.gpg u
-augroup END

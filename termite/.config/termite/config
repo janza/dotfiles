@@ -6,7 +6,7 @@ mouse_autohide = true
 allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
-clickable_url = true
+clickable_url = false
 font = Dina 10
 scrollback_lines = 10000
 search_wrap = true
@@ -64,14 +64,14 @@ color15 = #ebdbb2
 
 
 [hints]
-font = Inconsolata 12
+font = Dina 10
 # foreground = #ffffff
 # background = #000000
 # active_foreground = #000000
 # active_background = #ffffff
-#padding = 2
-#border = #3f3f3f
-#border_width = 0.5
+# padding = 2
+# border = #3f3f3f
+# border_width = 0.5
 # roundness = 0
 
 # vim: ft=dosini cms=#%s:

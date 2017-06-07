@@ -27,6 +27,4 @@ pandoc "${1:-/dev/stdin}" \
   --atx-headers \
   -t "$markdown_options" \
   --column=90 \
-  --normalize -R -s -S |
-  sed 's/^\s*//ig' |
-  cat -s
+  --normalize -R -s -S

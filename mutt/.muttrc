@@ -15,13 +15,6 @@ macro index <f1> '<change-folder>~/.mail/jjanzic/inbox<enter>'
 macro index <f2> '<change-folder>~/.mail/personal/inbox<enter>'
 macro index <f3> '<change-folder>~/.mail/insided/inbox<enter>'
 
-macro index,pager v1 '<change-folder>~/.mail/personal/inbox<enter>'
-macro index,pager v2 '<change-folder>~/.mail/personal/archive<enter>'
-macro index,pager v3 '<change-folder>~/.mail/insided/inbox<enter>'
-macro index,pager v4 '<change-folder>~/.mail/insided/archive<enter>'
-macro index,pager v5 '<change-folder>~/.mail/jjanzic/inbox<enter>'
-macro index,pager v6 '<change-folder>~/.mail/jjanzic/archive<enter>'
-
 macro compose \e5 "F pandoc -s -f markdown -t html --css ~/.mutt/pandoc.css | python -m premailer \ny^T^Utext/html; charset=utf8\n"
 
 set query_command="goobook query %s"
@@ -38,8 +31,6 @@ set smart_wrap
 set wrap=100
 set markers=no
 
-
-
 bind pager        j next-line
 bind pager        k previous-line
 bind pager        g top
@@ -47,8 +38,6 @@ bind pager        G bottom
 bind attach,index g first-entry
 bind attach,index G last-entry
 bind index,pager  R group-reply
-
-bind pager v view-attachments
 
 macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
@@ -98,10 +87,6 @@ set reverse_name
 set status_on_top
 set status_format       = "[%f %l] %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p drafts, ?%?t?%t +tagged, ?%?d?%d deleted, ?  %?b?%b unread messages. ?%>  %V  [%P]"
 
-# set sidebar_visible = yes
-# set sidebar_short_path = yes
-# set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
-
 ignore *
 unignore date subject user-agent posted-to
 unignore to cc bcc from
@@ -119,6 +104,7 @@ bind editor <space> noop
 
 
 bind index M    recall-message
+bind  index,pager G noop
 macro index,pager Gi "<change-folder>=../inbox<enter>" "Go to Inbox"
 macro index,pager Ga "<change-folder>=../archive<enter>" "Go to All Mail"
 
