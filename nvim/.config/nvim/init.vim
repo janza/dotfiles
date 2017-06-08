@@ -47,8 +47,10 @@ Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 Plug 'othree/csscomplete.vim'
+
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+Plug 'Shougo/echodoc.vim'
 
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'zchee/deoplete-go', { 'for': 'go' }
@@ -62,7 +64,7 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 
 Plug 'vim-airline/vim-airline'
 
-Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 
@@ -255,10 +257,17 @@ hi VertSplit ctermbg=NONE guibg=NONE
 hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
 
+let g:ale_linters = {'go': ['go build']}
+
 let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_install_global = 1
 
 autocmd FileType php LanguageClientStart
+let g:LanguageClient_autoStart = 1
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
