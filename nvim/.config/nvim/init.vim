@@ -1,4 +1,3 @@
-let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
 
 call plug#begin('~/.vim/plugged')
@@ -265,8 +264,14 @@ let g:user_emmet_install_global = 1
 autocmd FileType php LanguageClientStart
 let g:LanguageClient_autoStart = 1
 
+let g:LanguageClient_serverCommands = {
+      \ 'javascript': ['javascript-typescript-stdio'],
+      \ }
+
+
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
