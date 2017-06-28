@@ -16,12 +16,6 @@
 "start_remote_tmux"
     mod4 + backslash
 
-"open_dir_in_terminal"
-    mod4 + m
-
-"open_dir_in_terminal scratch"
-    mod4 + Return
-
 "pamixer --increase 5"
     XF86AudioRaiseVolume
 

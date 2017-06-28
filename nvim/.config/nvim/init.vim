@@ -75,6 +75,8 @@ Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 Plug 'elixir-lang/vim-elixir'
 Plug 'slashmili/alchemist.vim'
 
+Plug 'leafgarland/typescript-vim'
+
 Plug 'janza/vim-hackatime'
 
 Plug 'posva/vim-vue'
