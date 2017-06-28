@@ -23,7 +23,7 @@ bind editor <Tab> complete-query
 
 set editor=vim
 
-set my_tprot='t-prot -emtS -c --bigq -Mmutt --spass | sed "s/^\s*//ig" | cat -s'
+set my_tprot='t-prot -emtS -c --bigq -Mmutt --spass | grl | sed "s/^\s*//ig" | cat -s'
 set display_filter=$my_tprot
 
 set tilde
