@@ -9,20 +9,14 @@ Plug 'tpope/vim-eunuch' " SudoWrite
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-abolish'
 "
 Plug 'morhetz/gruvbox'
 Plug 'mattn/emmet-vim'
 
-" Plug 'yegappan/greplace'
-
 Plug 'alvan/vim-closetag'
-" Plug 'rliang/termedit.nvim'
 
 Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)', 'EasyAlign' ] }
-" Plug 'junegunn/vim-pseudocl'
-" Plug 'junegunn/vim-fnr'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'kassio/neoterm', { 'on': [ 'T', 'Tmap' ] }
@@ -47,13 +41,9 @@ Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 Plug 'othree/csscomplete.vim'
 
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
-Plug 'Shougo/echodoc.vim'
-
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'zchee/deoplete-go', { 'for': 'go' }
-" Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+" Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+" Plug 'Shougo/echodoc.vim'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
@@ -67,19 +57,19 @@ Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 
-Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
+Plug 'vim-scripts/php-annotations-syntax'
 
-Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'cespare/vim-toml'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
-Plug 'elixir-lang/vim-elixir'
-Plug 'slashmili/alchemist.vim'
+" Plug 'elixir-lang/vim-elixir'
+" Plug 'slashmili/alchemist.vim'
 
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 
 Plug 'janza/vim-hackatime'
 
-Plug 'posva/vim-vue'
+" Plug 'posva/vim-vue'
 
 call plug#end()
 
