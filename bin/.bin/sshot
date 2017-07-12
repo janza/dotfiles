@@ -1,2 +1,6 @@
 #!/usr/bin/env bash
-puush -c -a
+set -e
+# puush -c -a
+url=$(maim -s | curl -s -X POST 'https://puull.pw' -F "f=@-")
+echo -n "$url" | xsel -b
+notify-send "Copied to clipboard: $url"
