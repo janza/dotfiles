@@ -83,6 +83,7 @@ bindsym $mod+u exec emoji_picker
 bindsym $mod+o exec pass_fzf
 bindsym $mod+grave exec thunar
 bindsym $mod+n exec swaylock -c 000000dd
+bindsym $mod+s exec swayshoot
 
 bindsym grave exec termite
 bindsym $mod+backslash exec start_remote_tmux
