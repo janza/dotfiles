@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+set -eo pipefail
+
+swaygrab /tmp/sshot.png
+convert /tmp/sshot.png -crop "$(slop)" /tmp/sshot.png
+curl -s 'https://puull.pw' -F "f=@/tmp/sshot.png" | xsel -b
+notify-send "Copied to clipboard"
