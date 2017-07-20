@@ -23,6 +23,7 @@ Plug 'kassio/neoterm', { 'on': [ 'T', 'Tmap' ] }
 
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 
 Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
@@ -167,6 +168,8 @@ let g:neoformat_javascript_prettiersingle = {
       \ 'args': ['--single-quote'],
       \ }
 
+let g:jsx_ext_required = 0
+
 map <leader>f :Neoformat<CR>
 
 let g:neoformat_enabled_javascript = ['prettiereslint', 'prettiersingle']
@@ -254,7 +257,7 @@ let g:ale_linters = {'go': ['go build']}
 let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_install_global = 1
 
-autocmd FileType php LanguageClientStart
+" autocmd FileType php LanguageClientStart
 let g:LanguageClient_autoStart = 1
 
 let g:LanguageClient_serverCommands = {

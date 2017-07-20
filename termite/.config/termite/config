@@ -11,6 +11,7 @@ hyperlinks = true
 font = Dina 10
 scrollback_lines = 10000
 search_wrap = true
+client_side_decoration = false
 #icon_name = terminal
 #geometry = 640x480
 
