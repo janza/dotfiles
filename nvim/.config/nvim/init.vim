@@ -163,8 +163,8 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
 let g:go_fmt_fail_silently                = 1
-let g:neoformat_javascript_prettiersingle = {
-      \ 'exe': 'prettier',
+let g:neoformat_javascript_prettierstandard = {
+      \ 'exe': 'prettier-standard',
       \ 'args': ['--single-quote'],
       \ }
 
@@ -172,7 +172,7 @@ let g:jsx_ext_required = 0
 
 map <leader>f :Neoformat<CR>
 
-let g:neoformat_enabled_javascript = ['prettiereslint', 'prettiersingle']
+let g:neoformat_enabled_javascript = ['prettierstandard']
 
 command! -nargs=* Rg
       \ call fzf#vim#grep(
@@ -252,7 +252,12 @@ hi VertSplit ctermbg=NONE guibg=NONE
 hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
 
-let g:ale_linters = {'go': ['go build']}
+let g:ale_linters = {
+      \'go': ['go build'],
+      \'javascript.jsx': ['standard'],
+      \'javascript': ['standard'],
+      \}
+" let g:ale_fix_on_save = 1
 
 let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_install_global = 1
