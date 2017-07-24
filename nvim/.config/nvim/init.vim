@@ -40,7 +40,6 @@ Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
 Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
-Plug 'othree/csscomplete.vim'
 
 " Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
@@ -259,20 +258,23 @@ let g:ale_linters = {
       \}
 " let g:ale_fix_on_save = 1
 
+let g:ale_php_phpstan_level = 1
+
 let g:user_emmet_leader_key='<C-E>'
 let g:user_emmet_install_global = 1
 
 " autocmd FileType php LanguageClientStart
-let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_autoStart = 1
 
-let g:LanguageClient_serverCommands = {
-      \ 'javascript': ['javascript-typescript-stdio'],
-      \ }
+" let g:LanguageClient_serverCommands = {
+"       \ 'javascript': ['javascript-typescript-stdio'],
+"       \ }
 
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 " nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci

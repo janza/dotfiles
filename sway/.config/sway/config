@@ -109,7 +109,7 @@ new_window none
 # monitors
 
 set $mon_lap eDP-1
-set $mon_ext HDMI-1
+set $mon_ext HDMI-A-2
 
 workspace 10 output $mon_lap
 workspace 9 output $mon_lap
@@ -123,7 +123,7 @@ workspace 3 output $mon_ext
 workspace 4 output $mon_ext
 workspace 5 output $mon_ext
 
-output $mon_lap background ~/dotfiles/sway/wallpaper.jpg stretch
+output $mon_lap disable
 output $mon_ext background ~/dotfiles/sway/wallpaper.jpg stretch
 
 bar {
