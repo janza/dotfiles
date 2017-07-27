@@ -164,7 +164,8 @@ let g:deoplete#enable_smart_case = 1
 let g:go_fmt_fail_silently                = 1
 let g:neoformat_javascript_prettierstandard = {
       \ 'exe': 'prettier-standard',
-      \ 'args': ['--single-quote'],
+      \ 'stdin': 1,
+      \ 'args': ['--single-quote', '--stdin'],
       \ }
 
 let g:jsx_ext_required = 0
