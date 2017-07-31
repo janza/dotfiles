@@ -25,6 +25,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
+Plug 'leafgarland/typescript-vim'
+
 Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
 
@@ -35,7 +37,6 @@ Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 Plug 'AndrewRadev/splitjoin.vim'
 
-Plug 'sbdchd/neoformat', { 'on':  'Neoformat' }
 Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
 Plug 'roxma/nvim-completion-manager'
@@ -162,17 +163,9 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
 let g:go_fmt_fail_silently                = 1
-let g:neoformat_javascript_prettierstandard = {
-      \ 'exe': 'prettier-standard',
-      \ 'stdin': 1,
-      \ 'args': ['--single-quote', '--stdin'],
-      \ }
-
 let g:jsx_ext_required = 0
 
-map <leader>f :Neoformat<CR>
-
-let g:neoformat_enabled_javascript = ['prettierstandard']
+map <leader>f :ALEFix<CR>
 
 command! -nargs=* Rg
       \ call fzf#vim#grep(
@@ -257,6 +250,12 @@ let g:ale_linters = {
       \'javascript.jsx': ['standard'],
       \'javascript': ['standard'],
       \}
+
+let g:ale_fixers = {
+      \   'javascript': ['prettier_standard'],
+      \ }
+let g:ale_javascript_prettier_standard_executable = 'prettier-standard'
+let g:ale_javascript_prettier_standard_use_global = 1
 " let g:ale_fix_on_save = 1
 
 let g:ale_php_phpstan_level = 1
