@@ -19,7 +19,7 @@ Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)', 'EasyAlign' ] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'kassio/neoterm', { 'on': [ 'T', 'Tmap' ] }
+Plug 'kassio/neoterm'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
@@ -221,6 +221,11 @@ map '' ysiw'
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 noremap 0 ^
+
+nmap <Tab> :Ttoggle<CR>
+vnoremap <silent> <Tab> :TREPLSendSelection<CR>
+let g:neoterm_autoscroll = 1
+" nnoremap <silent> ,<Tab> :call neoterm#close()<cr>
 
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
