@@ -2,7 +2,7 @@ source ~/.zshrc.d/zsh_config.zsh
 
 export EDITOR=vim
 export VISUAL=vim
-export BROWSER=google-chrome
+export BROWSER=firefox-nightly
 export GOPATH=~/code/go
 
 export TERM="xterm-256color"
