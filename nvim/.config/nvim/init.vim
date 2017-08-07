@@ -215,6 +215,8 @@ let g:airline_symbols.branch     = '⎇'
 let g:airline_symbols.notexists  = ''
 let g:airline_symbols.whitespace = ''
 
+let g:airline#extensions#ale#enabled = 1
+
 nmap gm :LivedownToggle<CR>
 map '' ysiw'
 
@@ -249,11 +251,11 @@ hi VertSplit ctermbg=NONE guibg=NONE
 
 hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
+hi! link ALEInfoSign GruvboxBlueSign
 
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-let g:ale_set_highlights = 1
-let g:ale_set_signs = 1
-let g:ale_sign_column_always = 1
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⏺'
 
