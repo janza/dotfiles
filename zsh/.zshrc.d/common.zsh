@@ -12,7 +12,7 @@ export PATH="$HOME/.npm/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:./node_modules/.bin"
 
-export FZF_DEFAULT_COMMAND='rg --files'
+export FZF_DEFAULT_COMMAND='rg --files --hidden'
 export FZF_DEFAULT_OPTS='-s --no-mouse --inline-info'
 
 alias rg="rg -S"
