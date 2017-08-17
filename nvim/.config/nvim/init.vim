@@ -215,8 +215,6 @@ let g:airline_symbols.branch     = '⎇'
 let g:airline_symbols.notexists  = ''
 let g:airline_symbols.whitespace = ''
 
-let g:airline#extensions#ale#enabled = 1
-
 nmap gm :LivedownToggle<CR>
 map '' ysiw'
 
@@ -251,13 +249,9 @@ hi VertSplit ctermbg=NONE guibg=NONE
 
 hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
-hi! link ALEInfoSign GruvboxBlueSign
 
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⏺'
 
 let g:ale_linters = {
       \'go': ['gometalinter'],
@@ -268,6 +262,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
       \   'javascript': ['prettier_standard'],
       \   'go': ['goimports'],
+      \   'python': ['autopep8'],
       \ }
 
 let g:ale_javascript_prettier_standard_executable = 'prettier-standard'
