@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
+export floating=1
 exec myterm "$HOME/.bin/list_pass_entries"

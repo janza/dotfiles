@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 # cd ~/code/oos/kitty
 # exec konsole --separate "$@"
+
 if [[ "$#" == "0" ]]; then
-    exec termite
+    if [ -n "$floating" ]; then
+        exec termite --class "floating"
+    else
+        exec termite
+    fi
     # exec konsole --separate
 else
-    exec termite -e "$@"
+    if [ -n "$floating" ]; then
+        exec termite --class "floating" -e "$@"
+    else
+        exec termite -e "$@"
+    fi
     # exec konsole --separate -e $@
 fi

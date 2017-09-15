@@ -1,2 +1,3 @@
 #!/usr/bin/env sh
+export floating=1
 exec myterm 'bash -c "fzf < ~/.emoji | head -1 | cut -f 1 -d\  -z | xsel -i -b"'

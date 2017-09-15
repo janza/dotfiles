@@ -9,4 +9,11 @@ password_files=( "${password_files[@]%.gpg}" )
 
 password=$(printf '%s\n' "${password_files[@]}" | fzf)
 
+case $password in 2fa/*)
+  totpInput=$(echo "$password" | sed -e 's/\(2fa\/\|\/code\)//g')
+  out=$(totp "$totpInput")
+  echo "$out" | tr -d '\n' | xsel -b
+  exit 0
+esac
+
 pass show "$password" | tr -d '\n' | xsel -b

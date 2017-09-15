@@ -96,7 +96,7 @@ bindsym grave exec myterm
 
 set $mon_lap eDP1
 # set $mon_ext DP1
-set $mon_ext eDP1
+set $mon_ext HDMI1
 
 workspace 10 output $mon_lap
 workspace 9 output $mon_lap
@@ -117,6 +117,7 @@ for_window [class="(?i)file-roller"] floating enable , border none
 for_window [class="(?i)viewnior"] floating enable , border normal, move absolute center
 for_window [class="(?i)wicd"] floating enable , border normal
 for_window [class="Nautilus" instance="file_progress"] floating enable,move absolute center
+for_window [class="floating"] floating enable, move absolute 0px 0px
 for_window [window_role="unipicker"] floating enable, move absolute 0px 0px
 
 
