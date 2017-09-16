@@ -11,7 +11,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
 "
 Plug 'morhetz/gruvbox'
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', { 'for': ['html', 'twig'] }
 
 Plug 'alvan/vim-closetag'
 
@@ -30,9 +30,12 @@ Plug 'leafgarland/typescript-vim'
 Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
 
+Plug 'junegunn/gv.vim'
+Plug 'tweekmonster/startuptime.vim'
+
 Plug 'mhinz/vim-sayonara'
+Plug 'junegunn/vim-slash'
 Plug 'haya14busa/incsearch.vim'
-Plug 'wellle/targets.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 Plug 'AndrewRadev/splitjoin.vim'
@@ -155,7 +158,11 @@ let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
 
 let g:hackatime_InfluxHost                 = 'influx.jjanzic.com'
-let g:hackatime_BasicAuth                  = substitute(system('pass show influx.jjanzic.com'), "\n", "", "")
+function! Receive(job_id, data, event)
+  let g:hackatime_BasicAuth = a:data[0]
+endfunction
+call jobstart(['pass', 'show', 'influx.jjanzic.com'], {'on_stdout': 'Receive'})
+
 let g:neoterm_shell                       = "zsh"
 let g:coverage_json_path                  = 'coverage/json/coverage-final.json'
 
