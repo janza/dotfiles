@@ -179,6 +179,14 @@ command! -nargs=* Rg
       \   'rg --column -S --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
       \   fzf#vim#with_preview('up:30%'), 1)
 
+function! s:switch_dir(directory)
+  execute ':e' fnameescape(a:directory)
+  execute ':cd' fnameescape(a:directory)
+endfunction
+
+command! -nargs=* Fasd
+      \ call fzf#run({'source': 'fasd -l -d', 'sink': function('<sid>switch_dir')})
+
 nmap ga <Plug>(EasyAlign)
 nmap ggv :execute "!git-view % " . line(".")<CR>
 
@@ -341,6 +349,7 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 nnoremap <c-p> :Files<cr>
 nnoremap <c-o> :GFiles?<CR>
 nnoremap <c-l> :Buffers<CR>
+nnoremap <c-k> :Fasd<cr>
 nnoremap <c-t> :History<CR>
 nnoremap <c-g> :Commits<CR>
 
