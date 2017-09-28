@@ -262,8 +262,8 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ale_linters = {
       \'go': ['gometalinter'],
-      \'javascript.jsx': ['standard'],
-      \'javascript': ['standard'],
+      \'javascript.jsx': ['eslint'],
+      \'javascript': ['eslint'],
       \}
 
 let g:ale_fixers = {
