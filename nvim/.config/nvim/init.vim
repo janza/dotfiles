@@ -34,7 +34,7 @@ Plug 'junegunn/gv.vim'
 Plug 'tweekmonster/startuptime.vim'
 
 Plug 'mhinz/vim-sayonara'
-Plug 'junegunn/vim-slash'
+" Plug 'junegunn/vim-slash'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
@@ -50,12 +50,14 @@ Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 " Plug 'Shougo/echodoc.vim'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
-Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
+" Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
 
 Plug 'nelsyeung/twig.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 
 Plug 'vim-airline/vim-airline'
+
+Plug 'avakhov/vim-yaml'
 
 Plug 'fatih/vim-go'
 
@@ -71,7 +73,7 @@ Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
 " Plug 'leafgarland/typescript-vim'
 
-Plug 'janza/vim-hackatime'
+" Plug 'janza/vim-hackatime'
 
 " Plug 'posva/vim-vue'
 
