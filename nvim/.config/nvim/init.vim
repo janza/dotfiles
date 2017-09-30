@@ -57,8 +57,6 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 
 Plug 'vim-airline/vim-airline'
 
-Plug 'avakhov/vim-yaml'
-
 Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
