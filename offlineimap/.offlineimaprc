@@ -8,6 +8,7 @@ localrepository = personal-local
 remoterepository = personal-remote
 ; status_backend = sqlite
 postsynchook = notmuch new
+autorefresh = 0.5
 
 [Repository personal-local]
 type = Maildir
@@ -30,6 +31,7 @@ localrepository = insided-local
 remoterepository = insided-remote
 ; status_backend = sqlite
 postsynchook = notmuch new
+autorefresh = 0.5
 
 [Repository insided-local]
 type = Maildir
@@ -51,6 +53,7 @@ localrepository = jjanzic-local
 remoterepository = jjanzic-remote
 ; status_backend = sqlite
 postsynchook = notmuch new
+autorefresh = 0.5
 
 [Repository jjanzic-local]
 type = Maildir
