@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
 # puush -c -a
-url=$(maim -s | curl -s -X POST 'https://puull.pw' -F "f=@-")
+url=$(maim -s | curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw' )
 echo -n "$url" | xsel -b
 notify-send "Copied to clipboard: $url"
