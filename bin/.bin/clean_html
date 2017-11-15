@@ -17,6 +17,8 @@ for option in 'markdown_github
 +backtick_code_blocks
 +fenced_code_attributes
 +inline_code_attributes
++smart
++raw_html
 -implicit_figures'; do
   markdown_options="$markdown_options${option//[[:space:]]}"
 done
@@ -27,4 +29,4 @@ pandoc "${1:-/dev/stdin}" \
   --atx-headers \
   -t "$markdown_options" \
   --column=90 \
-  --normalize -R -s -S
+  -s
