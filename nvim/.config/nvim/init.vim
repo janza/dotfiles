@@ -45,12 +45,15 @@ Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 
+Plug 'jceb/vim-orgmode'
+
 " Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 " Plug 'Shougo/echodoc.vim'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
-" Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
+Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
+Plug 'stephpy/vim-yaml'
 
 Plug 'nelsyeung/twig.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -66,7 +69,7 @@ Plug 'vim-scripts/php-annotations-syntax'
 Plug 'cespare/vim-toml'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
-" Plug 'elixir-lang/vim-elixir'
+Plug 'elixir-lang/vim-elixir'
 " Plug 'slashmili/alchemist.vim'
 
 " Plug 'leafgarland/typescript-vim'

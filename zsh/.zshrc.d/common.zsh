@@ -43,6 +43,6 @@ function search_and_replace () {
     echo "Usage: search_and_replace TERM_TO_REPLACE TERM_TO_REPLACE_WITH"
     return 1
   fi
-  rg "$1" -l | xargs sed -i "s|$1|$2|g"
+  rg "$1" -l | xargs sed -E -i "s|$1|$2|g"
 }
 
