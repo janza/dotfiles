@@ -13,6 +13,9 @@
 
 # "kbdlight down"
 #     XF86KbdBrightnessDown
+#
+"mailsearch"
+    mod4 + y
 
 "start_remote_tmux"
     mod4 + backslash

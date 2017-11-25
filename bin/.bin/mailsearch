@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+export floating=1
+exec myterm 'bash -c "notmuch-mutt -r --prompt search && neomutt -R -f ~/.cache/notmuch/mutt/results"'
