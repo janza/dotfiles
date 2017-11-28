@@ -16,4 +16,6 @@ case $password in 2fa/*)
   exit 0
 esac
 
-pass show "$password" | tr -d '\n' | xsel -b
+if [[ "$password" != "" ]]; then
+  pass show "$password" | tr -d '\n' | xsel -b
+fi
