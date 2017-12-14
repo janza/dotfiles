@@ -18,7 +18,7 @@ for option in 'markdown_github
 +fenced_code_attributes
 +inline_code_attributes
 +smart
-+raw_html
+-raw_html
 -implicit_figures'; do
   markdown_options="$markdown_options${option//[[:space:]]}"
 done
