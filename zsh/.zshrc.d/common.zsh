@@ -8,7 +8,7 @@ export GOPATH=~/code/go
 export TERM="xterm-256color"
 
 export PATH="$HOME/.bin:$PATH"
-export PATH="$HOME/.npm/bin:$PATH"
+export PATH="$PATH:$HOME/.npm/bin"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:./node_modules/.bin"
 
