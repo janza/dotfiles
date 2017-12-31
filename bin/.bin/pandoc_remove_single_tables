@@ -1,38 +1,144 @@
 #!/usr/bin/env python
 
-import requests
-from pandocfilters import toJSONFilter, walk, Link
+# import requests
+from pandocfilters import walk, Table, Para, RawInline, stringify
+import json
+import sys
+import io
+import codecs
 
-grl_host = 'https://grl.jjanzic.com/'
+# grl_host = 'https://grl.jjanzic.com/'
+
+links = []
+
+
+def filter_table(key, value, fmt, meta, old_value=''):
+    if value[3]:
+        rows = [value[3]] + value[4]
+    else:
+        rows = value[4]
+    if not rows:
+        return []
+
+    if len(rows[0]) == 1:  # just one column in table, strip the table
+        return sum(
+            walk([row[0] for row in rows], behead, fmt, meta), [])
+
+    parsed_rows = []
+    for row in rows:
+        columns = [walk(col, behead, fmt, meta) for col in row]
+        if columns:
+            parsed_rows.append(columns)
+
+    # remove empty rows
+    parsed_rows = list(filter(lambda row: [col for col in row if col], parsed_rows))
+
+    columns_with_content = set()  # [False for col in rows[0]]
+    for row in parsed_rows:
+        for i, col in enumerate(row):
+            if stringify(col):
+                columns_with_content.add(i)
+
+    for i, row in enumerate(parsed_rows):
+        parsed_rows[i] = [row[col] for col in sorted(columns_with_content)]
+
+    if not parsed_rows:
+        return []
+
+    if len(parsed_rows[0]) == 1:  # just one column in table, strip the table
+        return sum(
+            walk([row[0] for row in parsed_rows], behead, fmt, meta), [])
+
+    return Table([], [], [], [], parsed_rows)
 
 
 def behead(key, value, fmt, meta):
+    global links
 
     # Remove tables with one cell
     if key == 'Table':
-        r = []
-        if len(value[3]) == 1:
-            r += walk(value[3][0], behead, fmt, meta)
-        if len(value[4]) == 1:
-            r += walk(value[4][0][0], behead, fmt, meta)
-        if len(value[4]) > 1 and len(value[4][0]) == 1:
-            r += sum([walk(i[0], behead, fmt, meta) for i in value[4]], [])
-        if r:
-            return r
+        return filter_table(key, value, fmt, meta)
+
+    # return None
+
+    if key == 'Plain':
+        # value = walk(value, behead, fmt, meta)
+        if not value:
+            # raise Exception('{}'.format(json.dumps(value, indent=2, separators=(',', ': '))))
+            return []
         return None
 
-    # Trim links using url shortener
-    # if key == 'Link':
-    #     if (len(value)) < 3:
-    #         return None
-    #     if (len(value[2])) != 2:
-    #         return None
-    #     url = value[2][0]
-    #     if (len(url) > 120):
-    #         r = requests.post(grl_host, data=url)
-    #         value[2][0] = grl_host + r.text
-    #         return Link(*value)
+    if key == 'Str':
+        if not value[0].replace('\u00a0', ''):
+            return []
+
+    # if key == 'Div':
+    #     return []
+
+    if key == 'HorizontalRule':
+        return []
+
+    if key == 'Image':
+        return value[1]
+
+    if key == 'Link':
+        if (len(value)) < 3:
+            return None
+        if (len(value[2])) != 2:
+            return None
+        parsed_children = walk(value[1], behead, fmt, meta)
+        if value[2][0][0] == '#':
+            return parsed_children
+
+        if value[2][0][0:4] != 'http' and value[2][0][0:4] != 'mail':
+            value[2][0] = 'http://{}'.format(value[2][0])
+
+        links.append(value[2][0])
+        if parsed_children:
+            return parsed_children + [RawInline(fmt, ' [{}]'.format(len(links)))]  # value[2][0]))]
+        return RawInline(fmt, value[2][0])
+
+
+def parse_input(source, fmt='markdown'):
+    doc = json.loads(source)
+
+    if 'meta' in doc:
+        meta = doc['meta']
+    elif doc[0]:  # old API
+        meta = doc[0]['unMeta']
+    else:
+        meta = {}
+    altered = doc
+    # for action in actions:
+    # raise Exception(doc)
+    altered = walk(altered, behead, fmt, meta)
+    number_of_digits = len(str(len(links)))
+    altered['blocks'] += [
+        Para([
+            RawInline(fmt, ('[{:>' + str(number_of_digits) + '}] {}\n').format(str(idx + 1), url)) for idx, url in enumerate(links)
+        ])
+    ]
+
+    c = json.dumps(altered)
+    return c
+
+    raise Exception(json.dumps(altered))
 
 
 if __name__ == "__main__":
-    toJSONFilter(behead)
+    try:
+        input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
+    except AttributeError:
+        # Python 2 does not have sys.stdin.buffer.
+        # REF: https://stackoverflow.com/questions/2467928/python-unicodeencode
+        input_stream = codecs.getreader("utf-8")(sys.stdin)
+
+    source = input_stream.read()
+    if len(sys.argv) > 1:
+        format = sys.argv[1]
+    else:
+        format = ""
+
+    sys.stdout.write(parse_input(source, format))
+
+    # toJSONFilter(add_links)
