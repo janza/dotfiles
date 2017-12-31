@@ -396,3 +396,8 @@ cnoremap <C-E>      <End>
 nmap <leader>p :set paste!<BAR>set paste?<CR>
 vnoremap < <gv
 vnoremap > >gv
+
+" read custom configuration
+if filereadable(".vim.custom")
+  so .vim.custom
+endif

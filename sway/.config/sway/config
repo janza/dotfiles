@@ -9,7 +9,7 @@ floating_modifier $mod
 # focus_on_window_activation none
 
 workspace_layout auto left
-layout auto left
+#layout auto left
 default_border pixel 1
 hide_edge_borders both
 
@@ -117,14 +117,14 @@ workspace 8 output $mon_lap
 workspace 7 output $mon_lap
 workspace 6 output $mon_lap
 
-workspace 1 output $mon_ext
-workspace 2 output $mon_ext
-workspace 3 output $mon_ext
-workspace 4 output $mon_ext
-workspace 5 output $mon_ext
+workspace 1 output $mon_lap
+workspace 2 output $mon_lap
+workspace 3 output $mon_lap
+workspace 4 output $mon_lap
+workspace 5 output $mon_lap
 
-output $mon_lap disable
-output $mon_ext background ~/dotfiles/sway/wallpaper.jpg stretch
+#output $mon_lap disable
+#output $mon_ext background ~/dotfiles/sway/wallpaper.jpg stretch
 
 bar {
     font pango:Dina 10
