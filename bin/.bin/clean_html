@@ -25,8 +25,7 @@ done
 
 pandoc "${1:-/dev/stdin}" \
   -f html \
-  --filter ~/.bin/pandoc_remove_single_tables \
+  --filter ~/.bin/pretty_html_mail \
   --atx-headers \
   -t "$markdown_options" \
-  --column=90 \
-  -s
+  -s | grl
