@@ -17,6 +17,15 @@
 "mailsearch"
     mod4 + y
 
+"mons -s"
+    mod4 + bracketright
+
+"mons -o"
+    mod4 + bracketleft
+
+"mons -e right"
+    mod4 + apostrophe
+
 "start_remote_tmux"
     mod4 + backslash
 

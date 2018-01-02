@@ -38,6 +38,8 @@ Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
+Plug 'jceb/vim-orgmode'
+
 Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
@@ -273,8 +275,9 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ale_linters = {
       \'go': ['gometalinter'],
-      \'javascript.jsx': ['eslint'],
-      \'javascript': ['eslint'],
+      \'javascript.jsx': ['standard'],
+      \'javascript': ['standard'],
+      \'sass': [],
       \}
 
 let g:ale_fixers = {
