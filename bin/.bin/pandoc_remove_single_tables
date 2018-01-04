@@ -71,6 +71,7 @@ def behead(key, value, fmt, meta):
     if key == 'Str':
         if not value[0].replace('\u00a0', ''):
             return []
+        return RawInline(fmt, value)
 
     # if key == 'Div':
     #     return []
