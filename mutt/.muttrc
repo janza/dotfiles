@@ -87,7 +87,7 @@ unignore to cc bcc from
 set edit_headers=yes
 
 hdr_order Date From To Cc
-alternative_order text/plain text/enriched text/html *
+alternative_order text/html text/enriched text/plain *
 auto_view text/html
 
 
