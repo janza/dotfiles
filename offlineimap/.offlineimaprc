@@ -13,15 +13,15 @@ autorefresh = 0.5
 [Repository personal-local]
 type = Maildir
 localfolders = ~/.mail/personal
-nametrans = lambda folder: {'archive': '[Gmail]/All Mail', 'inbox': 'INBOX', }.get(folder, folder)
+nametrans = gmail_trans_local
 
 [Repository personal-remote]
 type = Gmail
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteuser = josip.janzic@gmail.com
 remotepasseval = get_pass('josip.janzic@gmail.com')
-nametrans = lambda folder: {'[Gmail]/All Mail': 'archive', 'INBOX': 'inbox', }.get(folder, folder)
-folderfilter = lambda folder: folder in ['[Gmail]/All Mail', 'INBOX']
+nametrans = gmail_trans_remote
+folderfilter = gmail_filter
 auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN
 
 
@@ -36,15 +36,15 @@ autorefresh = 0.5
 [Repository insided-local]
 type = Maildir
 localfolders = ~/.mail/insided
-nametrans = lambda folder: {'archive': '[Gmail]/All Mail', 'inbox': 'INBOX', }.get(folder, folder)
+nametrans = gmail_trans_local
 
 [Repository insided-remote]
 type = Gmail
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteuser = josip.janzic@insided.com
 remotepasseval = get_pass('josip.janzic@insided.com')
-nametrans = lambda folder: {'[Gmail]/All Mail': 'archive', 'INBOX': 'inbox', }.get(folder, folder)
-folderfilter = lambda folder: folder in ['[Gmail]/All Mail', 'INBOX']
+nametrans = gmail_trans_remote
+folderfilter = gmail_filter
 auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN
 
 

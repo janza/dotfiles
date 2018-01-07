@@ -7,10 +7,14 @@ export GOPATH=~/code/go
 
 export TERM="xterm-256color"
 
-# export PATH="$HOME/.bin:$PATH"
-export PATH="$PATH:$HOME/.npm/bin"
-export PATH="$PATH:$GOPATH/bin"
-export PATH="$PATH:./node_modules/.bin"
+if [[ "$IS_PATH_SET" = "" ]]; then
+  export PATH="$HOME/.bin:$PATH"
+  export PATH="$PATH:$HOME/.npm/bin"
+  export PATH="$PATH:$GOPATH/bin"
+  export PATH="$PATH:./node_modules/.bin"
+  export IS_PATH_SET=1
+fi
+
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 export FZF_DEFAULT_OPTS='-s --no-mouse --inline-info'

@@ -28,4 +28,4 @@ pandoc "${1:-/dev/stdin}" \
   --filter ~/.bin/pretty_html_mail \
   --atx-headers \
   -t "$markdown_options" \
-  -s | grl
+  -s

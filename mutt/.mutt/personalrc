@@ -1,4 +1,7 @@
 set folder=$HOME/.mail/personal/inbox
+# set record = "$HOME/.mail/personal/sent"
+set postponed = "$HOME/.mail/personal/drafts"
+
 set mbox_type=Maildir
 set realname = 'Josip Janzic'
 set from = 'josip.janzic@gmail.com'
