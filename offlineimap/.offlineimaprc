@@ -58,7 +58,7 @@ autorefresh = 0.5
 [Repository jjanzic-local]
 type = Maildir
 localfolders = ~/.mail/jjanzic
-nametrans = lambda folder: {'inbox': 'INBOX', }.get(folder, folder)
+nametrans = lambda folder: {'inbox': 'INBOX', 'archive': 'Archive' }.get(folder, folder)
 
 [Repository jjanzic-remote]
 type = IMAP
@@ -66,6 +66,6 @@ sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remotehost = imap.mailfence.com
 remoteuser = josip@jjanzic.com
 remotepasseval = get_pass('josip@mailfence.com')
-nametrans = lambda folder: {'INBOX': 'inbox', }.get(folder, folder)
-folderfilter = lambda folder: folder in ['archive', 'INBOX']
+nametrans = lambda folder: {'INBOX': 'inbox', 'Archive': 'archive' }.get(folder, folder)
+folderfilter = lambda folder: folder.lower() in ['archive', 'inbox']
 auth_mechanisms = GSSAPI, CRAM-MD5, PLAIN, LOGIN

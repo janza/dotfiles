@@ -1,6 +1,7 @@
 set folder=$HOME/.mail/jjanzic/inbox
 # set record = "$HOME/.mail/jjanzic/sent"
 set postponed = "$HOME/.mail/jjanzic/drafts"
+set trash = "$HOME/.mail/jjanzic/archive"
 
 set mbox_type=Maildir
 set realname = 'Josip Janzic'
