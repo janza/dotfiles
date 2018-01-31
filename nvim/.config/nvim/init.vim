@@ -21,6 +21,7 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'kassio/neoterm'
 
+
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -49,13 +50,16 @@ Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 
 Plug 'jceb/vim-orgmode'
 
-" Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'matze/vim-move'
+
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 " Plug 'Shougo/echodoc.vim'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
-Plug 'stephpy/vim-yaml'
+" Plug 'stephpy/vim-yaml'
+Plug 'avakhov/vim-yaml'
 
 Plug 'nelsyeung/twig.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
