@@ -14,7 +14,12 @@ function ec2 () {
     ip=$private_ip
   fi
 
-  ssh -tA ssh.insided.com -- ssh -A -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$ip"
+  host=ssh.insided.com
+  if [[ "$AWS_DEFAULT_REGION" == "us-west-2" ]]; then
+    host="ssh-$AWS_DEFAULT_REGION.insided.com"
+  fi
+
+  ssh -tA "$host" -- ssh -A -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$ip"
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
