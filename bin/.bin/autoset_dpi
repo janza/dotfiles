@@ -1,8 +1,10 @@
 #!/usr/bin/env sh
-screen_width=$(i3-msg -t get_workspaces | jq '.[] | select (.focused == true).rect.width')
+workspaces=$(i3-msg -t get_workspaces )
+screen_width=$(echo $workspaces | jq '.[] | select (.focused == true).rect.width')
+screen_height=$(echo $workspaces | jq '.[] | select (.focused == true).rect.height')
 # res=$(get_current_monitor)
 
-if [ "$screen_width" == "2880" ]; then
+if [[ "$screen_width" == "2560" && "$screen_height" == "1578" ]]; then
     set_dpi_retina
 else
     set_dpi_normal
