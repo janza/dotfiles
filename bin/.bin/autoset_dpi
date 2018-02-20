@@ -4,7 +4,7 @@ screen_width=$(echo $workspaces | jq '.[] | select (.focused == true).rect.width
 screen_height=$(echo $workspaces | jq '.[] | select (.focused == true).rect.height')
 # res=$(get_current_monitor)
 
-if [[ "$screen_width" == "2560" && "$screen_height" == "1578" ]]; then
+if [[ "$screen_width" == "2560" && ("$screen_height" == "1578" || "$screen_height" == "1556") ]]; then
     set_dpi_retina
 else
     set_dpi_normal
