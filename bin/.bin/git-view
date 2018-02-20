@@ -1,1 +1,96 @@
-/home/josip/code/personal/git-remote-viewer/git-view
+#!/usr/bin/env bash
+set -e
+# set -x
+
+programname=$0
+
+services_list="bitbucket.org
+github.com
+gitlab.com"
+
+function usage {
+    echo "usage: $programname file [linenumber]"
+    exit 1
+}
+
+function absolute_dir_path {
+    dirname "$1"
+}
+
+function get_repo_root_path {
+    local current_path
+    current_path=$PWD
+    cd "$1" || exit
+
+    cd "$current_path" || exit
+}
+
+function get_repo_relative_file_path {
+    dir_path=$(absolute_dir_path "$1")
+    cd "$dir_path" || exit 1
+}
+
+function get_remote_repo_base_path {
+    git remote -v | grep -oP "$1"'.[[:alnum:]\.@\:/\-~]+' | cut -d ':' -f 2 | sed "s/$1.//" | sed 's/\.git//' | head -1
+}
+
+function get_remote_url {
+    local service
+    local repo
+    local branch
+    local file_path
+
+    service=$1
+    repo=$2
+    branch=$3
+    file_path=$4
+
+    if [ "$service" == "bitbucket.org" ]; then
+        echo "https://bitbucket.org/$repo/src/$branch/$file_path#-$line_number"
+    elif [ "$service" == "github.com" ]; then
+        echo "https://github.com/$repo/blob/$branch/$file_path#L$line_number"
+    elif [ "$service" == "gitlab.com" ]; then
+        echo "https://gitlab.com/$repo/blob/$branch/$file_path"
+    fi
+}
+
+function get_service_used {
+    for service in $services_list; do
+        if git remote -v | grep -q "$service"; then
+            echo "$service"
+            return
+        fi
+    done
+
+    >&2 echo "No supported service found ("${services_list//\n/}"), exiting ..."
+    exit 1
+}
+
+if [ "$#" -lt 1 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    usage
+    exit 1
+fi
+
+file_path=$(realpath "$1")
+line_number=${2:-"0"}
+
+dir_path=$(absolute_dir_path "$1")
+current_path=$PWD
+
+# cd "$dir_path" || exit
+repo_path=$(PWD=$dir_path git rev-parse --show-toplevel)
+branch=$(PWD=$dir_path git rev-parse --abbrev-ref HEAD)
+service=$(PWD=$dir_path get_service_used)
+remote_repo_path=$(get_remote_repo_base_path "$service")
+
+rel_path=$(echo "$file_path" | sed "s/$(echo "$repo_path" | sed 's/\//\\\//g')//" | cut -f 2- -d '/')
+
+url=$(get_remote_url "$service" "$remote_repo_path" "$branch" "$rel_path" "$line_number")
+
+if which open &>/dev/null; then
+    open "$url"
+elif [ "$BROWSER" != "" ]; then
+    $BROWSER "$url"
+else
+    xdg-open "$url"
+fi
