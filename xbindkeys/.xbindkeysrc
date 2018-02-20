@@ -2,18 +2,18 @@
     mod4 + s
     m:0x0 + c:107
 
-# "light -A 5 -p"
-#     XF86MonBrightnessUp
-#
-# "light -U 5 -p"
-#     XF86MonBrightnessDown
+"light -A 5 -p"
+    XF86MonBrightnessUp
 
-# "kbdlight up"
-#     XF86KbdBrightnessUp
+"light -U 5 -p"
+    XF86MonBrightnessDown
 
-# "kbdlight down"
-#     XF86KbdBrightnessDown
-#
+"kbdlight up"
+    XF86KbdBrightnessUp
+
+"kbdlight down"
+    XF86KbdBrightnessDown
+
 "mailsearch"
     mod4 + y
 
