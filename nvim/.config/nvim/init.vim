@@ -1,6 +1,7 @@
 let g:python3_host_prog = '/usr/bin/python3'
 
 call plug#begin('~/.vim/plugged')
+
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-fugitive'
@@ -11,11 +12,11 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
 "
 Plug 'morhetz/gruvbox'
-Plug 'mattn/emmet-vim', { 'for': ['html', 'twig'] }
+Plug 'mattn/emmet-vim'
 
 Plug 'alvan/vim-closetag'
 
-Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)', 'EasyAlign' ] }
+" Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)', 'EasyAlign' ] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
@@ -32,7 +33,7 @@ Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
 
 Plug 'junegunn/gv.vim'
-Plug 'tweekmonster/startuptime.vim'
+" Plug 'tweekmonster/startuptime.vim'
 
 Plug 'mhinz/vim-sayonara'
 " Plug 'junegunn/vim-slash'
@@ -45,15 +46,19 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
+Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
+Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+
 Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 
 Plug 'jceb/vim-orgmode'
 
-Plug 'matze/vim-move'
+" Plug 'matze/vim-move'
 
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 " Plug 'Shougo/echodoc.vim'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
@@ -70,12 +75,12 @@ Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 
-Plug 'vim-scripts/php-annotations-syntax'
+Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
-Plug 'cespare/vim-toml'
+" Plug 'cespare/vim-toml'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
-Plug 'elixir-lang/vim-elixir'
+" Plug 'elixir-lang/vim-elixir'
 " Plug 'slashmili/alchemist.vim'
 
 " Plug 'leafgarland/typescript-vim'
@@ -279,19 +284,25 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ale_linters = {
       \'go': ['gometalinter'],
-      \'javascript.jsx': ['standard'],
-      \'javascript': ['standard'],
+      \'javascript.jsx': ['eslint'],
+      \'javascript': ['eslint'],
       \'sass': [],
       \}
 
+let g:ale_php_phpcbf_executable = 'php-cs-fixer'
+
 let g:ale_fixers = {
-      \   'javascript': ['prettier_standard'],
+      \   'javascript': ['prettier_eslint'],
       \   'go': ['goimports'],
+      \   'php': ['phpcbf'],
       \   'python': ['autopep8'],
       \ }
 
 let g:ale_javascript_prettier_standard_executable = 'prettier-standard'
 let g:ale_javascript_prettier_standard_use_global = 1
+
+let g:ale_javascript_prettier_eslint_executable = 'prettier-eslint'
+let g:ale_javascript_prettier_eslint_use_global = 1
 
 let g:ale_go_goimports_executable = 'goimports'
 let g:ale_go_goimports_use_global = 1
@@ -304,16 +315,15 @@ let g:user_emmet_install_global = 1
 
 " autocmd FileType php LanguageClientStart
 " let g:LanguageClient_autoStart = 1
-" let g:LanguageClient_autoStart = 1
+let g:LanguageClient_autoStart = 1
 
-" let g:LanguageClient_serverCommands = {
-"       \ 'javascript': ['javascript-typescript-stdio'],
-"       \ }
+let g:LanguageClient_serverCommands = {
+      \ 'javascript': ['javascript-typescript-stdio'],
+      \ }
 
-
-" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 " nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
