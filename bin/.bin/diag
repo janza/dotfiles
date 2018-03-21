@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+blockdiag - -T png -o /tmp/diagram
+
+cat /tmp/diagram | upload_image
+
+rm /tmp/diagram
