@@ -85,8 +85,6 @@ Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
 " Plug 'leafgarland/typescript-vim'
 
-" Plug 'janza/vim-hackatime'
-
 " Plug 'posva/vim-vue'
 
 call plug#end()
@@ -170,12 +168,6 @@ let g:terminal_color_12 = '#83a598'
 let g:terminal_color_13 = '#d3869b'
 let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
-
-let g:hackatime_InfluxHost                 = 'influx.jjanzic.com'
-function! Receive(job_id, data, event)
-  let g:hackatime_BasicAuth = a:data[0]
-endfunction
-call jobstart(['pass', 'show', 'influx.jjanzic.com'], {'on_stdout': 'Receive'})
 
 let g:neoterm_shell                       = "zsh"
 let g:coverage_json_path                  = 'coverage/json/coverage-final.json'
