@@ -410,3 +410,28 @@ vnoremap > >gv
 if filereadable(".vim.custom")
   so .vim.custom
 endif
+
+let g:html_no_progress = 1
+let g:html_no_pre = 1
+com! -range=% HtmlPaste <line1>,<line2>call HtmlPaste()
+noremap <silent> gH :HtmlPaste<cr>
+fun! HtmlPaste() range
+  let localPaste = "~/.paste/"
+  let remotePublic = "jjanzic.com:sites/pub/paste"
+  let remotePasteUrl = "https://jjanzic.com/paste"
+
+  let pasteName = system("cat /dev/urandom | base64 | head -1 | tr -dc 'a-zA-Z0-9'| cut -c'1-10'")
+
+  set clipboard=""
+
+  exe ":".a:firstline.",".a:lastline."TOhtml"
+  exe ":w! " . localPaste . pasteName
+  exe ":close"
+  call system("rsync -a " . localPaste . " " . remotePublic)
+  redraw!
+
+  let @+ = remotePasteUrl . "/" . pasteName
+
+  set clipboard+=unnamedplus
+
+endfun
