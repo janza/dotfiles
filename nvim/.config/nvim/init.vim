@@ -27,12 +27,12 @@ Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 
-Plug 'svermeulen/vim-easyclip'
+" Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
 
-Plug 'junegunn/gv.vim'
+" Plug 'junegunn/gv.vim'
 " Plug 'tweekmonster/startuptime.vim'
 
 Plug 'mhinz/vim-sayonara'
@@ -40,40 +40,40 @@ Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
-Plug 'jceb/vim-orgmode'
+" Plug 'jceb/vim-orgmode'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
-Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
+" Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
-Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
-Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+" Plug 'autozimu/LanguageClient-neovim', {
+"       \ 'branch': 'next',
+"       \ 'do': 'bash install.sh',
+"       \ }
+" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
 Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 
-Plug 'jceb/vim-orgmode'
+" Plug 'jceb/vim-orgmode'
 
 " Plug 'matze/vim-move'
 
 " Plug 'Shougo/echodoc.vim'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
-Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
+" Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
 " Plug 'stephpy/vim-yaml'
-Plug 'avakhov/vim-yaml'
+" Plug 'avakhov/vim-yaml'
 
 Plug 'nelsyeung/twig.vim'
-Plug 'Glench/Vim-Jinja2-Syntax'
+" Plug 'Glench/Vim-Jinja2-Syntax'
 
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 
-Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
+" Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 
 Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
@@ -125,7 +125,7 @@ set iskeyword-=.
 set termguicolors
 let mapleader=","
 let g:mapleader=","
-set fillchars+=vert:│
+" set fillchars+=vert:│
 set foldmethod=manual
 
 set wildmode=list:longest
@@ -148,8 +148,12 @@ if has('nvim')
   set inccommand=nosplit  " substitution previews
 endif
 
+
 let g:gruvbox_sign_column = 'bg0'
 let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_improved_warnings = 1
+let g:gruvbox_improved_strings = 0
+let g:gruvbox_invert_selection = 1
 colorscheme gruvbox
 
 let g:terminal_color_0  = '#282828'
@@ -193,10 +197,7 @@ endfunction
 command! -nargs=* Fasd
       \ call fzf#run({'source': 'fasd -l -d', 'sink': function('<sid>switch_dir')})
 
-nmap ga <Plug>(EasyAlign)
 nmap ggv :execute "!git-view % " . line(".")<CR>
-
-let g:enable_bold_font = 1
 
 let g:neoterm_size = 13
 
@@ -206,19 +207,19 @@ let g:gitgutter_diff_args = '-w'
 
 let g:airline_left_sep  = ''
 let g:airline_right_sep = ''
-let g:airline_mode_map = {
-      \ '__' : '-',
-      \ 'n'  : 'N',
-      \ 'i'  : 'I',
-      \ 'R'  : 'R',
-      \ 'c'  : 'C',
-      \ 'v'  : 'V',
-      \ 'V'  : 'V',
-      \ '^V' : 'V',
-      \ 's'  : 'S',
-      \ 'S'  : 'S',
-      \ '^S' : 'S',
-      \ }
+" let g:airline_mode_map = {
+"       \ '__' : '-',
+"       \ 'n'  : 'N',
+"       \ 'i'  : 'I',
+"       \ 'R'  : 'R',
+"       \ 'c'  : 'C',
+"       \ 'v'  : 'V',
+"       \ 'V'  : 'V',
+"       \ '^V' : 'V',
+"       \ 's'  : 'S',
+"       \ 'S'  : 'S',
+"       \ '^S' : 'S',
+"       \ }
 
 " let g:airline_section_b = ''
 " let g:airline_section_x = ''
@@ -230,9 +231,9 @@ endif
 
 " unicode symbols
 let g:airline_symbols.crypt      = '🔒'
-let g:airline_symbols.linenr     = '¶'
+let g:airline_symbols.linenr     = ''
 let g:airline_symbols.maxlinenr  = ''
-let g:airline_symbols.branch     = '⎇'
+let g:airline_symbols.branch     = ''
 let g:airline_symbols.notexists  = ''
 let g:airline_symbols.whitespace = ''
 
@@ -243,8 +244,6 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 noremap 0 ^
 
-nmap <Tab> :Ttoggle<CR>
-vnoremap <silent> <Tab> :TREPLSendSelection<CR>
 let g:neoterm_autoscroll = 1
 " nnoremap <silent> ,<Tab> :call neoterm#close()<cr>
 
@@ -252,16 +251,13 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-nmap <leader>i :IstanbulHide<CR>:IstanbulShow<CR>
-
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>
 let test#strategy = "neovim"
 
-let g:EasyClipUseSubstituteDefaults = 1
-let g:EasyClipAutoFormat = 1
+" let g:EasyClipUseSubstituteDefaults = 1
+" let g:EasyClipAutoFormat = 1
 
-" nmap     <C-F> <Plug>CtrlSFPrompt
 nmap     <C-F> :Rg<space>
 
 nmap ge :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -270,9 +266,6 @@ hi VertSplit ctermbg=NONE guibg=NONE
 
 hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
-
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ale_linters = {
       \'go': ['gometalinter'],
@@ -286,7 +279,7 @@ let g:ale_php_phpcbf_executable = 'php-cs-fixer'
 let g:ale_fixers = {
       \   'javascript': ['prettier_eslint'],
       \   'go': ['goimports'],
-      \   'php': ['phpcbf'],
+      \   'php': ['php_cs_fixer'],
       \   'python': ['autopep8'],
       \ }
 
@@ -303,19 +296,11 @@ let g:ale_go_goimports_use_global = 1
 let g:ale_php_phpstan_level = 1
 
 let g:user_emmet_leader_key='<C-E>'
-let g:user_emmet_install_global = 1
-
-" autocmd FileType php LanguageClientStart
-" let g:LanguageClient_autoStart = 1
-let g:LanguageClient_autoStart = 1
+" let g:user_emmet_install_global = 1
 
 let g:LanguageClient_serverCommands = {
       \ 'javascript': ['javascript-typescript-stdio'],
       \ }
-
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
@@ -331,8 +316,8 @@ au FileType yaml setl sw=2 ts=2 sts=2 et
 au FileType htmldjango setl sw=2 ts=2 sts=2 et
 au FileType javascript setl sw=2 ts=2 sts=2 et
 au FileType make setl noet
-au BufNewFile,BufRead *.es6 setlocal ft=javascript
-au BufNewFile,BufRead *.tag setlocal ft=javascript
+" au BufNewFile,BufRead *.es6 setlocal ft=javascript
+" au BufNewFile,BufRead *.tag setlocal ft=javascript
 
 
 ""
@@ -354,8 +339,8 @@ nmap <silent> <A-h> :wincmd h<CR>
 nmap <silent> <A-l> :wincmd l<CR>
 
 
-" FZF stuff
-let g:fzf_commits_log_options = '--oneline --color=always --format="%C(auto)%h%d %C(black)%C(bold)%an %C(auto)%s %C(black)%C(bold)%cr"'
+" highlight word under cursor
+nmap <leader><leader> :set hls<CR>:let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'<CR>
 
 imap <c-x><c-k> <plug>(fzf-complete-word)
 nnoremap <c-p> :Files<cr>
