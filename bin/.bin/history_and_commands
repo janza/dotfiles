@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e
 
-# cat <(dmenu_path) <(cut -d ';' -f 2- < ~/.zhistory) | fzf --tiebreak=index --print-query --prompt='' | tail -1
-dmenu_path | fzf --tiebreak=index --print-query --prompt='' | tail -1 | tee $1
+prog=$(dmenu_path | fzf --reverse --sync --tiebreak=index --print-query --prompt='' | tail -1)
+echo $prog | tee $1

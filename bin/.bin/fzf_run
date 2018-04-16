@@ -4,7 +4,10 @@ set -e
 autoset_dpi
 
 cmd_file="/tmp/fzf_cmd_to_run"
-floating=1 myterm "history_and_commands ${cmd_file}"
-if [[ ! -z ${cmd_file} ]]; then
-    nohup /bin/sh > /dev/null < ${cmd_file} &
+if [[ ! -p $cmd_file ]]; then
+    rm -f $cmd_file
+    mkfifo $cmd_file
 fi
+
+floating=1 myterm "history_and_commands ${cmd_file}"
+nohup $(cat "$cmd_file") > /dev/null &

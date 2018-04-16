@@ -1,19 +1,30 @@
 #!/usr/bin/env bash
-# cd ~/code/oos/kitty
-# exec konsole --separate "$@"
+
+# if [[ "$#" == "0" ]]; then
+#     if [ -n "$floating" ]; then
+#         exec termite --class "floating"
+#     else
+#         exec termite
+#     fi
+# else
+#     if [ -n "$floating" ]; then
+#         exec termite --class "floating" -e "$@"
+#     else
+#         exec termite -e "$@"
+#     fi
+# fi
+
 
 if [[ "$#" == "0" ]]; then
     if [ -n "$floating" ]; then
-        exec termite --class "floating"
+        exec kitty -1 --class "floating"
     else
-        exec termite
+        exec kitty -1
     fi
-    # exec konsole --separate
 else
     if [ -n "$floating" ]; then
-        exec termite --class "floating" -e "$@"
+        exec kitty --single-instance --class "floating" $@
     else
-        exec termite -e "$@"
+        exec kitty --single-instance $@
     fi
-    # exec konsole --separate -e $@
 fi

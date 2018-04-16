@@ -3,7 +3,7 @@ xbindkeys &
 # xsetroot -cursor_name left_ptr &
 nitrogen --restore &
 clipit &
-compton --backend glx --vsync opengl &
+# compton --backend glx --vsync opengl &
 xset r rate 200 65 &
 setxkbmap -layout hr -variant us -option caps:escape  #  && xmodmap /home/josip/.en.map &
 # xss-lock -- /home/josip/.bin/ssaver &
