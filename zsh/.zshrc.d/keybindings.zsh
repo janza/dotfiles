@@ -1,5 +1,5 @@
 cd_fzf_exec() {
-  local dir=$(fasd -l -d | grep -v '/\.' | fzf)
+  local dir=$(fasd -l -d | grep -v '/\.' | fzf --reverse --height 20)
   if [[ -n $dir ]]; then
     cd $dir
   fi
