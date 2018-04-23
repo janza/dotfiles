@@ -32,11 +32,9 @@ Plug 'mxw/vim-jsx'
 " Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
 
-" Plug 'junegunn/gv.vim'
 " Plug 'tweekmonster/startuptime.vim'
 
 Plug 'mhinz/vim-sayonara'
-" Plug 'junegunn/vim-slash'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
@@ -44,7 +42,7 @@ Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 Plug 'AndrewRadev/splitjoin.vim'
 
-" Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
+Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
 " Plug 'autozimu/LanguageClient-neovim', {
 "       \ 'branch': 'next',
@@ -62,9 +60,6 @@ Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 " Plug 'Shougo/echodoc.vim'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
-" Plug 'pearofducks/ansible-vim', { 'for': 'ansible' }
-" Plug 'stephpy/vim-yaml'
-" Plug 'avakhov/vim-yaml'
 
 Plug 'nelsyeung/twig.vim'
 " Plug 'Glench/Vim-Jinja2-Syntax'
@@ -201,9 +196,10 @@ nmap ggv :execute "!git-view % " . line(".")<CR>
 
 let g:neoterm_size = 13
 
-let g:gitgutter_realtime = 0
+let g:gitgutter_realtime = 1
 let g:gitgutter_eager = 1
 let g:gitgutter_diff_args = '-w'
+let g:gitgutter_grep = 'rg'
 
 let g:airline_left_sep  = ''
 let g:airline_right_sep = ''
