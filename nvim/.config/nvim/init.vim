@@ -16,6 +16,7 @@ Plug 'mattn/emmet-vim'
 
 Plug 'alvan/vim-closetag'
 
+
 " Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)', 'EasyAlign' ] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
@@ -44,6 +45,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
+" Plug 'NLKNguyen/cloudformation-syntax.vim'
 " Plug 'autozimu/LanguageClient-neovim', {
 "       \ 'branch': 'next',
 "       \ 'do': 'bash install.sh',
@@ -64,7 +66,7 @@ Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 Plug 'nelsyeung/twig.vim'
 " Plug 'Glench/Vim-Jinja2-Syntax'
 
-" Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 
 " Plug 'fatih/vim-go'
 
@@ -169,6 +171,11 @@ let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
 
 let g:neoterm_shell                       = "zsh"
+let g:neoterm_size = 13
+let g:neoterm_autoscroll = 1
+let g:neoterm_autojump = 1
+let g:neoterm_default_mod = ':rightbelow'
+" nnoremap <silent> ,<Tab> :call neoterm#close()<cr>
 let g:coverage_json_path                  = 'coverage/json/coverage-final.json'
 
 let g:deoplete#enable_at_startup = 1
@@ -178,6 +185,8 @@ let g:deoplete#enable_smart_case = 1
 let g:jsx_ext_required = 0
 
 map <leader>f :ALEFix<CR>
+nmap <silent> <A-k> <Plug>(ale_previous_wrap)
+nmap <silent> <A-j> <Plug>(ale_next_wrap)
 
 command! -nargs=* Rg
       \ call fzf#vim#grep(
@@ -194,7 +203,6 @@ command! -nargs=* Fasd
 
 nmap ggv :execute "!git-view % " . line(".")<CR>
 
-let g:neoterm_size = 13
 
 let g:gitgutter_realtime = 1
 let g:gitgutter_eager = 1
@@ -240,8 +248,6 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 noremap 0 ^
 
-let g:neoterm_autoscroll = 1
-" nnoremap <silent> ,<Tab> :call neoterm#close()<cr>
 
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
@@ -329,8 +335,8 @@ nnoremap <leader>gl :Glog<cr>
 nnoremap <leader>gp :Git push<cr>
 nnoremap <leader>gs :Git status -sb<cr>
 
-nmap <silent> <A-k> :wincmd k<CR>
-nmap <silent> <A-j> :wincmd j<CR>
+" nmap <silent> <A-k> :wincmd k<CR>
+" nmap <silent> <A-j> :wincmd j<CR>
 nmap <silent> <A-h> :wincmd h<CR>
 nmap <silent> <A-l> :wincmd l<CR>
 
@@ -416,3 +422,53 @@ fun! HtmlPaste() range
   set clipboard+=unnamedplus
 
 endfun
+
+
+" cloudformation linter
+
+call ale#Set('cloudformation_cfnlint_executable', 'cfn-lint')
+
+function! CfnLintHandle(buffer, lines) abort
+    let l:output = []
+
+    for l:error in ale#util#FuzzyJSONDecode(a:lines, [])
+        if l:error.Level is# 'Error'
+            let l:type = 'E'
+        elseif l:error.Level is# 'Warning'
+            let l:type = 'W'
+        else
+            let l:type = 'I'
+        endif
+
+        call add(l:output, {
+        \   'lnum': l:error.Location.Start.LineNumber,
+        \   'col': l:error.Location.Start.ColumnNumber,
+        \   'end_lnum': l:error.Location.End.LineNumber,
+        \   'end_col': l:error.Location.End.ColumnNumber,
+        \   'text': l:error.Message,
+        \   'type': l:type,
+        \   'code': l:error.Rule.Id,
+        \})
+    endfor
+
+    return l:output
+endfunction
+
+function! CfnLintExe(buffer) abort
+    return ale#Var(a:buffer, 'cloudformation_cfnlint_executable')
+endfunction
+
+function! CfnLintCommand(buffer) abort
+    let l:cmd = ale#Escape(ale#Var(a:buffer, 'cloudformation_cfnlint_executable'))
+
+    let l:cmd .= ' --format json --template %t'
+
+    return l:cmd
+endfunction
+
+call ale#linter#Define('yaml', {
+\   'name': 'cfnlint',
+\   'executable_callback': 'CfnLintExe',
+\   'command_callback': 'CfnLintCommand',
+\   'callback': 'CfnLintHandle',
+\})
