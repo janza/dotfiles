@@ -16,24 +16,16 @@ Plug 'mattn/emmet-vim'
 
 Plug 'alvan/vim-closetag'
 
-
-" Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)', 'EasyAlign' ] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'kassio/neoterm'
 
-
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
-" Plug 'leafgarland/typescript-vim'
-
-" Plug 'svermeulen/vim-easyclip'
 Plug 'w0rp/ale'
-
-" Plug 'tweekmonster/startuptime.vim'
 
 Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
@@ -50,21 +42,13 @@ Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 "       \ 'branch': 'next',
 "       \ 'do': 'bash install.sh',
 "       \ }
-" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
-
-" Plug 'jceb/vim-orgmode'
-
-" Plug 'matze/vim-move'
-
-" Plug 'Shougo/echodoc.vim'
+" Plug 'roxma/nvim-completion-manager'
+" Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 
 Plug 'nelsyeung/twig.vim'
-" Plug 'Glench/Vim-Jinja2-Syntax'
 
 Plug 'vim-airline/vim-airline'
 
@@ -74,17 +58,11 @@ Plug 'vim-airline/vim-airline'
 
 Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
-" Plug 'cespare/vim-toml'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
 Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
-" Plug 'elixir-lang/vim-elixir'
-" Plug 'slashmili/alchemist.vim'
-
 " Plug 'leafgarland/typescript-vim'
-
-" Plug 'posva/vim-vue'
 
 call plug#end()
 
@@ -230,6 +208,7 @@ let g:airline_right_sep = ''
 " let g:airline_section_b = ''
 " let g:airline_section_x = ''
 " let g:airline_section_y = ''
+let g:airline#extensions#ale#enabled = 1
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -279,6 +258,11 @@ let g:ale_linters = {
       \}
 
 let g:ale_php_phpcbf_executable = 'php-cs-fixer'
+
+let g:ale_php_langserver_executable = globpath(&rtp,'vendor/felixfbecker/language-server/bin/php-language-server.php',1)
+let g:ale_php_langserver_use_global = 1
+
+nmap <leader>d :ALEGoToDefinition<CR>
 
 let g:ale_fixers = {
       \   'javascript': ['prettier_eslint'],
