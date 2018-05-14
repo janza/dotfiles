@@ -39,7 +39,7 @@ Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
-" Plug 'jceb/vim-orgmode'
+Plug 'jceb/vim-orgmode'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
@@ -76,6 +76,8 @@ Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
 " Plug 'cespare/vim-toml'
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
+
+Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
 " Plug 'elixir-lang/vim-elixir'
 " Plug 'slashmili/alchemist.vim'
