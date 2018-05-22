@@ -60,7 +60,7 @@ Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
-Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
 " Plug 'leafgarland/typescript-vim'
 
@@ -191,24 +191,26 @@ let g:gitgutter_grep = 'rg'
 
 let g:airline_left_sep  = ''
 let g:airline_right_sep = ''
-" let g:airline_mode_map = {
-"       \ '__' : '-',
-"       \ 'n'  : 'N',
-"       \ 'i'  : 'I',
-"       \ 'R'  : 'R',
-"       \ 'c'  : 'C',
-"       \ 'v'  : 'V',
-"       \ 'V'  : 'V',
-"       \ '^V' : 'V',
-"       \ 's'  : 'S',
-"       \ 'S'  : 'S',
-"       \ '^S' : 'S',
-"       \ }
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : 'N',
+      \ 'i'  : 'I',
+      \ 'R'  : 'R',
+      \ 'c'  : 'C',
+      \ 'v'  : 'V',
+      \ 'V'  : 'V',
+      \ '^V' : 'V',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ '^S' : 'S',
+      \ }
 
 " let g:airline_section_b = ''
 " let g:airline_section_x = ''
 " let g:airline_section_y = ''
 let g:airline#extensions#ale#enabled = 1
+let g:airline_section_b = '%-0.10{getcwd()}'
+let g:airline_section_c = '%t'
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
