@@ -1,30 +1,30 @@
 #!/usr/bin/env bash
 
-# if [[ "$#" == "0" ]]; then
-#     if [ -n "$floating" ]; then
-#         exec termite --class "floating"
-#     else
-#         exec termite
-#     fi
-# else
-#     if [ -n "$floating" ]; then
-#         exec termite --class "floating" -e "$@"
-#     else
-#         exec termite -e "$@"
-#     fi
-# fi
-
-
 if [[ "$#" == "0" ]]; then
     if [ -n "$floating" ]; then
-        exec kitty -1 --class "floating"
+        exec termite --class "floating"
     else
-        exec kitty -1
+        exec termite
     fi
 else
     if [ -n "$floating" ]; then
-        exec kitty --single-instance --class "floating" $@
+        exec termite --class "floating" -e "$@"
     else
-        exec kitty --single-instance $@
+        exec termite -e "$@"
     fi
 fi
+
+
+# if [[ "$#" == "0" ]]; then
+#     if [ -n "$floating" ]; then
+#         exec kitty -1 --class "floating"
+#     else
+#         exec kitty -1
+#     fi
+# else
+#     if [ -n "$floating" ]; then
+#         exec kitty --single-instance --class "floating" $@
+#     else
+#         exec kitty --single-instance $@
+#     fi
+# fi
