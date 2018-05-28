@@ -56,8 +56,8 @@ my_hdr X-Face: 2.@)Bj+UtRj:iQzX:/=pFO\\r-S.[zlWJ851S*RE9e%S(!Uwa[8.\#(U\;v\\?VHu
 
 set index_format='%<[y?%<[m?%<[d?%[%H:%M ]&%[%d %a]>&%[%b %d]>&%[%m/%y ]> %-20.20F %s'
 
-# set sort=threads
-set sort=reverse-date-received
+set sort=threads
+# set sort=reverse-date-received
 set sort_aux=reverse-last-date-received
 
 set fast_reply=yes
