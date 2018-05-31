@@ -281,14 +281,7 @@ let g:ale_go_goimports_executable = 'goimports'
 let g:ale_go_goimports_use_global = 1
 " let g:ale_fix_on_save = 1
 
-let g:ale_php_phpstan_level = 1
-
 let g:user_emmet_leader_key='<C-E>'
-" let g:user_emmet_install_global = 1
-
-let g:LanguageClient_serverCommands = {
-      \ 'javascript': ['javascript-typescript-stdio'],
-      \ }
 
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
