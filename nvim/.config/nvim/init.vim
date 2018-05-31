@@ -45,6 +45,7 @@ Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
 " Plug 'roxma/nvim-completion-manager'
 " Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
+Plug 'posva/vim-vue'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 
@@ -252,17 +253,14 @@ hi VertSplit ctermbg=NONE guibg=NONE
 hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
 
+" let g:ale_completion_enabled = 1
+
 let g:ale_linters = {
       \'go': ['gometalinter'],
       \'javascript.jsx': ['eslint'],
       \'javascript': ['eslint'],
       \'sass': [],
       \}
-
-let g:ale_php_phpcbf_executable = 'php-cs-fixer'
-
-let g:ale_php_langserver_executable = globpath(&rtp,'vendor/felixfbecker/language-server/bin/php-language-server.php',1)
-let g:ale_php_langserver_use_global = 1
 
 nmap <leader>d :ALEGoToDefinition<CR>
 
