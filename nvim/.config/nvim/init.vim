@@ -270,6 +270,7 @@ let g:ale_fixers = {
       \   'php': ['php_cs_fixer'],
       \   'python': ['autopep8'],
       \ }
+let g:ale_php_phpmd_ruleset = '/home/josip/.phpmd.xml'
 
 let g:ale_javascript_prettier_standard_executable = 'prettier-standard'
 let g:ale_javascript_prettier_standard_use_global = 1
