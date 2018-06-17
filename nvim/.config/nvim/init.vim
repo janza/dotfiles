@@ -37,11 +37,15 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
 " Plug 'NLKNguyen/cloudformation-syntax.vim'
 " Plug 'autozimu/LanguageClient-neovim', {
 "       \ 'branch': 'next',
 "       \ 'do': 'bash install.sh',
 "       \ }
+
+" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
 " Plug 'roxma/nvim-completion-manager'
 " Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
@@ -60,8 +64,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
-
-" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
 " Plug 'leafgarland/typescript-vim'
 
@@ -253,6 +255,15 @@ hi VertSplit ctermbg=NONE guibg=NONE
 hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
 
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ }
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
 " let g:ale_completion_enabled = 1
 
 let g:ale_linters = {
@@ -298,6 +309,7 @@ au FileType yaml setl sw=2 ts=2 sts=2 et
 au FileType htmldjango setl sw=2 ts=2 sts=2 et
 au FileType javascript setl sw=2 ts=2 sts=2 et
 au FileType make setl noet
+au FileType mail setl fo+=aw
 " au BufNewFile,BufRead *.es6 setlocal ft=javascript
 " au BufNewFile,BufRead *.tag setlocal ft=javascript
 
@@ -372,6 +384,8 @@ cnoremap <C-E>      <End>
 nmap <leader>p :set paste!<BAR>set paste?<CR>
 vnoremap < <gv
 vnoremap > >gv
+
+nmap <leader>j :set ft=json<BAR>%!jq .<CR>
 
 " read custom configuration
 if filereadable(".vim.custom")
