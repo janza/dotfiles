@@ -14,5 +14,6 @@ nm-applet &
 
 # unclutter &
 xsetroot -cursor_name left_ptr &
+kdeconnect-indicator &
 
 # eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
