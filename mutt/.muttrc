@@ -75,7 +75,12 @@ unset record
 set reply_to
 set reverse_name
 
-set status_on_top
+unset help
+unset hide_thread_subject
+# set pager_index_lines = 10
+set pager_stop
+set pager_context = 5
+# set status_on_top
 set status_format       = "%f %l %?M?%M/?%m Mails %?n?%n new, ?%?u?%u unread, ?%?p?%p drafts, ?%?t?%t +tagged, ?%?d?%d deleted, ?  %?n?%n unread messages. ?%> %V"
 
 unset suspend
