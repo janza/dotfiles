@@ -32,7 +32,7 @@ alias drm="docker rm -f"
 alias dim="docker images"
 alias o="xdg-open"
 alias open="xdg-open"
-alias y="yaourt"
+alias y="yay"
 alias git='hub'
 alias mosh='mosh --bind-server=any'
 alias ti='tig --all'
