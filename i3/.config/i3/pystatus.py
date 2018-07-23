@@ -29,22 +29,22 @@ status.register("uptime")
 
 # This would look like this:
 # Discharging 6h:51m
-status.register(
-    "battery",
-    battery_ident='BAT1',
-    format="{status}{percentage:.0f}%",
-    alert=False,
-    full_color='#ffffff',
-    charging_color='#ffffff',
-    status={
-        "DIS": "<",
-        "CHR": ">",
-        "FULL": "",
-    }, )
+# status.register(
+#     "battery",
+#     battery_ident='BAT1',
+#     format="{status}{percentage:.0f}%",
+#     alert=False,
+#     full_color='#ffffff',
+#     charging_color='#ffffff',
+#     status={
+#         "DIS": "<",
+#         "CHR": ">",
+#         "FULL": "",
+#     }, )
 status.register(
     "battery",
     battery_ident='BAT0',
-    format="{status}{percentage:.0f}%",
+    format="Bat: {status}{percentage:.0f}%",
     full_color='#ffffff',
     charging_color='#ffffff',
     alert=False,
@@ -68,7 +68,7 @@ status.register(
 # Note: requires both netifaces and basiciw (for essid and quality)
 status.register(
     "network",
-    interface="wlan0",
+    interface="wlp3s0",
     dynamic_color=False,
     color_up="#ffffff",
     color_down="#ffffff",
@@ -80,7 +80,7 @@ status.register(
 status.register(
     "disk",
     path="/",
-    format="{avail}G", )
+    format="Disk: {avail}G", )
 
 # Shows pulseaudio default sink volume
 #
