@@ -15,8 +15,9 @@
     cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     appraise = !/home/josip/.go/bin/git-appraise
+	meld = !/home/josip/.bin/git-meld.pl
 [diff]
-    tool = meld
+	tool = meld
 
 [color "branch"]
     current = yellow reverse
