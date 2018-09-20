@@ -18,10 +18,8 @@ zstyle ':prezto:load' pmodule \
            'spectrum' \
            'utility' \
            'completion' \
-           'ssh' \
-           'fasd' \
            'git' \
-           'syntax-highlighting' \
+           'fasd' \
            'python'
 
 # Set the key mapping style to 'emacs' or 'vi'.

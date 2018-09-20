@@ -5,6 +5,8 @@ export VISUAL=vim
 export BROWSER=/home/josip/.bin/brwsr
 export GOPATH=~/code/go
 
+export XDG_CURRENT_DESKTOP=kde
+
 export TERM="xterm-256color"
 
 if [[ "$IS_PATH_SET" = "" ]]; then
@@ -13,6 +15,12 @@ if [[ "$IS_PATH_SET" = "" ]]; then
   export PATH="$PATH:$GOPATH/bin"
   export PATH="$PATH:./node_modules/.bin"
   export IS_PATH_SET=1
+fi
+
+if [[ "$SWAYSOCK" != "" ]]; then
+  export QT_QPA_PLATFORM=wayland-egl
+  export SDL_VIDEODRIVER=wayland
+  export CLUTTER_BACKEND=wayland
 fi
 
 
@@ -50,3 +58,4 @@ function search_and_replace () {
   rg "$1" -l | xargs sed -E -i "s|$1|$2|g"
 }
 
+export MOZ_USE_XINPUT2=1 # firefox smooth scroll

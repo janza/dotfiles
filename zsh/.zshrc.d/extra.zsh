@@ -31,4 +31,8 @@ function prs () {
   curl -s -u "$(pass show bitbucket_api)" "https://api.bitbucket.org/2.0/repositories/insided/$repo/pullrequests" | jq '.values[] | (.author.display_name |split(" ")[0][0:7?]) + "\t" + .title + "\t" + .links.html.href' -r | fzf --delimiter="\t" --with-nth 1,2 | awk -F'\t' '{print $(NF)}'
 }
 
+[ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
+
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
+
+
