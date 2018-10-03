@@ -23,7 +23,7 @@
 "xrandr --output eDP1 --mode 1680x1050 --output DP2 --off --output DP1 --off"
     mod4 + bracketleft
 
-"mons -e right"
+"xrandr --output eDP1 --mode 1680x1050 --output DP1 --auto --above eDP1 --output DP2 --auto --above eDP1"
     mod4 + apostrophe
 
 "start_remote_tmux"
