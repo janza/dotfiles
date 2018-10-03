@@ -20,7 +20,7 @@
 "mons -s"
     mod4 + bracketright
 
-"mons -o"
+"xrandr --output eDP1 --mode 1680x1050 --output DP2 --off --output DP1 --off"
     mod4 + bracketleft
 
 "mons -e right"
@@ -62,5 +62,5 @@
 "systemctl suspend"
     Mod4 + XF86PowerOff
 
-"thunar" # thunar
+"dolphin"
     Mod4 + grave
