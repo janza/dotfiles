@@ -53,6 +53,9 @@
 "emoji_picker"
     Mod4 + u
 
+"jira_sprint_fzf"
+    Mod4 + i
+
 "pass_fzf"
     Mod4 + o
 
@@ -62,5 +65,5 @@
 "systemctl suspend"
     Mod4 + XF86PowerOff
 
-"dolphin"
+"thunar"
     Mod4 + grave

@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 
-autoset_dpi
+# if [[ "$SWAYSOCK" == "" ]]; then
+#     autoset_dpi
+# fi
 
 cmd_file="/tmp/fzf_cmd_to_run"
 if [[ ! -p $cmd_file ]]; then
