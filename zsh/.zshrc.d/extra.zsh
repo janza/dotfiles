@@ -35,4 +35,4 @@ function prs () {
 
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
 
-
+source /usr/bin/aws_zsh_completer.sh
