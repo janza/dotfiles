@@ -1,9 +1,10 @@
 #!/bin/bash
+dunst &
 xbindkeys &
 # xsetroot -cursor_name left_ptr &
-nitrogen --restore &
 clipit &
 compton -b --backend glx --vsync opengl &
+nitrogen --restore &
 xset r rate 200 65 &
 setxkbmap -layout hr -variant us -option caps:escape  #  && xmodmap /home/josip/.en.map &
 # xss-lock -- /home/josip/.bin/ssaver &

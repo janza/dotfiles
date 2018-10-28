@@ -12,14 +12,16 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
 "
 Plug 'morhetz/gruvbox'
-Plug 'mattn/emmet-vim'
+" Plug 'mattn/emmet-vim'
 
-Plug 'alvan/vim-closetag'
+" Plug 'alvan/vim-closetag'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
+" Plug 'Yggdroot/indentLine'
 Plug 'kassio/neoterm'
+" Plug 'kristijanhusak/vim-carbon-now-sh'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
@@ -31,21 +33,20 @@ Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
-Plug 'jceb/vim-orgmode'
+" Plug 'tpope/vim-speeddating'
+" Plug 'jceb/vim-orgmode'
+
 
 Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" Plug 'NLKNguyen/cloudformation-syntax.vim'
-" Plug 'autozimu/LanguageClient-neovim', {
-"       \ 'branch': 'next',
-"       \ 'do': 'bash install.sh',
-"       \ }
-
-" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+" Plug 'google/vim-maktaba'
+" Plug 'google/vim-coverage'
+" Plug 'google/vim-syncopate'
+" Plug 'google/vim-glaive'
+" Optional: Enable coverage's default mappings on the <Leader>C prefix.
+" Glaive coverage plugin[mappings]
 
 " Plug 'roxma/nvim-completion-manager'
 " Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
@@ -59,15 +60,24 @@ Plug 'vim-airline/vim-airline'
 
 " Plug 'fatih/vim-go'
 
-" Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
+Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 
 Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
 
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'leafgarland/typescript-vim'
 
 call plug#end()
+
+silent! call glaive#Install()
 
 let g:netrw_dirhistmax = 0
 
@@ -255,11 +265,6 @@ hi VertSplit ctermbg=NONE guibg=NONE
 hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
 
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio'],
-    \ }
-
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
@@ -277,11 +282,13 @@ nmap <leader>d :ALEGoToDefinition<CR>
 
 let g:ale_fixers = {
       \   'javascript': ['prettier_eslint'],
+      \   'javascript.jsx': ['prettier_eslint'],
       \   'go': ['goimports'],
       \   'php': ['php_cs_fixer'],
       \   'python': ['autopep8'],
       \ }
 let g:ale_php_phpmd_ruleset = '/home/josip/.phpmd.xml'
+let g:ale_lint_on_text_changed = 'never'
 
 let g:ale_javascript_prettier_standard_executable = 'prettier-standard'
 let g:ale_javascript_prettier_standard_use_global = 1
@@ -309,7 +316,6 @@ au FileType yaml setl sw=2 ts=2 sts=2 et
 au FileType htmldjango setl sw=2 ts=2 sts=2 et
 au FileType javascript setl sw=2 ts=2 sts=2 et
 au FileType make setl noet
-au FileType mail setl fo+=aw
 " au BufNewFile,BufRead *.es6 setlocal ft=javascript
 " au BufNewFile,BufRead *.tag setlocal ft=javascript
 

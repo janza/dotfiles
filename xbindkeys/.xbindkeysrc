@@ -14,7 +14,7 @@
 "kbdlight down"
     XF86KbdBrightnessDown
 
-"mailsearch"
+"view_pr"
     mod4 + y
 
 "mons -s"
