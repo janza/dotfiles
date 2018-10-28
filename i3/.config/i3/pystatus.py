@@ -1,20 +1,21 @@
 from i3pystatus import Status
 from i3pystatus.mail.maildir import MaildirMail
 from i3pystatus.updates import pacman
+from i3pystatus.calendar.khal_calendar import Khal
 
-status = Status()
+status = Status(logfile='/home/josip/.i3pystatus.log',)
 
 # Displays clock like this:
 # Tue 30 Jul 11:59:46 PM KW31
 #                          ^-- calendar week
 status.register(
     "clock",
-    format="%a %-d %b %H:%M", )
+    format="%-d %b %H:%M", )
 
 # Shows the average load of the last minute and the last 5 minutes
 # (the default value for format is used)
-status.register("load")
-status.register("uptime")
+# status.register("load")
+# status.register("uptime")
 
 # Shows your CPU temperature, if you have a Intel CPU
 # status.register("temp",
@@ -44,7 +45,7 @@ status.register("uptime")
 status.register(
     "battery",
     battery_ident='BAT0',
-    format="Bat: {status}{percentage:.0f}%",
+    format="B{status}{percentage:.0f}%",
     full_color='#ffffff',
     charging_color='#ffffff',
     alert=False,
@@ -53,6 +54,7 @@ status.register(
         "CHR": ">",
         "FULL": "",
     }, )
+
 # Shows the address and up/down state of eth0. If it is up the address is shown in
 # green (the default value of color_up) and the CIDR-address is shown
 # (i.e. 10.10.10.42/24).
@@ -72,22 +74,20 @@ status.register(
     dynamic_color=False,
     color_up="#ffffff",
     color_down="#ffffff",
-    format_up="{essid} {v4}", )
+    format_up="W {essid}", )
 
 # Shows disk usage of /
 # Format:
 # 42/128G [86G]
-status.register(
-    "disk",
-    path="/",
-    format="Disk: {avail}G", )
+# status.register(
+#     "disk",
+#     path="/",
+#     format="Disk: {avail}G", )
 
 # Shows pulseaudio default sink volume
 #
 # Note: requires libpulseaudio from PyPI
-status.register(
-    "pulseaudio",
-    format="Vol: {volume}", )
+status.register("pulseaudio", format="V {volume}", )
 
 # Shows mpd status
 # Format:
@@ -104,15 +104,15 @@ status.register(
 for maildir in ['jjanzic', 'personal', 'insided']:
     status.register(
         "mail",
-        on_leftclick='termite -e mutt',
+        on_leftclick='termite -e neomutt',
         backends=[
             MaildirMail(
                 account=maildir,
                 directory="/home/josip/.mail/{maildir}/inbox".format(
                     maildir=maildir))
         ],
-        format="{account} {current_unread}",
-        format_plural="{account} {current_unread}",
+        format=maildir[0] + " {current_unread}",
+        format_plural=maildir[0] + " {current_unread}",
         color_unread="#00ff00")
 
 # status.register("external_ip")
@@ -122,8 +122,21 @@ for maildir in ['jjanzic', 'personal', 'insided']:
 
 # status.register(
 #     "updates",
-#     format="Updates: {count}",
+#     format="U: {count}",
 #     format_no_updates="No updates",
+#     color='#ffffff',
 #     backends=[pacman.Pacman()])
+
+status.register("calendar",
+                # urgent_seconds=600000,
+                dynamic_color=False,
+                interval=1,
+                format="{title}: {humanize_remaining}",
+                update_interval=60,
+                skip_all_day=True,
+                skip_regex=r'Standup',
+                urgent_blink=False,
+                on_leftclick='notify-send -i task-due Calendar "$(khal list --notstarted now)"',
+                backend=Khal(config_path='/home/josip/.config/khal/config'))
 
 status.run()
