@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+url=$(echo "$1" | grep -Eo 'https://bitbucket[^ ]+' | awk -F'/' '{print "https://api.bitbucket.org/2.0/repositories/insided/" $5 "/pullrequests/" $7 "/approve"}')
+curl -sL -XPOST -u "$(pass show bitbucket_api)" "$url"

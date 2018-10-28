@@ -5,8 +5,11 @@ jq < /tmp/bitbucket_prs '.values[] | (.source.repository.name) + "|" + (.author.
     column -t -s"|" | \
     fzf --ansi --no-sort --reverse -d "\t" --with-nth 1 \
         --preview 'bat --color always --wrap character --theme "OneHalfDark" -p /tmp/bitbucket_prs_$(echo {} | awk -F"'"\t"'" '"'"'{print $(NF)}'"'"')' \
-        --preview-window "right:70%" \
-        --bind 'ctrl-n:preview-down,ctrl-m:preview-up,tab:toggle-preview,enter:accept'
+        --preview-window "right:70%:wrap" \
+        --bind 'ctrl-alt-j:preview-down' \
+        --bind 'ctrl-alt-k:preview-up' \
+        --bind 'tab:toggle-preview' \
+        --bind 'enter:accept,ctrl-o:execute(approvepr $(echo {} | awk -F"'"\t"'" '"'"'{print $2}'"'"'))'
 )
 if [[ "$url" == "" ]]; then
     exit 1
