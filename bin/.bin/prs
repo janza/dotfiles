@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -e
+url=$(
+jq < /tmp/bitbucket_prs '.values[] | (.source.repository.name) + "|" + (.author.display_name|split(" ")[0]) + "|" + .title + "\t" + .links.html.href + "\t" + (.source.repository.name) + (.id |tostring) + (.updated_on)' -r | \
+    column -t -s"|" | \
+    fzf --ansi --no-sort --reverse -d "\t" --with-nth 1 \
+        --preview 'bat --color always --wrap character --theme "OneHalfDark" -p /tmp/bitbucket_prs_$(echo {} | awk -F"'"\t"'" '"'"'{print $(NF)}'"'"')' \
+        --preview-window "right:70%" \
+        --bind 'ctrl-n:preview-down,ctrl-m:preview-up,tab:toggle-preview,enter:accept'
+)
+if [[ "$url" == "" ]]; then
+    exit 1
+fi
+echo "$url" | awk -F"\t" '{print $2}'

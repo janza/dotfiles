@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+view_me() {
+    url=$(prs)
+    if [[ $url != "" ]]; then
+        brwsr "$url"
+    fi
+}
+export -f view_me
+# export floating=1
+export fullscreen=1
+exec myterm "bash -c 'view_me'"

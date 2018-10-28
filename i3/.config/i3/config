@@ -119,7 +119,7 @@ for_window [class="(?i)wicd"] floating enable , border normal
 for_window [class="Nautilus" instance="file_progress"] floating enable,move absolute center
 for_window [class="floating"] floating enable, move absolute 0px 0px, resize set 1500 400
 for_window [window_role="unipicker"] floating enable, move absolute 0px 0px
-for_window [class="fullscreenme"] fullscreen
+for_window [class="fullscreenme"] floating enable, fullscreen
 
 
 bar {
