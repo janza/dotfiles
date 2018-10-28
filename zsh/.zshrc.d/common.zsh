@@ -5,7 +5,7 @@ export VISUAL=vim
 export BROWSER=/home/josip/.bin/brwsr
 export GOPATH=~/code/go
 
-export XDG_CURRENT_DESKTOP=kde
+# export XDG_CURRENT_DESKTOP=kde
 
 export TERM="xterm-256color"
 
