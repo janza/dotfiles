@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -e
 url=$(
-jq < /tmp/bitbucket_prs '.values[] | (.source.repository.name[:11]) + "|" + (.author.display_name|split(" ")[0]) + "|" + .title + "\t" + .links.html.href + "\t" + (.source.repository.name) + (.id |tostring) + (.updated_on)' -r | \
+jq < /tmp/bitbucket_prs '.values[] | (.source.repository.name[:11]) + "|" + (.author.display_name|split(" ")[0]) + "|" + .title + "\t" + .links.html.href + "\t" + (.source.repository.name) + (.id |tostring) + (.updated_on) + "\t" + (.summary.raw|gsub("\n";"---"))' -r | \
     column -t -s"|" | \
     fzf --ansi --no-sort --reverse -d "\t" --with-nth 1 \
-        --preview 'bat --color always --wrap character --theme "OneHalfDark" -p /tmp/bitbucket_prs_$(echo {} | awk -F"'"\t"'" '"'"'{print $(NF)}'"'"')' \
+        --preview 'echo {} | awk -F"'"\t"'" '"'"'{gsub(/---/, "\n"); print $4}'"'"'; bat --color always --wrap character --theme "OneHalfDark" -p /tmp/bitbucket_prs_$(echo {} | awk -F"'"\t"'" '"'"'{print $3}'"'"')' \
         --preview-window "bottom:70%:wrap" \
         --bind 'ctrl-alt-j:preview-down' \
         --bind 'ctrl-alt-k:preview-up' \
