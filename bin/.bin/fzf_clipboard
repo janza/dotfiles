@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+gpaste-client --oneline | fzf | cut -d: -f1 | xargs gpaste-client select
