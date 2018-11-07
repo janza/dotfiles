@@ -29,6 +29,9 @@
 "start_remote_tmux"
     mod4 + backslash
 
+"fzf_clipboard_term"
+    mod4 + slash
+
 "pamixer --increase 5"
     XF86AudioRaiseVolume
 

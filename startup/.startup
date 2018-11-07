@@ -1,8 +1,8 @@
 #!/bin/bash
 dunst &
 xbindkeys &
+gpaste-client start &
 # xsetroot -cursor_name left_ptr &
-clipit &
 compton -b --backend glx --vsync opengl &
 nitrogen --restore &
 xset r rate 200 65 &
