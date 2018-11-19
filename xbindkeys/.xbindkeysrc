@@ -20,14 +20,17 @@
 "mons -s"
     mod4 + bracketright
 
-"xrandr --output eDP1 --mode 1680x1050 --output DP2 --off --output DP1 --off"
+"xrandr --output eDP1 --mode 1680x1050 --output DP2 --off --output DP1 --off --output HDMI1 --off"
     mod4 + bracketleft
 
-"xrandr --output eDP1 --mode 1680x1050 --output DP1 --auto --above eDP1 --output DP2 --auto --above eDP1"
+"xrandr --output eDP1 --mode 1680x1050 --output DP1 --auto --above eDP1 --output DP2 --auto --above eDP1 --output HDMI1 --auto --above eDP1"
     mod4 + apostrophe
 
 "start_remote_tmux"
     mod4 + backslash
+
+"focus_i3windows_term.sh"
+    mod4 + minus
 
 "fzf_clipboard_term"
     mod4 + slash
