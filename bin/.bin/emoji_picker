@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-export floating=1
-exec myterm emoji_picker_term

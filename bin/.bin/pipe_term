@@ -1,0 +1,5 @@
+#!/usr/bin/bash -e
+export pipe_file=/tmp/term-pipe-$RANDOM
+termite --class "floating" --title "make_me_floating" -e "bash -c '$* > $pipe_file'" 2>/dev/null >/dev/null
+wl-copy < "$pipe_file"
+rm "$pipe_file"

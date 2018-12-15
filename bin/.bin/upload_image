@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+set -euo pipefail
 
 url=$(pv | curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw')
 

@@ -18,10 +18,11 @@ H=$(echo "$H*$scale" | bc)
 
 wlstream 24 vaapi /dev/dri/renderD128 libx264 nv12 12 "/tmp/$name.mkv" || echo continuing
 
-ffmpeg -i "/tmp/$name.mkv" -filter:v "crop=$W:$H:$X:$Y" "$HOME/$name-cropped.mp4"
+ffmpeg -i "/tmp/$name.mkv" -filter:v "crop=$W:$H:$X:$Y" "/tmp/$name-cropped.webm"
 
-url=$(curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw' < "$HOME/$name-cropped.mp4" | sed 's/png/mp4/')
+url=$(curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw' < "/tmp/$name-cropped.webm" | sed 's/png/webm/')
 
 notify-send "Copied to clipboard: $url"
 echo -n "$url" | wl-copy
 
+rm "/tmp/$name*"

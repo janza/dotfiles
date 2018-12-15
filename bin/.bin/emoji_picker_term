@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-fzf --reverse < ~/.emoji | head -1 | cut -f 1 -d\  -z | xsel -i -b
+fzf --reverse < ~/.emoji | awk '{ printf "%s", $1}'

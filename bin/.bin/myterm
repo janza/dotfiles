@@ -2,7 +2,7 @@
 
 if [[ "$#" == "0" ]]; then
     if [ -n "$floating" ]; then
-        exec termite --class "floating"
+        exec termite --class "floating" --title "make_me_floating"
     elif [ -n "$fullscreen" ]; then
         exec termite --class "fullscreenme"
     else
@@ -10,7 +10,7 @@ if [[ "$#" == "0" ]]; then
     fi
 else
     if [ -n "$floating" ]; then
-        exec termite --class "floating" -e "$@"
+        exec termite --class "floating" --title "make_me_floating" -e "$@"
     elif [ -n "$fullscreen" ]; then
         exec termite --class "fullscreenme" -e "$@"
     else

@@ -1,5 +1,5 @@
 [global]
-    font = Iosevka 14
+    font = Iosevka Term 14
 
     # allow a small subset of html markup:
     # <b>bold</b>

@@ -34,7 +34,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 " Plug 'tpope/vim-speeddating'
-" Plug 'jceb/vim-orgmode'
+Plug 'jceb/vim-orgmode'
 
 
 Plug 'AndrewRadev/splitjoin.vim'
@@ -58,14 +58,14 @@ Plug 'nelsyeung/twig.vim'
 
 Plug 'vim-airline/vim-airline'
 
-" Plug 'fatih/vim-go'
+Plug 'fatih/vim-go'
 
 Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 
 Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
 Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
-
+Plug 'metakirby5/codi.vim'
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -73,7 +73,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 
@@ -82,6 +82,8 @@ silent! call glaive#Install()
 let g:netrw_dirhistmax = 0
 
 set background=dark
+
+set title
 
 " syntax sync minlines=256
 " set synmaxcol=256 " Syntax highlight max cols
@@ -181,10 +183,10 @@ map <leader>f :ALEFix<CR>
 nmap <silent> <A-k> <Plug>(ale_previous_wrap)
 nmap <silent> <A-j> <Plug>(ale_next_wrap)
 
-command! -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column -S --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   fzf#vim#with_preview('up:30%'), 1)
+" command! -bang -nargs=* Rg
+"       \ call fzf#vim#grep(
+"       \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+"       \   fzf#vim#with_preview('up:60%'), 1)
 
 function! s:switch_dir(directory)
   execute ':e' fnameescape(a:directory)

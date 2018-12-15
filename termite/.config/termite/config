@@ -8,21 +8,21 @@ dynamic_title = true
 urgent_on_bell = true
 clickable_url = false
 hyperlinks = true
-font = Iosevka 14
+font = Iosevka Term 16
 scrollback_lines = 10000
 search_wrap = true
 client_side_decoration = false
 #icon_name = terminal
-geometry = 1200x500
+#geometry = 640x480
 
 # "system", "on" or "off"
-cursor_blink = off
+cursor_blink = on
 
 # "block", "underline" or "ibeam"
 cursor_shape = block
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
-browser = xdg-open
+# browser = brwsr
 
 # set size hints for the window
 #size_hints = false
@@ -65,7 +65,7 @@ color15 = #ebdbb2
 
 
 [hints]
-font = Iosevka 14
+font = Iosevka Term 10
 # foreground = #ffffff
 # background = #000000
 # active_foreground = #000000

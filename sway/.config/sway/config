@@ -65,9 +65,10 @@ bindsym $mod+Shift+t move container to workspace 10
 
 # reload the configuration file
 bindsym $mod+c kill
-bindsym $mod+Shift+c reload
-bindsym $mod+Control+r restart
+bindsym $mod+Control+r reload
 bindsym $mod+Control+q exec i3-msg exit
+
+for_window [title="make_me_floating"] floating enable, move position center, resize set 50ppt 50ppt
 
 focus_follows_mouse yes
 
@@ -76,8 +77,8 @@ focus_follows_mouse yes
 #
 
 bindsym $mod+d exec fzf_run
-bindsym $mod+u exec emoji_picker
-bindsym $mod+o exec pass_fzf
+bindsym $mod+u exec pipe_term emoji_picker_term
+bindsym $mod+o exec pipe_term list_pass_entries
 bindsym $mod+grave exec file-brwsr
 bindsym $mod+n exec swaylock -c 000000
 bindsym $mod+s exec swayshoot

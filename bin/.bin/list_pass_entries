@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# set -e
 
 shopt -s nullglob globstar
 
@@ -12,10 +13,10 @@ password=$(printf '%s\n' "${password_files[@]}" | fzf)
 case $password in 2fa/*)
   totpInput=$(echo "$password" | sed -e 's/\(2fa\/\|\/code\)//g')
   out=$(totp "$totpInput")
-  echo "$out" | tr -d '\n' | xsel -b
+  echo "$out" | tr -d '\n' # > "$pipe_file"
   exit 0
 esac
 
 if [[ "$password" != "" ]]; then
-  pass show "$password" 2>/dev/null | tr -d '\n' | xsel -b
+  pass show "$password" 2>/dev/null | tr -d '\n' # > "$pipe_file"
 fi

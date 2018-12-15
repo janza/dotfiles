@@ -18,9 +18,13 @@ if [[ "$IS_PATH_SET" = "" ]]; then
 fi
 
 if [[ "$SWAYSOCK" != "" ]]; then
-  export QT_QPA_PLATFORM=wayland-egl
+  export QT_QPA_PLATFORM=wayland
   export SDL_VIDEODRIVER=wayland
   export CLUTTER_BACKEND=wayland
+  export _JAVA_AWT_WM_NONREPARENTING=1
+  export GDK_BACKEND=wayland
+  export CLUTTER_BACKEND=wayland
+  export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 fi
 
 

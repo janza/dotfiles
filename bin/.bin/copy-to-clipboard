@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+wl-copy
+# read -r clipboard
+# echo "$clipboard"
+# swaymsg move to scratchpad
+# echo -n "$clipboard" | wl-copy
+# sleep 5
