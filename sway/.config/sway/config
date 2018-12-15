@@ -78,9 +78,23 @@ focus_follows_mouse yes
 bindsym $mod+d exec fzf_run
 bindsym $mod+u exec emoji_picker
 bindsym $mod+o exec pass_fzf
-bindsym $mod+grave exec dolphin
+bindsym $mod+grave exec file-brwsr
 bindsym $mod+n exec swaylock -c 000000
 bindsym $mod+s exec swayshoot
+bindsym $mod+Shift+s exec recordscreen
+bindsym $mod+y exec view_pr
+bindsym $mod+i exec jira_sprint_fzf
+bindsym $mod+slash exec fzf_clipboard_term
+bindsym $mod+XF86PowerOff systemctl suspend
+
+exec mako
+exec swayidle timeout 300 'swaylock -c 000000' timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' before-sleep 'swaylock -c 000000'
+exec kdeconnect-indicator
+
+exec_always import-gsettings \
+    gtk-theme:gtk-theme-name \
+    icon-theme:gtk-icon-theme-name \
+    cursor-theme:gtk-cursor-theme-name
 
 bindsym grave exec termite
 bindsym $mod+backslash exec start_remote_tmux
@@ -105,7 +119,7 @@ bindsym $mod+button5 exec pamixer --decrease 5
 
 # monitors
 
-set $mon_lap eDP-1
+set $mon_lap 'Apple Computer Inc Color LCD 0x00000000'
 set $mon_ext DP-1
 
 workspace 10 output $mon_lap
@@ -119,9 +133,9 @@ workspace 2 output $mon_ext
 workspace 3 output $mon_ext
 workspace 4 output $mon_ext
 workspace 5 output $mon_ext
-
-output $mon_lap scale 1.523
-#output $mon_ext background ~/dotfiles/sway/wallpaper.jpg stretch
+#
+output $mon_lap scale 1.7 background ~/wallpaper.jpg fill
+#output $mon_ext background ~/wallpaper.jpg stretch
 
 # output $mon_lap res 1680x1050
 
@@ -140,7 +154,7 @@ input {
 }
 
 bar {
-    font pango:Inconsolata 10
+    font pango:Inconsolata 12
 
     position bottom
     workspace_buttons yes

@@ -1,4 +1,27 @@
 #!/bin/bash
-slop=$(slop -f "%x %y %w %h %g %i") || exit 1
-read -r X Y W H G ID < <(echo $slop)
-ffmpeg -f x11grab -s "$W"x"$H" -i ":0.0+$X,$Y" "$HOME/screen-recording-$(date '+%Y%m%d%H%M%S').webm"
+set -euo pipefail
+
+if [ -n "$(pidof wlstream)" ]; then
+    killall -KILL wlstream
+    exit 0
+fi
+
+read -r X Y W H < <(slurp -d | tr , ' ' | tr x ' ')
+
+name="recording-$(date '+%Y%m%d%H%M%S')"
+
+scale=$(swaymsg -t get_outputs --raw | jq '.[0].scale')
+X=$(echo "$X*$scale" | bc)
+Y=$(echo "$Y*$scale" | bc)
+W=$(echo "$W*$scale" | bc)
+H=$(echo "$H*$scale" | bc)
+
+wlstream 24 vaapi /dev/dri/renderD128 libx264 nv12 12 "/tmp/$name.mkv" || echo continuing
+
+ffmpeg -i "/tmp/$name.mkv" -filter:v "crop=$W:$H:$X:$Y" "$HOME/$name-cropped.mp4"
+
+url=$(curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw' < "$HOME/$name-cropped.mp4" | sed 's/png/mp4/')
+
+notify-send "Copied to clipboard: $url"
+echo -n "$url" | wl-copy
+
