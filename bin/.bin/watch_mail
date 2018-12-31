@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+
+micon() {
+    [[ $1 -gt 0 ]] && echo -n "j:$1 "
+    [[ $2 -gt 0 ]] && echo -n "p:$2 "
+    [[ $3 -gt 0 ]] && echo -n "i:$3 "
+
+    [[ $1 -gt 0 ]] || [[ $2 -gt 0 ]] || [[ $3 -gt 0 ]] && echo -n ''
+}
+
+checkbox() {
+    find "/home/josip/.mail/$1/inbox/new" -follow  -maxdepth 1 -type f | wc -l
+}
+
+micon "$(checkbox jjanzic)" "$(checkbox personal)" "$(checkbox insided)" | xargs
+inotifywait -e create -e move -e delete /home/josip/.mail/*/inbox/new -q -m | \
+    while read -r; do
+        micon "$(checkbox jjanzic)" "$(checkbox personal)" "$(checkbox insided)" | xargs
+    done

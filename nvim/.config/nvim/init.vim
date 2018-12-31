@@ -41,12 +41,10 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
-" Plug 'google/vim-maktaba'
-" Plug 'google/vim-coverage'
-" Plug 'google/vim-syncopate'
-" Plug 'google/vim-glaive'
-" Optional: Enable coverage's default mappings on the <Leader>C prefix.
-" Glaive coverage plugin[mappings]
+Plug 'google/vim-maktaba'
+Plug 'janza/vim-coverage'
+Plug 'google/vim-syncopate'
+Plug 'google/vim-glaive'
 
 " Plug 'roxma/nvim-completion-manager'
 " Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
@@ -64,7 +62,7 @@ Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 
 Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
-Plug 'janko-m/vim-test', { 'on': ['TestNearest', 'TestFile'] }
+Plug 'janko-m/vim-test' " , { 'on': ['TestNearest', 'TestFile'] }
 Plug 'metakirby5/codi.vim'
 
 Plug 'autozimu/LanguageClient-neovim', {
@@ -77,7 +75,6 @@ Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 
-silent! call glaive#Install()
 
 let g:netrw_dirhistmax = 0
 
@@ -140,13 +137,18 @@ if has('nvim')
   set inccommand=nosplit  " substitution previews
 endif
 
+silent! call glaive#Install()
 
 let g:gruvbox_sign_column = 'bg0'
 let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_improved_warnings = 1
+let g:gruvbox_improved_warnings = 0
 let g:gruvbox_improved_strings = 0
-let g:gruvbox_invert_selection = 1
+let g:gruvbox_invert_selection = 0
+let g:gruvbox_italic = 1
 colorscheme gruvbox
+
+Glaive syncopate browser=firefox
+Glaive coverage partial_text='?|' uncovered_text='-|' covered_text='-|' partial_guibg='bg0' uncovered_guibg='bg0' covered_guibg='bg0' partial_guifg='#fabd2f' uncovered_guifg='#fb4934' covered_guifg='#b8bb26'
 
 let g:terminal_color_0  = '#282828'
 let g:terminal_color_1  = '#cc241d'
@@ -171,7 +173,6 @@ let g:neoterm_autoscroll = 1
 let g:neoterm_autojump = 1
 let g:neoterm_default_mod = ':rightbelow'
 " nnoremap <silent> ,<Tab> :call neoterm#close()<cr>
-let g:coverage_json_path                  = 'coverage/json/coverage-final.json'
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
@@ -251,12 +252,18 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
+nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
+nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
+nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
+
+nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
+nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
+nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>
 let test#strategy = "neovim"
-
-" let g:EasyClipUseSubstituteDefaults = 1
-" let g:EasyClipAutoFormat = 1
+let g:test#runner_commands = ['Phpunit', 'Jest']
 
 nmap     <C-F> :Rg<space>
 
@@ -330,10 +337,9 @@ nnoremap <leader>ga :Gwrite<cr>
 nnoremap <leader>gb :Gblame<cr>
 nnoremap <leader>gc :Gcommit --verbose<cr>
 nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gg :Gstatus --verbose<cr>
 nnoremap <leader>gl :Glog<cr>
 nnoremap <leader>gp :Git push<cr>
-nnoremap <leader>gs :Git status -sb<cr>
+nnoremap <leader>gs :Gstatus<cr>
 
 " nmap <silent> <A-k> :wincmd k<CR>
 " nmap <silent> <A-j> :wincmd j<CR>
@@ -374,6 +380,8 @@ map <leader>q :Sayonara<CR>
 map <leader>w :w<CR>
 nmap <silent> <leader>l :vsplit<CR>
 nmap <leader>/ :nohl<CR>
+nnoremap <leader>/ :call gruvbox#hls_hide()<CR>
+
 noremap j gj
 noremap k gk
 if has("user_commands")
@@ -414,6 +422,10 @@ fun! HtmlPaste() range
   set clipboard=""
 
   exe ":".a:firstline.",".a:lastline."TOhtml"
+  exe ":%s/font-family: monospace;/font-family: inconsolata, monospace;/"
+  exe ":%s/font-size: 1em;/font-size: 18px;/"
+  exe ":%s/1c1c1c/1d2021/"
+  exe ":%s/ffd7af/f9f5d7/"
   exe ":w! " . localPaste . pasteName
   exe ":close"
   call system("rsync -a " . localPaste . " " . remotePublic)

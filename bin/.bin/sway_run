@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+export pipe_file=/tmp/term-pipe-$RANDOM
+termite --class "floating" --title "make_me_floating" -e "zsh -c 'exec history_and_commands $pipe_file'" 2>/dev/null >/dev/null
+nohup $(cat "$pipe_file") > /dev/null &
+rm "$pipe_file"

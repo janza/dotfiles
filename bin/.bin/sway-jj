@@ -1,17 +1,15 @@
-#!/usr/bin/env bash
-export XKB_DEFAULT_LAYOUT=hr
-export XKB_DEFAULT_VARIANT=us
-export XKB_DEFAULT_OPTIONS=caps:escape
-export WLC_REPEAT_DELAY=200
-export WLC_REPEAT_RATE=50
-export WLC_LIBINPUT=1
-
-# export GDK_BACKEND=x11
-# export GTK_BACKEND=x11
-# export CLUTTER_BACKEND=x11
-# export SDL_VIDEODRIVER=x11
-# export QT_QPA_PLATFORM=x11
-# export QT_QPA_PLATFORM=wayland-egl
+#!/usr/bin/env zsh
+export CLUTTER_BACKEND=wayland
+export GDK_BACKEND=wayland
 export GTK_CSD=0
+export QT_QPA_PLATFORM=wayland
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export SDL_VIDEODRIVER=wayland
+export _JAVA_AWT_WM_NONREPARENTING=1
 
-exec sway # -d >/tmp/sway.log 2>&1
+if (( $+commands[gnome-keyring-daemon] )); then
+  eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+  export SSH_AUTH_SOCK
+fi
+
+exec sway
