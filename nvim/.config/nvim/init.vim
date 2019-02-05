@@ -414,8 +414,8 @@ com! -range=% HtmlPaste <line1>,<line2>call HtmlPaste()
 noremap <silent> gH :HtmlPaste<cr>
 fun! HtmlPaste() range
   let localPaste = "~/.paste/"
-  let remotePublic = "jjanzic.com:sites/pub/paste"
-  let remotePasteUrl = "https://jjanzic.com/paste"
+  let remotePublic = "jjanzic.com:sites/ss"
+  let remotePasteUrl = "https://puull.com/s"
 
   let pasteName = system("cat /dev/urandom | base64 | head -1 | tr -dc 'a-zA-Z0-9'| cut -c'1-10'")
 
