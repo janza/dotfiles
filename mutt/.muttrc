@@ -19,7 +19,7 @@ macro compose \ef "F pandoc -s --quiet --self-contained -f markdown -t html --cs
 
 macro index,pager \eo "<view-attachments><search>html<enter>|qcat\n<exit>"
 
-set query_command="goobook query %s"
+set query_command="MATES_DIR=~/.contacts/contacts mates mutt-query %s"
 macro index,pager a "<pipe-message>goobook add<return>" "add sender to google contacts"
 bind editor <Tab> complete-query
 

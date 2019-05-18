@@ -1,11 +1,13 @@
 #!/usr/bin/env zsh
 export CLUTTER_BACKEND=wayland
-export GDK_BACKEND=wayland
+export MOZ_ENABLE_WAYLAND=1
 export GTK_CSD=0
 export QT_QPA_PLATFORM=wayland
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 export SDL_VIDEODRIVER=wayland
 export _JAVA_AWT_WM_NONREPARENTING=1
+export KITTY_ENABLE_WAYLAND=1
+export XDG_CURRENT_DESKTOP=sway
 
 if (( $+commands[gnome-keyring-daemon] )); then
   eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)

@@ -5,7 +5,7 @@ set trash = "$HOME/.mail/jjanzic/archive"
 
 set mbox_type=Maildir
 set realname = 'Josip Janzic'
-set from = 'josip@jjanzic.com'
+set from = 'me@josip.dev'
 set use_from = yes
 set sendmail  = "msmtp -a jjanzic"
 

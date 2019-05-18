@@ -8,7 +8,7 @@ dynamic_title = true
 urgent_on_bell = true
 clickable_url = false
 hyperlinks = true
-font = Iosevka Term 16
+font = Inconsolata 14
 scrollback_lines = 10000
 search_wrap = true
 client_side_decoration = false
@@ -22,7 +22,7 @@ cursor_blink = on
 cursor_shape = block
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
-# browser = brwsr
+browser = preview_url
 
 # set size hints for the window
 #size_hints = false
@@ -54,7 +54,7 @@ color4  = #458588
 color5  = #b16286
 color6  = #689d6a
 color7  = #a89984
-color8  = #928374
+color8  = #767676
 color9  = #fb4934
 color10 = #b8bb26
 color11 = #fabd2f
@@ -62,6 +62,8 @@ color12 = #83a598
 color13 = #d3869b
 color14 = #8ec07c
 color15 = #ebdbb2
+
+
 
 
 [hints]

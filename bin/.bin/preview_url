@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+# set -e
+
+url=$1
+
+case $url in
+  *.png|*.png?*|*.jpg|*.jpg?*|*.jpeg|*.jpeg?*|*.gif|*.gif?*)
+    curl -sL "$url" > /tmp/slika
+    exec eog /tmp/slika
+      ;;
+  *) brwsr "$url";;
+esac

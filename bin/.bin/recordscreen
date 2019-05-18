@@ -16,13 +16,20 @@ Y=$(echo "$Y*$scale" | bc)
 W=$(echo "$W*$scale" | bc)
 H=$(echo "$H*$scale" | bc)
 
-wlstream 24 vaapi /dev/dri/renderD128 libx264 nv12 12 "/tmp/$name.mkv" || echo continuing
+notify-send "Recording video ..."
+wlstream 28 vaapi /dev/dri/renderD128 libx264 nv12 12 "/tmp/$name.mkv" || true
 
-ffmpeg -i "/tmp/$name.mkv" -filter:v "crop=$W:$H:$X:$Y" "/tmp/$name-cropped.webm"
+notify-send "Processing video ..."
+
+result=$(ffmpeg -i "/tmp/$name.mkv" -filter:v "crop=$W:$H:$X:$Y" "/tmp/$name-cropped.webm" 2>&1)
+
+notify-send "$result"
+
+notify-send "Uploading video ..."
 
 url=$(curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw' < "/tmp/$name-cropped.webm" | sed 's/png/webm/')
 
 notify-send "Copied to clipboard: $url"
 echo -n "$url" | wl-copy
 
-rm "/tmp/$name*"
+rm /tmp/"$name"*

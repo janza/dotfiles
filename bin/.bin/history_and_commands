@@ -1,5 +1,0 @@
-#!/bin/bash
-set -e
-
-prog=$(dmenu_path | fzf --reverse --sync --tiebreak=index --print-query --prompt='' | tail -1)
-echo $prog | tee $1

@@ -32,7 +32,7 @@ async def get_state(client):
         p('{artist}: {title}'.format(**song))
         return
 
-    p('Not playing', 'notplaying')
+    p('No song', 'notplaying')
 
 
 async def main():

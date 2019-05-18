@@ -1,6 +1,5 @@
 from i3pystatus import Status
 from i3pystatus.mail.maildir import MaildirMail
-from i3pystatus.updates import pacman
 from i3pystatus.calendar.khal_calendar import Khal
 
 status = Status(logfile='/home/josip/.i3pystatus.log',)
@@ -10,7 +9,7 @@ status = Status(logfile='/home/josip/.i3pystatus.log',)
 #                          ^-- calendar week
 status.register(
     "clock",
-    format="%-d %b %H:%M", )
+    format="%-d.%-m. %H:%M", )
 
 # Shows the average load of the last minute and the last 5 minutes
 # (the default value for format is used)
@@ -45,15 +44,22 @@ status.register(
 status.register(
     "battery",
     battery_ident='BAT0',
-    format="B{status}{percentage:.0f}%",
+    format="{status} {percentage:.0f}%",
+    levels={
+        0: '',
+        15: '',
+        40: '',
+        60: '',
+        90: '',
+    },
     full_color='#ffffff',
     charging_color='#ffffff',
-    alert=False,
+    alert=True,
     status={
-        "DIS": "<",
-        "CHR": ">",
-        "FULL": "",
-    }, )
+         'CHR': '',
+        'FULL': ''
+    }
+)
 
 # Shows the address and up/down state of eth0. If it is up the address is shown in
 # green (the default value of color_up) and the CIDR-address is shown
@@ -74,7 +80,7 @@ status.register(
     dynamic_color=False,
     color_up="#ffffff",
     color_down="#ffffff",
-    format_up="W {essid}", )
+    format_up=" {essid}", )
 
 # Shows disk usage of /
 # Format:
@@ -87,18 +93,18 @@ status.register(
 # Shows pulseaudio default sink volume
 #
 # Note: requires libpulseaudio from PyPI
-status.register("pulseaudio", format="V {volume}", )
+status.register("pulseaudio", format=" {volume}", )
 
 # Shows mpd status
 # Format:
 # Cloud connected▶Reroute to Remain
 status.register(
     "mpd",
-    format="{title}{status}",
+    format="{status} {title}",
     status={
-        "pause": "",
-        "play": " >",
-        "stop": "",
+        "pause": "",
+        "play": "",
+        "stop": "",
     }, )
 
 for maildir in ['jjanzic', 'personal', 'insided']:
@@ -111,8 +117,8 @@ for maildir in ['jjanzic', 'personal', 'insided']:
                 directory="/home/josip/.mail/{maildir}/inbox".format(
                     maildir=maildir))
         ],
-        format=maildir[0] + " {current_unread}",
-        format_plural=maildir[0] + " {current_unread}",
+        format='  ' + maildir[0] + " {current_unread}",
+        format_plural='  ' + maildir[0] + " {current_unread}",
         color_unread="#00ff00")
 
 # status.register("external_ip")
@@ -131,7 +137,7 @@ status.register("calendar",
                 # urgent_seconds=600000,
                 dynamic_color=False,
                 interval=1,
-                format="{title}: {humanize_remaining}",
+                format=" {title}: {humanize_remaining}",
                 update_interval=60,
                 skip_all_day=True,
                 skip_regex=r'Standup',

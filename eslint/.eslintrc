@@ -1,7 +1,12 @@
 {
-  "parser": "typescript-eslint-parser",
   "extends": [
     "standard",
     "standard-jsx"
-  ]
+  ],
+  "env": {
+    "jest": true
+  },
+  "globals": {
+    "page": true
+  }
 }
