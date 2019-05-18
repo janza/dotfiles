@@ -237,6 +237,9 @@ function! TestTransform(cmd) abort
   if getftype(expand('~/.virtualenvs/'.mydirname)) == "dir"
     return 'workon '.mydirname.'; PYTHONPATH='.getcwd().' '.a:cmd
   endif
+  if filereadable("composer.json")
+    return '$(composer config bin-dir)/'.a:cmd
+  endi
   return 'PYTHONPATH='.getcwd().' '.a:cmd
 endfunction
 
