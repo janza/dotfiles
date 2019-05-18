@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-termite -e "mosh --bind-server=any jjanzic.com -- tmux attach -d"
+exec termite -e "exec mosh --bind-server=any jjanzic.com -- tmux attach -d"
