@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+data=$(curl -s "https://forecast.buienradar.nl/2.0/forecast/2756504")
+
+deg=$(echo -n "$data" | jq -r '(.days[0].hours[0].temperature|round|tostring) + "°C"')
+prec=$(echo -n "$data" | jq -r '"100 " + ([.days[0].hours[].precipitation ] | join(" "))' | sparklines | cut -b 4-)
+
+echo "$deg $prec" > /tmp/forecast

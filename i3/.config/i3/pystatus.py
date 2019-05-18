@@ -56,7 +56,7 @@ status.register(
     charging_color='#ffffff',
     alert=True,
     status={
-         'CHR': '',
+        'CHR': '',
         'FULL': ''
     }
 )
@@ -80,7 +80,8 @@ status.register(
     dynamic_color=False,
     color_up="#ffffff",
     color_down="#ffffff",
-    format_up=" {essid}", )
+    format_down="off",
+    format_up="", )
 
 # Shows disk usage of /
 # Format:
@@ -137,12 +138,18 @@ status.register("calendar",
                 # urgent_seconds=600000,
                 dynamic_color=False,
                 interval=1,
-                format=" {title}: {humanize_remaining}",
+                format=" {title}: {humanize_remaining}",
                 update_interval=60,
                 skip_all_day=True,
-                skip_regex=r'Standup',
+                skip_regex=r'Standup|holidays',
                 urgent_blink=False,
                 on_leftclick='notify-send -i task-due Calendar "$(khal list --notstarted now)"',
                 backend=Khal(config_path='/home/josip/.config/khal/config'))
+
+status.register('file',
+                format=' {weather}',
+                components={
+                    'weather': (str, 'tmp/forecast')
+                })
 
 status.run()
