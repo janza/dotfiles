@@ -158,6 +158,21 @@ let g:gruvbox_invert_selection = 0
 let g:gruvbox_italic = 1
 colorscheme gruvbox
 
+let g:fzf_colors = {
+	\ 'fg':      ['fg', 'Normal'],
+	\ 'bg':      ['bg', 'Normal'],
+	\ 'hl':      ['fg', 'GruvboxBlue'],
+	\ 'fg+':     ['fg', 'GruvboxGreen'],
+	\ 'bg+':     ['bg', 'GruvboxBg1'],
+	\ 'hl+':     ['fg', 'GruvboxGreen'],
+	\ 'info':    ['fg', 'GruvboxGreen'],
+	\ 'prompt':  ['fg', 'GruvboxBlue'],
+	\ 'header':  ['fg', 'GruvboxBlue'],
+	\ 'pointer': ['fg', 'Error'],
+	\ 'marker':  ['fg', 'Error'],
+	\ 'spinner': ['fg', 'Statement'],
+	\ }
+
 let g:neoterm_shell = "zsh"
 let g:neoterm_size = 13
 let g:neoterm_autoscroll = 1
@@ -237,9 +252,9 @@ function! TestTransform(cmd) abort
   if getftype(expand('~/.virtualenvs/'.mydirname)) == "dir"
     return 'workon '.mydirname.'; PYTHONPATH='.getcwd().' '.a:cmd
   endif
-  if filereadable("composer.json")
-    return '$(composer config bin-dir)/'.a:cmd
-  endi
+  " if filereadable("composer.json")
+  "   return '$(composer config bin-dir)/'.a:cmd
+  " endi
   return 'PYTHONPATH='.getcwd().' '.a:cmd
 endfunction
 
