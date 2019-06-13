@@ -1,33 +1,42 @@
 #!/bin/bash
 set -euo pipefail
 
-if [ -n "$(pidof wlstream)" ]; then
-    killall -KILL wlstream
+if [ -n "$(pidof wf-recorder)" ]; then
+    killall -KILL wf-recorder
     exit 0
 fi
 
-read -r X Y W H < <(slurp -d | tr , ' ' | tr x ' ')
+# read -r X Y W H < <(slurp -d | tr , ' ' | tr x ' ')
 
 name="recording-$(date '+%Y%m%d%H%M%S')"
 
-scale=$(swaymsg -t get_outputs --raw | jq '.[0].scale')
-X=$(echo "$X*$scale" | bc)
-Y=$(echo "$Y*$scale" | bc)
-W=$(echo "$W*$scale" | bc)
-H=$(echo "$H*$scale" | bc)
+# scale=$(swaymsg -t get_outputs --raw | jq '.[0].scale')
+# X=$(echo "$X*$scale" | bc)
+# Y=$(echo "$Y*$scale" | bc)
+# W=$(echo "$W*$scale" | bc)
+# H=$(echo "$H*$scale" | bc)
+
+filename="/tmp/$name.mkv"
 
 notify-send "Recording video ..."
-wlstream 28 vaapi /dev/dri/renderD128 libx264 nv12 12 "/tmp/$name.mkv" || true
+result=$(wf-recorder -g "$(slurp)" -f "$filename" -c h264_vaapi -d /dev/dri/renderD128 2>&1 || true)
+
+notify-send "$result"
+
+if [ ! -s "$filename" ]; then
+    notify-send "Output file is empty, exiting"
+    exit 1
+fi
 
 notify-send "Processing video ..."
 
-result=$(ffmpeg -i "/tmp/$name.mkv" -filter:v "crop=$W:$H:$X:$Y" "/tmp/$name-cropped.webm" 2>&1)
+result=$(ffmpeg -i "$filename" "$filename.mp4" 2>&1 || true)
 
 notify-send "$result"
 
 notify-send "Uploading video ..."
 
-url=$(curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw' < "/tmp/$name-cropped.webm" | sed 's/png/webm/')
+url=$(curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw' < "$filename.mp4" | sed 's/png/mp4/')
 
 notify-send "Copied to clipboard: $url"
 echo -n "$url" | wl-copy
