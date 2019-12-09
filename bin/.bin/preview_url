@@ -1,12 +1,31 @@
 #!/usr/bin/bash
 # set -e
 
+# CORE-123
+
 url=$1
 
+
 case $url in
+  https://cl.ly*)
+    notify-send "Loading $url"
+    curl -sL "$url/download" > /tmp/slika
+    notify-send "Opening $url"
+    imv /tmp/slika
+    ;;
   *.png|*.png?*|*.jpg|*.jpg?*|*.jpeg|*.jpeg?*|*.gif|*.gif?*)
+    notify-send "Loading $url"
     curl -sL "$url" > /tmp/slika
-    exec eog /tmp/slika
-      ;;
+    notify-send "Opening $url"
+    imv /tmp/slika
+    ;;
+  *.mp4|*.mpg?*|*.mpeg?|*.mp4?*)
+    notify-send "Opening $url"
+    mpv "$url"
+    ;;
+  OPS-*|OGP-*|USER-*|CUST-*|CORE-*)
+    notify-send "Opening $url"
+    brwsr "https://insidedhq.atlassian.net/browse/$url"
+    ;;
   *) brwsr "$url";;
 esac

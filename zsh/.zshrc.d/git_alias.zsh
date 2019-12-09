@@ -56,8 +56,8 @@ alias ga='git add'
 compdef _git ga=git-add
 alias gm='git merge'
 compdef _git gm=git-merge
-alias grhom='git reset --hard'
-alias grh='git reset --hard origin/master'
+alias grhom='git reset --hard origin/master'
+alias grh='git reset --hard'
 
 # Will cd into the top of the current repository
 # or submodule.

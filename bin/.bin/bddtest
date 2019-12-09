@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+export RUN_SPECIFIC_TEST_CASE="$1"
+if [ "$HOST_INSIDED_CONTROL" == '' ]; then
+    branch=$(git rev-parse --abbrev-ref HEAD | tr '[:upper:]' '[:lower:]')
+    if [ "$branch" != 'master' ]; then
+        export HOST_INSIDED_CONTROL=https://insidedhq-control.$branch.almostinsided.com
+        export HOST_INSIDED_FORUM=https://insidedhq-forum.$branch.almostinsided.com
+    fi
+fi
+export LOAD_SCENARIOS_FROM_DOCS_MANAGER=yes
+python -c 'import unittest; from src.tests.bdd.test_bdd import TestBdd; unittest.main()'

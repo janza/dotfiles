@@ -3,4 +3,8 @@ node_modules
 phpstan.neon
 .git
 .mypy_cache
+mypy.ini
 .idea
+.vscode
+
+__pycache__

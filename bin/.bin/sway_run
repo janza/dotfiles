@@ -1,3 +1,2 @@
-#!/usr/bin/env bash
-
+#!/usr/bin/bash -e
 compgen -c |sort | fzf --reverse --sync --tiebreak=index --print-query --prompt='Run: ' | tail -1 | xargs swaymsg exec

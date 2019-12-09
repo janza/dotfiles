@@ -1,44 +1,32 @@
-#!/bin/bash
-set -euo pipefail
+#!/usr/bin/env sh
+set -eu
 
 if [ -n "$(pidof wf-recorder)" ]; then
-    killall -KILL wf-recorder
+    killall -INT wf-recorder
     exit 0
 fi
 
-# read -r X Y W H < <(slurp -d | tr , ' ' | tr x ' ')
+name="$(openssl rand -hex 16)"
 
-name="recording-$(date '+%Y%m%d%H%M%S')"
+filename="/tmp/$name.mp4"
 
-# scale=$(swaymsg -t get_outputs --raw | jq '.[0].scale')
-# X=$(echo "$X*$scale" | bc)
-# Y=$(echo "$Y*$scale" | bc)
-# W=$(echo "$W*$scale" | bc)
-# H=$(echo "$H*$scale" | bc)
-
-filename="/tmp/$name.mkv"
-
+notify-send "Select region ..."
+region=$(slurp)
 notify-send "Recording video ..."
-result=$(wf-recorder -g "$(slurp)" -f "$filename" -c h264_vaapi -d /dev/dri/renderD128 2>&1 || true)
-
-notify-send "$result"
+wf-recorder -g "$region" -f "$filename" -c h264_vaapi -d /dev/dri/renderD128 2>&1 || (notify-send "Failed to record" && exit 1)
 
 if [ ! -s "$filename" ]; then
     notify-send "Output file is empty, exiting"
     exit 1
 fi
 
-notify-send "Processing video ..."
-
-result=$(ffmpeg -i "$filename" "$filename.mp4" 2>&1 || true)
-
-notify-send "$result"
-
 notify-send "Uploading video ..."
 
-url=$(curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw' < "$filename.mp4" | sed 's/png/mp4/')
+rsync "$filename" josip.dev:sites/pub/vid/
+
+url="https://josip.dev/vid/$(basename "$filename")"
 
 notify-send "Copied to clipboard: $url"
-echo -n "$url" | wl-copy
+echo "$url" | wl-copy
 
-rm /tmp/"$name"*
+rm /tmp/"$name".mp4

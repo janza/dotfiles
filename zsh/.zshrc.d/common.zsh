@@ -11,9 +11,9 @@ export TERM="xterm-256color"
 
 if [[ "$IS_PATH_SET" = "" ]]; then
   export PATH="$HOME/.bin:$PATH"
-  export PATH="$PATH:$HOME/.npm/bin"
+  export PATH="$HOME/.npm/bin:$PATH"
+  export PATH="./node_modules/.bin:$PATH"
   export PATH="$PATH:$GOPATH/bin"
-  export PATH="$PATH:./node_modules/.bin"
   export PATH="$PATH:./vendors/bin"
   export IS_PATH_SET=1
 fi
@@ -29,6 +29,10 @@ alias l="exa --group-directories-first -1"
 alias ll="exa --group-directories-first -l"
 alias la="exa --group-directories-first -la"
 alias ls="exa"
+
+alias te="todo edit"
+alias t="todo"
+alias tn="todo new"
 
 alias setkbd="xset r rate 180 65 && setxkbmap -layout hr -variant us -option caps:escape"
 alias ipy=ipython

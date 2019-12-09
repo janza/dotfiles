@@ -8,15 +8,14 @@ password_files=( "$prefix"/**/*.gpg )
 password_files=( "${password_files[@]#"$prefix"/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
-password=$(printf '%s\n' "${password_files[@]}" | fzf)
+entry=$(printf '%s\n' "${password_files[@]}" | fzf)
 
-case $password in 2fa/*)
-  totpInput=$(echo "$password" | sed -e 's/\(2fa\/\|\/code\)//g')
-  out=$(totp "$totpInput")
-  echo "$out" | tr -d '\n' # > "$pipe_file"
-  exit 0
+if [[ "$entry" != "" ]]; then
+  password=$(pass show "$entry" 2>/dev/null)
+fi
+
+case $entry in 2fa/*)
+  password=$(c_otp -b "$password" | sed 's/[^0-9]*//')
 esac
 
-if [[ "$password" != "" ]]; then
-  pass show "$password" 2>/dev/null | tr -d '\n' # > "$pipe_file"
-fi
+echo "$password"

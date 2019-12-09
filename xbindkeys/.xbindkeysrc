@@ -20,10 +20,10 @@
 "mons -s"
     mod4 + bracketright
 
-"xrandr --output eDP1 --mode 1680x1050 --output DP2 --off --output DP1 --off --output HDMI1 --off"
+"xrandr --output eDP-1 --mode 1680x1050 --output DP-2 --off --output DP1 --off --output HDMI-1 --off"
     mod4 + bracketleft
 
-"xrandr --output eDP1 --mode 1680x1050 --output DP1 --auto --above eDP1 --output DP2 --auto --above eDP1 --output HDMI1 --auto --above eDP1"
+"xrandr --output eDP-11 --mode 1680x1050 --output DP-1 --auto --above eDP1 --output DP2 --auto --above eDP-1 --output HDMI-1 --auto --above eDP1"
     mod4 + apostrophe
 
 "start_remote_tmux"
@@ -53,7 +53,7 @@
 "mpc toggle -h localhost"
     Mod4 + comma
 
-"fzf_run"
+"termite --class floating --title make_me_floating -e sway_run"
     Mod4 + d
 
 "emoji_picker"

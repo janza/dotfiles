@@ -12,31 +12,26 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
 "
 Plug 'morhetz/gruvbox'
-" Plug 'mattn/emmet-vim'
-
-" Plug 'alvan/vim-closetag'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
-" Plug 'Yggdroot/indentLine'
+
+" Plug 'vim-airline/vim-airline'
+
 Plug 'kassio/neoterm'
-" Plug 'kristijanhusak/vim-carbon-now-sh'
+Plug 'kristijanhusak/vim-carbon-now-sh'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'sheerun/vim-polyglot'
-" Plug 'maxmellon/vim-jsx-pretty'
-" Plug 'pangloss/vim-javascript'
-" Plug 'mxw/vim-jsx'
 
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'junegunn/goyo.vim'
 
 Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
-" Plug 'tpope/vim-speeddating'
 Plug 'jceb/vim-orgmode'
 
 
@@ -44,41 +39,24 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 " Plug 'sjl/gundo.vim', { 'on':  'GundoShow' }
 
-" Plug 'google/vim-maktaba'
-" Plug 'janza/vim-coverage'
-" Plug 'google/vim-syncopate'
-" Plug 'google/vim-glaive'
-
 " Plug 'roxma/nvim-completion-manager'
 " Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
-Plug 'posva/vim-vue'
+" Plug 'posva/vim-vue'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 
 Plug 'nelsyeung/twig.vim'
 
-" Plug 'vim-airline/vim-airline'
-" Plug 'liuchengxu/eleline.vim'
-
 Plug 'fatih/vim-go'
-
-" Plug 'juanpabloaj/vim-istanbul', { 'for': 'javascript' }
 
 Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
 Plug 'janko-m/vim-test' " , { 'on': ['TestNearest', 'TestFile'] }
 " Plug 'metakirby5/codi.vim'
 
-" Plug 'autozimu/LanguageClient-neovim', {
-"     \ 'branch': 'next',
-"     \ 'do': 'bash install.sh',
-"     \ }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-jedi'
-" Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-" Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'leafgarland/typescript-vim'
+Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 
 call plug#end()
 
@@ -86,10 +64,8 @@ let g:deoplete#enable_at_startup = 1
 
 let g:netrw_dirhistmax = 0
 
-set background=dark
 
 set title
-
 " syntax sync minlines=256
 " set synmaxcol=256 " Syntax highlight max cols
 set scrolloff=999
@@ -99,12 +75,23 @@ set backspace=2		" allow backspacing over everything in insert mode
 set nojoinspaces
 set shortmess+=cT
 
+set laststatus=2
+
+set swapfile
+set directory^=~/.vim/swap//
+set writebackup
 set nobackup
-set nowritebackup
-" set noswapfile
+set backupcopy=auto
+if has("patch-8.1.0251")
+  " consolidate the writebackups -- not a big
+  " deal either way, since they usually get deleted
+  set backupdir^=~/.vim/backup//
+end
+set undofile
+set undodir^=~/.vim/undo//
+
 set gdefault
 set hidden
-set undofile
 
 set ignorecase
 set smartcase
@@ -126,7 +113,7 @@ let g:mapleader=","
 " set fillchars+=vert:│
 set foldmethod=manual
 
-set wildoptions=pum
+" set wildoptions=pum
 set wildmode=list:longest
 set wildignore=*.o,*.obj,*~
 set wildignore+=*sass-cache*
@@ -156,6 +143,9 @@ let g:gruvbox_improved_warnings = 0
 let g:gruvbox_improved_strings = 0
 let g:gruvbox_invert_selection = 0
 let g:gruvbox_italic = 1
+
+set background=dark
+" colorscheme onehalflight
 colorscheme gruvbox
 
 let g:fzf_colors = {
@@ -190,21 +180,21 @@ endfunction
 command! -nargs=* Fasd
       \ call fzf#run({'source': 'fasd -l -d', 'sink': function('<sid>switch_dir')})
 
-let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
 function! FloatingFZF()
   let buf = nvim_create_buf(v:false, v:true)
   call setbufvar(buf, '&signcolumn', 'no')
 
   let height = &lines - 3
-  let width = float2nr(&columns - (&columns * 2 / 10))
-  let col = float2nr((&columns - width) / 2)
+  " let width = float2nr(&columns - (&columns * 2 / 10))
+  " let col = float2nr((&columns - width) / 2)
 
   let opts = {
         \ 'relative': 'editor',
         \ 'row': 1,
-        \ 'col': col,
-        \ 'width': width,
+        \ 'col': 1,
+        \ 'width': &columns,
         \ 'height': height
         \ }
 
@@ -235,9 +225,9 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
-nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
-nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+" nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
+" nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
+" nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
 
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>
@@ -252,14 +242,17 @@ function! TestTransform(cmd) abort
   if getftype(expand('~/.virtualenvs/'.mydirname)) == "dir"
     return 'workon '.mydirname.'; PYTHONPATH='.getcwd().' '.a:cmd
   endif
-  " if filereadable("composer.json")
-  "   return '$(composer config bin-dir)/'.a:cmd
-  " endi
+  if filereadable("composer.json")
+    return 'PATH="$(composer config bin-dir)/:$PATH"; '.a:cmd
+  endi
   return 'PYTHONPATH='.getcwd().' '.a:cmd
 endfunction
 
 let g:test#custom_transformations = {'custom': function('TestTransform')}
 let g:test#transformation = 'custom'
+let test#custom_runners = {'bddscenario': ['pybdd']}
+
+autocmd Bufenter *.scenario set ft=bddscenario
 
 nmap <C-F> :Rg<space>
 
@@ -327,7 +320,7 @@ map <leader>q :Sayonara<CR>
 map <leader>w :w<CR>
 nmap <silent> <leader>l :vsplit<CR>
 nmap <leader>/ :nohl<CR>
-nnoremap <leader>/ :call gruvbox#hls_hide()<CR>
+" nnoremap <leader>/ :call gruvbox#hls_hide()<CR>
 
 noremap j gj
 noremap k gk
@@ -348,57 +341,74 @@ nmap <leader>p :set paste!<BAR>set paste?<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-map <leader>f :ALEFix<CR>
-nmap <silent> <A-k> <Plug>(ale_previous_wrap)
-nmap <silent> <A-j> <Plug>(ale_next_wrap)
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" map <leader>f :ALEFix<CR>
+" nmap <silent> <A-k> <Plug>(ale_previous_wrap)
+" nmap <silent> <A-j> <Plug>(ale_next_wrap)
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" let g:ale_completion_enabled = 1
+" let g:ale_linters = {
+"       \'go': ['gometalinter'],
+"       \'javascript.jsx': ['eslint'],
+"       \'javascript': ['eslint'],
+"       \'sass': [],
+"       \}
 
-let g:ale_linters = {
-      \'go': ['gometalinter'],
-      \'javascript.jsx': ['eslint'],
-      \'javascript': ['eslint'],
-      \'sass': [],
-      \}
-
-nmap <leader>d :ALEGoToDefinition<CR>
+" nmap <leader>d :ALEGoToDefinition<CR>
 
 
-let g:ale_fixers = {
-      \   'javascript': ['prettier_eslint'],
-      \   'javascript.jsx': ['prettier_eslint'],
-      \   'go': ['goimports'],
-      \   'php': ['php_cs_fixer'],
-      \   'python': ['autopep8', 'isort'],
-      \ }
-let g:ale_php_phpmd_ruleset = '/home/josip/.phpmd.xml'
-let g:ale_lint_on_text_changed = 'never'
+" let g:ale_fixers = {
+"       \   'javascript': ['prettier_eslint'],
+"       \   'javascript.jsx': ['prettier_eslint'],
+"       \   'go': ['goimports'],
+"       \   'php': ['php_cs_fixer'],
+"       \   'python': ['autopep8', 'isort'],
+"       \ }
+" let g:ale_php_phpmd_ruleset = '/home/josip/.phpmd.xml'
+" let g:ale_lint_on_text_changed = 'never'
 
-let g:ale_javascript_prettier_standard_executable = 'prettier-standard'
-let g:ale_javascript_prettier_standard_use_global = 1
+" let g:ale_javascript_prettier_standard_executable = 'prettier-standard'
+" let g:ale_javascript_prettier_standard_use_global = 1
 
-let g:ale_javascript_prettier_eslint_executable = 'prettier-eslint'
-let g:ale_javascript_prettier_eslint_use_global = 1
+" let g:ale_javascript_prettier_eslint_executable = 'prettier-eslint'
+" let g:ale_javascript_prettier_eslint_use_global = 1
 
-let g:ale_go_goimports_executable = 'goimports'
-let g:ale_go_goimports_use_global = 1
+" let g:ale_go_goimports_executable = 'goimports'
+" let g:ale_go_goimports_use_global = 1
 
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 
-" nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
-" command! -nargs=0 Format :call CocAction('format')
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
-" inoremap <silent><expr> <c-space> coc#refresh()
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+command! -nargs=0 Format :call CocAction('format')
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>d :call CocAction('doHover')<cr>
+xmap <leader>f  <Plug>(coc-format)
+nmap <leader>f  <Plug>(coc-format)
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " let g:coc_snippet_next = '<TAB>'
 " let g:coc_snippet_prev = '<S-TAB>'
-" nmap <silent> [c <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap <silent> [l <Plug>(coc-diagnostic-prev)
+nmap <silent> ]l <Plug>(coc-diagnostic-next)
+nmap <silent> <A-k> <Plug>(coc-diagnostic-prev)
+nmap <silent> <A-j> <Plug>(coc-diagnostic-next)
 
 nmap <leader>j :set ft=json<BAR>%!jq .<CR>
 

@@ -1,3 +1,5 @@
 *.gif diff=image
 *.jpg diff=image
 *.png diff=image
+npm-shrinkwrap.json merge=npm-merge-driver
+package-lock.json merge=npm-merge-driver

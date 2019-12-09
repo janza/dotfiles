@@ -146,10 +146,10 @@ status.register("calendar",
                 on_leftclick='notify-send -i task-due Calendar "$(khal list --notstarted now)"',
                 backend=Khal(config_path='/home/josip/.config/khal/config'))
 
-status.register('file',
-                format=' {weather}',
-                components={
-                    'weather': (str, 'tmp/forecast')
-                })
+# status.register('file',
+#                 format=' {weather}',
+#                 components={
+#                     'weather': (str, 'tmp/forecast')
+#                 })
 
 status.run()

@@ -1,4 +1,4 @@
-text/html       ; clean_html %s          ; copiousoutput
+text/html       ; /usr/share/aerc/filters/html ; copiousoutput
 application/pdf ; evince %s
 image/*         ; viewnior %s
 audio/*         ; /usr/bin/mplayer %s

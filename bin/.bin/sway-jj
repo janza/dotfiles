@@ -14,4 +14,4 @@ if (( $+commands[gnome-keyring-daemon] )); then
   export SSH_AUTH_SOCK
 fi
 
-exec sway
+exec sway -Dnoatomic # 2>~/sway.log

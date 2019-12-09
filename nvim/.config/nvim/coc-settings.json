@@ -1,0 +1,22 @@
+{
+    "diagnostic-languageserver.filetypes": {
+        "email": "languagetool",
+        "markdown": ["write-good"],
+        "sh": "shellcheck"
+    },
+    "languageserver": {
+        "golang": {
+            "command": "go-langserver",
+            "filetypes": ["go"],
+            "initializationOptions": {
+                "gocodeCompletionEnabled": true,
+                "diagnosticsEnabled": true,
+                "lintTool": "golint"
+            }
+        }
+    },
+    "python.jediEnabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.mypyEnabled": true
+}

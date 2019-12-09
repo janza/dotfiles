@@ -4,7 +4,7 @@ set -eo pipefail
 
 auth="$(pass show bitbucket_api)"
 echo > /tmp/bitbucket_prs_tmp
-for repo in community-backend api editor-wysiwyg cloudformation-templates community-setup syncsearch datamigrations doctrine pymessagebus
+for repo in community-backend api cloudformation-templates community syncsearch community-api e2e_tests infrastructure
 do
     echo Processing $repo
     curl -s -u "$auth" "https://api.bitbucket.org/2.0/repositories/insided/$repo/pullrequests" >> /tmp/bitbucket_prs_tmp
