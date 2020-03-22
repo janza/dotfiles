@@ -1,4 +1,4 @@
 #!/usr/bin/bash -e
-set -x
+# set -x
 
-kitty --class "floating_kitty" bash -xc 'run_and_copy_output '"$1"
+kitty --class "floating_kitty" bash -c 'run_and_copy_output '"$1"

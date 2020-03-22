@@ -2,12 +2,12 @@
 
 issues() {
     # | sed 's/\[[^]]*]\s*//ig'
-    issue=$(jira_sprint | fzf --ansi --with-nth 1 -d '\t' --reverse --preview "echo {} | tr '\t' '\n' | tr -d '"'"'"' | tail -n +2 | bat --color always -l md -p" --preview-window 'up:30%:wrap' | cut -d' ' -f 1)
+    issue=$(jira_sprint list | fzf --ansi --with-nth 1 -d '\t' --reverse --preview "echo {} | tr '\t' '\n' | tr -d '"'"'"' | tail -n +2 | bat --color always -l md -p" --preview-window 'up:30%:wrap' | cut -d' ' -f 1)
     if [[ "$issue" != "" ]]; then
-        $BROWSER "https://insidedhq.atlassian.net/browse/$issue"
+        brwsr "https://insidedhq.atlassian.net/browse/$issue"
     fi
 }
 export -f issues
 # export floating=1
 export fullscreen=1
-exec myterm "bash -c 'issues'"
+exec alacritty -e bash -c 'issues'

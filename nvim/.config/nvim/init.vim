@@ -19,6 +19,7 @@ Plug 'junegunn/fzf.vim'
 
 " Plug 'vim-airline/vim-airline'
 
+Plug 'airblade/vim-rooter'
 Plug 'kassio/neoterm'
 Plug 'kristijanhusak/vim-carbon-now-sh'
 
@@ -45,7 +46,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 
-Plug 'nelsyeung/twig.vim'
+" Plug 'nelsyeung/twig.vim'
 
 Plug 'fatih/vim-go'
 
@@ -56,7 +57,7 @@ Plug 'janko-m/vim-test' " , { 'on': ['TestNearest', 'TestFile'] }
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
+" Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 
 call plug#end()
 
@@ -147,21 +148,23 @@ let g:gruvbox_italic = 1
 set background=dark
 " colorscheme onehalflight
 colorscheme gruvbox
+" colorscheme nord
+" colorscheme edge
 
-let g:fzf_colors = {
-	\ 'fg':      ['fg', 'Normal'],
-	\ 'bg':      ['bg', 'Normal'],
-	\ 'hl':      ['fg', 'GruvboxBlue'],
-	\ 'fg+':     ['fg', 'GruvboxGreen'],
-	\ 'bg+':     ['bg', 'GruvboxBg1'],
-	\ 'hl+':     ['fg', 'GruvboxGreen'],
-	\ 'info':    ['fg', 'GruvboxGreen'],
-	\ 'prompt':  ['fg', 'GruvboxBlue'],
-	\ 'header':  ['fg', 'GruvboxBlue'],
-	\ 'pointer': ['fg', 'Error'],
-	\ 'marker':  ['fg', 'Error'],
-	\ 'spinner': ['fg', 'Statement'],
-	\ }
+" let g:fzf_colors = {
+" 	\ 'fg':      ['fg', 'Normal'],
+" 	\ 'bg':      ['bg', 'Normal'],
+" 	\ 'hl':      ['fg', 'GruvboxBlue'],
+" 	\ 'fg+':     ['fg', 'GruvboxGreen'],
+" 	\ 'bg+':     ['bg', 'GruvboxBg1'],
+" 	\ 'hl+':     ['fg', 'GruvboxGreen'],
+" 	\ 'info':    ['fg', 'GruvboxGreen'],
+" 	\ 'prompt':  ['fg', 'GruvboxBlue'],
+" 	\ 'header':  ['fg', 'GruvboxBlue'],
+" 	\ 'pointer': ['fg', 'Error'],
+" 	\ 'marker':  ['fg', 'Error'],
+" 	\ 'spinner': ['fg', 'Statement'],
+" 	\ }
 
 let g:neoterm_shell = "zsh"
 let g:neoterm_size = 13
@@ -177,29 +180,29 @@ function! s:switch_dir(directory)
   execute ':cd' fnameescape(a:directory)
 endfunction
 
+let g:fzf_tags_command = 'rg --files | ctags --links=no -L-'
+
 command! -nargs=* Fasd
       \ call fzf#run({'source': 'fasd -l -d', 'sink': function('<sid>switch_dir')})
 
-" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+if has('nvim')
+  let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
 
-function! FloatingFZF()
-  let buf = nvim_create_buf(v:false, v:true)
-  call setbufvar(buf, '&signcolumn', 'no')
+  function! FloatingFZF()
+    let width = float2nr(&columns * 0.9)
+    let height = float2nr(&lines * 0.6)
+    let opts = { 'relative': 'editor',
+               \ 'row': (&lines - height) / 2,
+               \ 'col': (&columns - width) / 2,
+               \ 'width': width,
+               \ 'height': height }
 
-  let height = &lines - 3
-  " let width = float2nr(&columns - (&columns * 2 / 10))
-  " let col = float2nr((&columns - width) / 2)
+    let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
+  endfunction
 
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': 1,
-        \ 'col': 1,
-        \ 'width': &columns,
-        \ 'height': height
-        \ }
-
-  call nvim_open_win(buf, v:true, opts)
-endfunction
+  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+endif
 
 nmap ggv :execute "!git-view % " . line(".")<CR>
 highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#ebdbb2 guibg=#282828
@@ -225,14 +228,14 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-" nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
-" nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
-" nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+" nnoremap d "_d
+" nnoremap dd "_dd
 
 map <leader>tn :TestNearest<CR>
 map <leader>tf :TestFile<CR>
 let test#strategy = "neoterm"
-let g:test#runner_commands = ['pytest', 'Phpunit', 'Jest']
+" let test#runner_commands = ['unittest', 'Phpunit', 'Jest', 'bddscenario']
+let test#enabled_runners = ['php#phpunit', 'python#pyunit', 'javascript.jsx#jest', 'javascript#jest', 'bddscenario#pybdd']
 
 function! TestTransform(cmd) abort
   let mydirname = split(getcwd(), '/')[-1]
@@ -240,21 +243,21 @@ function! TestTransform(cmd) abort
     return 'poetry run '.a:cmd
   endif
   if getftype(expand('~/.virtualenvs/'.mydirname)) == "dir"
-    return 'workon '.mydirname.'; PYTHONPATH='.getcwd().' '.a:cmd
+    return 'PYTHONPATH='.getcwd().' '.a:cmd
   endif
   if filereadable("composer.json")
     return 'PATH="$(composer config bin-dir)/:$PATH"; '.a:cmd
   endi
-  return 'PYTHONPATH='.getcwd().' '.a:cmd
+  return a:cmd
 endfunction
 
+let g:test#javascript#jest#file_pattern = '\v(test|spec)\.(js|jsx|coffee|ts|tsx)$'
 let g:test#custom_transformations = {'custom': function('TestTransform')}
 let g:test#transformation = 'custom'
 let test#custom_runners = {'bddscenario': ['pybdd']}
 
 autocmd Bufenter *.scenario set ft=bddscenario
 
-nmap <C-F> :Rg<space>
 
 nmap ge :e <C-R>=expand("%:p:h") . "/" <CR>
 
@@ -293,10 +296,13 @@ nmap <silent> <A-l> :wincmd l<CR>
 nmap <leader><leader> :set hls<CR>:let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'<CR>
 
 nnoremap <c-p> :Files<cr>
+nnoremap <c-g> :Tags<cr>
 nnoremap <c-o> :GFiles?<CR>
 nnoremap <c-l> :Buffers<CR>
 nnoremap <c-k> :Fasd<cr>
 nnoremap <c-t> :History<CR>
+nnoremap <C-F> :Rg<space>
+" nmap <C-F> :Rg<space>
 
 " search for word under cursor
 nnoremap <c-d> :Rg <C-R><C-W><CR>

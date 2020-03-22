@@ -1,12 +1,13 @@
 #!/usr/bin/bash
-
+source ~/.virtualenvs/e2e_tests/bin/activate
 export RUN_SPECIFIC_TEST_CASE="$1"
 if [ "$HOST_INSIDED_CONTROL" == '' ]; then
     branch=$(git rev-parse --abbrev-ref HEAD | tr '[:upper:]' '[:lower:]')
-    if [ "$branch" != 'master' ]; then
+    if [ "$branch" != 'master' ] && [ "${use_master:-0}" != '1' ]; then
         export HOST_INSIDED_CONTROL=https://insidedhq-control.$branch.almostinsided.com
         export HOST_INSIDED_FORUM=https://insidedhq-forum.$branch.almostinsided.com
     fi
 fi
 export LOAD_SCENARIOS_FROM_DOCS_MANAGER=yes
+export BROWSER=chrome
 python -c 'import unittest; from src.tests.bdd.test_bdd import TestBdd; unittest.main()'

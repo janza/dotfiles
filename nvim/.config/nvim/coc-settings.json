@@ -13,6 +13,11 @@
                 "diagnosticsEnabled": true,
                 "lintTool": "golint"
             }
+        },
+        "efm": {
+            "command": "efm-langserver",
+            "args": [],
+            "filetypes": ["php"]
         }
     },
     "python.jediEnabled": true,

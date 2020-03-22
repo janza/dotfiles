@@ -2,10 +2,11 @@ source ~/.zshrc.d/zsh_config.zsh
 
 export EDITOR=vim
 export VISUAL=vim
-export BROWSER=firefox
+export BROWSER=firefox-nightly
 export GOPATH=~/code/go
+export QT_QPA_PLATFORMTHEME=gtk2
 
-# export XDG_CURRENT_DESKTOP=kde
+export XDG_CURRENT_DESKTOP=sway
 
 export TERM="xterm-256color"
 
@@ -23,7 +24,10 @@ export EXA_COLORS="uu=38;5;249:un=38;5;241:gu=38;5;245:gn=38;5;241:da=38;5;245:s
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 export FZF_DEFAULT_OPTS='-s --no-mouse --inline-info'
 
+alias kl="khal list"
+
 alias rg="rg -S"
+alias js="jira_sprint --no-summary"
 
 alias l="exa --group-directories-first -1"
 alias ll="exa --group-directories-first -l"

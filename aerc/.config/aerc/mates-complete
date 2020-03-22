@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+export MATES_DIR=~/.contacts/contacts
+mates email-query "$*" | awk -F '[<>]' 'BEGIN {OFS="\t"}; {print $2}'

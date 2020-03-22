@@ -6,3 +6,4 @@ url=$(pv | curl -sf -X POST -F "f=@-;filename=file" 'https://puull.pw')
 notify-send "$url"
 echo -n "$url" | xsel -b
 notify-send "Copied to clipboard: $url"
+echo "$url"

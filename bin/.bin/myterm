@@ -1,34 +1,52 @@
 #!/usr/bin/env bash
 
-if [[ "$#" == "0" ]]; then
-    if [ -n "$floating" ]; then
-        exec termite --class "floating" --title "make_me_floating"
-    elif [ -n "$fullscreen" ]; then
-        exec termite --class "fullscreenme"
-    else
-        exec termite
-    fi
-else
-    if [ -n "$floating" ]; then
-        exec termite --class "floating" --title "make_me_floating" -e "$@"
-    elif [ -n "$fullscreen" ]; then
-        exec termite --class "fullscreenme" -e "$@"
-    else
-        exec termite -e "$@"
-    fi
-fi
-
-
 # if [[ "$#" == "0" ]]; then
 #     if [ -n "$floating" ]; then
-#         exec kitty -1 --class "floating"
+#         exec alacritty --class "floating_kitty" --title "make_me_floating"
+#     elif [ -n "$fullscreen" ]; then
+#         exec alacritty --class "fullscreenme"
 #     else
-#         exec kitty -1
+#         exec alacritty
 #     fi
 # else
 #     if [ -n "$floating" ]; then
-#         exec kitty --single-instance --class "floating" $@
+#         exec alacritty --class "floating_kitty" --title "make_me_floating" -e "$@"
+#     elif [ -n "$fullscreen" ]; then
+#         exec alacritty --class "fullscreenme" -e "$@"
 #     else
-#         exec kitty --single-instance $@
+#         exec alacritty -e "$@"
 #     fi
 # fi
+
+# if [[ "$#" == "0" ]]; then
+#     if [ -n "$floating" ]; then
+#         exec termite --class "floating" --title "make_me_floating"
+#     elif [ -n "$fullscreen" ]; then
+#         exec termite --class "fullscreenme"
+#     else
+#         exec termite
+#     fi
+# else
+#     if [ -n "$floating" ]; then
+#         exec termite --class "floating" --title "make_me_floating" -e "$@"
+#     elif [ -n "$fullscreen" ]; then
+#         exec termite --class "fullscreenme" -e "$@"
+#     else
+#         exec termite -e "$@"
+#     fi
+# fi
+
+
+if [[ "$#" == "0" ]]; then
+    if [ -n "$floating" ]; then
+        exec kitty -1 --class "floating"
+    else
+        exec kitty -1
+    fi
+else
+    if [ -n "$floating" ]; then
+        exec kitty --single-instance --class "floating" $@
+    else
+        exec kitty --single-instance $@
+    fi
+fi

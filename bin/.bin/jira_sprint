@@ -8,6 +8,13 @@ import json
 from jira import JIRA as jira_construct
 
 
+def get_jira():
+    auth = (
+        'josip.janzic@insided.com',
+        str(subprocess.check_output(['pass', 'atlassian/token/josip.janzic@insided.com']).decode()).split('\n')[0])
+    return jira_construct('https://insidedhq.atlassian.net', basic_auth=auth)
+
+
 def load_issues():
     query = '''
 project IN ("USER")
@@ -16,11 +23,7 @@ ORDER BY sprint, Rank
     '''
 
 # AND sprint IN openSprints()
-
-    auth = (
-        'josip.janzic@insided.com',
-        str(subprocess.check_output(['pass', 'atlassian/token/josip.janzic@insided.com']).decode()).split('\n')[0])
-    jira = jira_construct('https://insidedhq.atlassian.net', basic_auth=auth)
+    jira = get_jira()
     results = jira.search_issues(
         query, maxResults=150,
         # fields=['summary, assignee, status, issuetype'],
@@ -87,7 +90,7 @@ def color(string):
         return taken_colors[string]
 
 
-def main(skip_cache):
+def main(skip_cache, all_tickets, no_summary):
     if skip_cache:
         load_issues()
 
@@ -98,17 +101,25 @@ def main(skip_cache):
         results = load_issues()
 
     for i in results['issues']:
-        # print(i['fields'].keys())
+        # print(i['fields'].get('customfield_10101', ''))
+        # continue
+        if not all_tickets:
+            if i['fields']['customfield_10007'] is None:
+                continue
+            if 'state=ACTIVE' not in i['fields']['customfield_10007'][0]:
+                continue
+
         assignee = i['fields']['assignee']['displayName'].split(
             ' ')[0] if i['fields']['assignee'] else ''
         status = i['fields']['status']['name'].replace('Ready for ', '').replace('Development', 'Todo')
-        print('{key} {status_color}{status:<11}{reset} {assigne_color}{assignee:<10}{reset} {summary} {type}\t{description}'.format(
+        print('{key:<9} {status_color}{status:<11}{reset} {assigne_color}{assignee:<10}{reset} {summary} {label} {type}\t{description}'.format(
             summary=i['fields']['summary'],
             assignee=assignee,
             status=status,
             key=i['key'],
-            description=json.dumps(i['fields']['description']),
+            description='' if no_summary else json.dumps(i['fields']['description']),
             type=i['fields']['issuetype']['name'],
+            label='<' + ','.join(i['fields']['labels']) + '>' if i['fields']['labels'] else '',
             reset=reset,
             status_color=status_color(status),
             assigne_color=color(assignee) if assignee else '',
@@ -118,7 +129,36 @@ def main(skip_cache):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
+    parser.add_argument('action', default='list', choices=['list', 'test-plan', 'comment', 'get-transitions', 'transition'])
     parser.add_argument('--skip-cache', action='store_true')
+    parser.add_argument('--all-tickets', action='store_true')
+    parser.add_argument('--no-summary', action='store_true')
+    parser.add_argument('--issue', '-i')
+    parser.add_argument('--test-plan', '-p')
+    parser.add_argument('--comment', '-c')
+    parser.add_argument('--transition', '-t')
+
     args = parser.parse_args()
 
-    main(args.skip_cache)
+    if args.action == 'list':
+        main(args.skip_cache, args.all_tickets, args.no_summary)
+
+    elif args.action == 'test-plan' and args.issue and args.test_plan:
+        issue = get_jira().issue(args.issue)
+        issue.update(fields={'customfield_10101': args.test_plan})
+
+    elif args.action == 'comment' and args.issue and args.comment:
+        get_jira().add_comment(args.issue, args.comment)
+
+    elif args.action == 'get-transitions' and args.issue:
+        jira = get_jira()
+        transitions = jira.transitions(jira.issue(args.issue))
+        print(', '.join(t['name'] for t in transitions))
+
+    elif args.action == 'transition' and args.issue and args.transition:
+        jira = get_jira()
+        issue = jira.issue(args.issue)
+        transitions = jira.transitions(issue)
+        for t in transitions:
+            if t['name'] == args.transition:
+                jira.transition_issue(issue, t['id'])

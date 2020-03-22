@@ -11,6 +11,8 @@ default_border normal 0
 default_floating_border normal 0
 hide_edge_borders both
 
+# xwayland disable
+
 
 # titlebar_border_thickness 0
 titlebar_border_thickness 0
@@ -80,8 +82,10 @@ for_window [title="Sharing Indicator"] floating enable, border none  # fix the i
 
 for_window [title = "Picture-in-Picture"] floating enable
 
-bindswitch --locked lid:off output eDP-1 dpms on
-bindswitch --locked lid:on output eDP-1 dpms off
+for_window [app_id="ulauncher"] border none
+
+# bindswitch --locked lid:off output eDP-1 dpms on
+# bindswitch --locked lid:on output eDP-1 dpms off
 
 titlebar_position bottom
 focus_follows_mouse yes
@@ -90,7 +94,7 @@ mouse_warping output
 #
 # KEYBINDINGS: xbindkeys -> sway
 #
-bindsym $mod+d exec kitty --class floating_kitty sway-launcher-desktop.sh
+bindsym $mod+d exec sway-launcher-desktop.sh
 bindsym $mod+u exec pipe_term emoji_picker_term
 
 bindsym $mod+o exec pipe_term list_pass_entries
@@ -120,7 +124,7 @@ bindsym $mod+semicolon exec pipe_term wl-clipboard-fzf
 
 bindsym grave exec kitty
 bindsym $mod+backslash exec start_remote_tmux
-bindsym $mod+minus exec kitty aerc
+bindsym $mod+minus exec kitty -e aerc
 bindsym $mod+comma exec playerctl play-pause
 
 # brightness
@@ -160,7 +164,7 @@ workspace 5 output $mon_ext
 output $mon_lap scale 2
 output * background {
     "#000000" solid_color
-    "/home/josip/fun_stuff/isabel-galvez-1303622-unsplash2.jpg" fill
+    /home/josip/fun_stuff/92f3c888780721.5de069e4ceabb.jpg fill
 }
 
 input * {
@@ -201,7 +205,9 @@ bar {
 }
 
 exec /usr/lib/kdeconnectd
+exec kdeconnect-indicator
 exec wob-pipe
+exec ulauncher
 exec "systemctl --user import-environment; systemctl --user start sway-session.target"
 
 # vim:filetype=i3

@@ -5,7 +5,6 @@
 
 url=$1
 
-
 case $url in
   https://cl.ly*)
     notify-send "Loading $url"
@@ -25,7 +24,7 @@ case $url in
     ;;
   OPS-*|OGP-*|USER-*|CUST-*|CORE-*)
     notify-send "Opening $url"
-    brwsr "https://insidedhq.atlassian.net/browse/$url"
+    $BROWSER "https://insidedhq.atlassian.net/browse/$url"
     ;;
-  *) brwsr "$url";;
+  *) $BROWSER "$url";;
 esac
