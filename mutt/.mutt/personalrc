@@ -7,4 +7,4 @@ set mbox_type=Maildir
 set realname = 'Josip Janzic'
 set from = 'josip.janzic@gmail.com'
 set use_from = yes
-set sendmail  = "msmtp -a personal"
+set sendmail  = "sendmdmail -a personal"

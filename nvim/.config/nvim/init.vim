@@ -1,4 +1,4 @@
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python3_host_prog = '/usr/bin/python'
 
 call plug#begin('~/.vim/plugged')
 
@@ -12,28 +12,39 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
 "
 Plug 'morhetz/gruvbox'
+" Plug 'smallwat3r/vim-efficient'
+" Plug 'habamax/vim-colors-lessthan'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'vimwiki/vimwiki', { 'on':  'VimwikiIndex', 'for': 'wiki' }
 
 " Plug 'vim-airline/vim-airline'
 
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 Plug 'kassio/neoterm'
-Plug 'kristijanhusak/vim-carbon-now-sh'
+
+" Plug 'kristijanhusak/vim-carbon-now-sh'
+"
+" Plug 'https://git.sr.ht/~leon_plickat/paige'
 
 Plug 'airblade/vim-gitgutter'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/completion-treesitter'
 
 " Plug 'w0rp/ale'
-Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/goyo.vim'
 
 Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
-Plug 'jceb/vim-orgmode'
+" Plug 'jceb/vim-orgmode'
 
 
 Plug 'AndrewRadev/splitjoin.vim'
@@ -48,14 +59,14 @@ Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 
 " Plug 'nelsyeung/twig.vim'
 
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': 'go' }
 
 Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
 Plug 'janko-m/vim-test' " , { 'on': ['TestNearest', 'TestFile'] }
 " Plug 'metakirby5/codi.vim'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 
@@ -65,6 +76,8 @@ let g:deoplete#enable_at_startup = 1
 
 let g:netrw_dirhistmax = 0
 
+" Fix bg colors in kitty
+let &t_ut=''
 
 set title
 " syntax sync minlines=256
@@ -78,11 +91,10 @@ set shortmess+=cT
 
 set laststatus=2
 
-set swapfile
-set directory^=~/.vim/swap//
-set writebackup
+set noswapfile
+set nowritebackup
 set nobackup
-set backupcopy=auto
+" set backupcopy=auto
 if has("patch-8.1.0251")
   " consolidate the writebackups -- not a big
   " deal either way, since they usually get deleted
@@ -114,6 +126,9 @@ let g:mapleader=","
 " set fillchars+=vert:│
 set foldmethod=manual
 
+set updatetime=300
+set signcolumn=yes
+
 " set wildoptions=pum
 set wildmode=list:longest
 set wildignore=*.o,*.obj,*~
@@ -131,40 +146,21 @@ set wildignore+=*.pdf
 set wildignore+=*/tmp/*,*.o,*.so,*.swp,*.zip,*/node_modules/*,*/bower_components/*
 
 if has('nvim')
-  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
   set inccommand=nosplit  " substitution previews
 endif
 
 " silent! call glaive#Install()
-
-let g:gruvbox_sign_column = 'bg0'
-let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_contrast_light = 'hard'
-let g:gruvbox_improved_warnings = 0
-let g:gruvbox_improved_strings = 0
-let g:gruvbox_invert_selection = 0
-let g:gruvbox_italic = 1
+"
+" let g:gruvbox_sign_column = 'bg0'
+" let g:gruvbox_contrast_dark = 'hard'
+" let g:gruvbox_contrast_light = 'hard'
+" let g:gruvbox_improved_warnings = 0
+" let g:gruvbox_improved_strings = 0
+" let g:gruvbox_invert_selection = 0
+" let g:gruvbox_italic = 1
 
 set background=dark
-" colorscheme onehalflight
 colorscheme gruvbox
-" colorscheme nord
-" colorscheme edge
-
-" let g:fzf_colors = {
-" 	\ 'fg':      ['fg', 'Normal'],
-" 	\ 'bg':      ['bg', 'Normal'],
-" 	\ 'hl':      ['fg', 'GruvboxBlue'],
-" 	\ 'fg+':     ['fg', 'GruvboxGreen'],
-" 	\ 'bg+':     ['bg', 'GruvboxBg1'],
-" 	\ 'hl+':     ['fg', 'GruvboxGreen'],
-" 	\ 'info':    ['fg', 'GruvboxGreen'],
-" 	\ 'prompt':  ['fg', 'GruvboxBlue'],
-" 	\ 'header':  ['fg', 'GruvboxBlue'],
-" 	\ 'pointer': ['fg', 'Error'],
-" 	\ 'marker':  ['fg', 'Error'],
-" 	\ 'spinner': ['fg', 'Statement'],
-" 	\ }
 
 let g:neoterm_shell = "zsh"
 let g:neoterm_size = 13
@@ -257,6 +253,7 @@ let g:test#transformation = 'custom'
 let test#custom_runners = {'bddscenario': ['pybdd']}
 
 autocmd Bufenter *.scenario set ft=bddscenario
+autocmd Bufenter *.tsx set ft=typescript
 
 
 nmap ge :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -347,74 +344,113 @@ nmap <leader>p :set paste!<BAR>set paste?<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-" map <leader>f :ALEFix<CR>
-" nmap <silent> <A-k> <Plug>(ale_previous_wrap)
-" nmap <silent> <A-j> <Plug>(ale_next_wrap)
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" let g:ale_linters = {
-"       \'go': ['gometalinter'],
-"       \'javascript.jsx': ['eslint'],
-"       \'javascript': ['eslint'],
-"       \'sass': [],
-"       \}
-
-" nmap <leader>d :ALEGoToDefinition<CR>
-
-
-" let g:ale_fixers = {
-"       \   'javascript': ['prettier_eslint'],
-"       \   'javascript.jsx': ['prettier_eslint'],
-"       \   'go': ['goimports'],
-"       \   'php': ['php_cs_fixer'],
-"       \   'python': ['autopep8', 'isort'],
-"       \ }
-" let g:ale_php_phpmd_ruleset = '/home/josip/.phpmd.xml'
-" let g:ale_lint_on_text_changed = 'never'
-
-" let g:ale_javascript_prettier_standard_executable = 'prettier-standard'
-" let g:ale_javascript_prettier_standard_use_global = 1
-
-" let g:ale_javascript_prettier_eslint_executable = 'prettier-eslint'
-" let g:ale_javascript_prettier_eslint_use_global = 1
-
-" let g:ale_go_goimports_executable = 'goimports'
-" let g:ale_go_goimports_use_global = 1
-
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 
-nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
-command! -nargs=0 Format :call CocAction('format')
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
-nmap <leader>d :call CocAction('doHover')<cr>
-xmap <leader>f  <Plug>(coc-format)
-nmap <leader>f  <Plug>(coc-format)
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" LSP-NVIM
+"
+lua <<EOF
+require'nvim_lsp'.pyls.setup{
+settings = {
+plugins = {
+        pyls_mypy = {
+            enabled = true;
+        };
+    };
+}
+}
+require'nvim_lsp'.tsserver.setup{}
+require'nvim_lsp'.gopls.setup{}
+require'nvim_lsp'.intelephense.setup{}
+EOF
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+let g:completion_chain_complete_list = {
+			\'default' : {
+			\	'default' : [
+			\		{'complete_items' : ['lsp']},
+			\		{'mode' : 'file'}
+			\	],
+			\	'comment' : [],
+			\	'string' : []
+			\	},
+			\'vim' : [
+			\	{'complete_items': ['snippet']},
+			\	{'mode' : 'cmd'}
+			\	],
+			\'typescript' : [
+			\	{'complete_items': ['ts']}
+			\	],
+			\'c' : [
+			\	{'complete_items': ['ts']}
+			\	],
+			\'python' : [
+			\	{'complete_items': ['lsp', 'ts']}
+			\	],
+			\'lua' : [
+			\	{'complete_items': ['ts']}
+			\	],
+			\}
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" COMPLETION-NVIM
+autocmd BufEnter * lua require'completion'.on_attach()
 
-" let g:coc_snippet_next = '<TAB>'
-" let g:coc_snippet_prev = '<S-TAB>'
-nmap <silent> [l <Plug>(coc-diagnostic-prev)
-nmap <silent> ]l <Plug>(coc-diagnostic-next)
-nmap <silent> <A-k> <Plug>(coc-diagnostic-prev)
-nmap <silent> <A-j> <Plug>(coc-diagnostic-next)
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" COMPLETION-NVIM-END
+
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "all",     -- one of "all", "language", or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { },  -- list of language that will be disabled
+  },
+  incremental_selection = {
+      enable = true,
+  }
+}
+EOF
+
+
+" nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+" command! -nargs=0 Format :call CocAction('format')
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+" nmap <leader>rn <Plug>(coc-rename)
+" nmap <leader>d :call CocAction('doHover')<cr>
+" xmap <leader>f  <Plug>(coc-format)
+" nmap <leader>f  <Plug>(coc-format)
+" xmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" inoremap <silent><expr> <c-space> coc#refresh()
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+
+" " let g:coc_snippet_next = '<TAB>'
+" " let g:coc_snippet_prev = '<S-TAB>'
+" nmap <silent> [l <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]l <Plug>(coc-diagnostic-next)
+" nmap <silent> <A-k> <Plug>(coc-diagnostic-prev)
+" nmap <silent> <A-j> <Plug>(coc-diagnostic-next)
+
 
 nmap <leader>j :set ft=json<BAR>%!jq .<CR>
 
@@ -439,8 +475,6 @@ fun! HtmlPaste() range
   exe ":".a:firstline.",".a:lastline."TOhtml"
   exe ":%s/font-family: monospace;/font-family: inconsolata, monospace;/"
   exe ":%s/font-size: 1em;/font-size: 18px;/"
-  exe ":%s/1c1c1c/1d2021/"
-  exe ":%s/ffd7af/f9f5d7/"
   exe ":w! " . localPaste . pasteName
   exe ":close"
   call system("rsync -a " . localPaste . " " . remotePublic)

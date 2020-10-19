@@ -1,0 +1,156 @@
+#!/usr/bin/env python
+
+import subprocess
+import email
+import email.message
+import email.policy
+import sys
+import commonmark
+import pynliner
+
+
+css = '''
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #fefefe;
+  color: #424242;
+  font-family: Helvetica Neue, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 500px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-transform: none;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+h4 {
+  font-size: 18px;
+}
+
+h5 {
+  font-size: 16px;
+}
+
+h6 {
+  font-size: 16px;
+}
+
+p {
+  margin: 0 0 10px;
+}
+
+p:last-child {
+  margin: 0;
+}
+
+a {
+  color: #0069ff;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style-position: inside;
+  margin: 0 0 40px;
+  padding: 0;
+}
+
+ul li, ol li {
+  margin: 0 0 10px;
+}
+
+blockquote {
+  border-left: 1px dashed #cacaca;
+  background: #fafafa;
+  margin: 40px 0;
+  padding: 10px 30px;
+}
+
+blockquote p {
+  color: #808080;
+  display: block;
+  font-style: italic;
+  margin: 0;
+  width: 100%;
+}
+
+img {
+  display: block;
+  margin: 40px 0;
+  width: auto;
+  max-width: 100%;
+}
+
+pre {
+  background: #effaff;
+  border: 1px dashed #a6d2df;
+  border-radius: 3px;
+  margin: 0 0 40px;
+  font-size: 14px;
+  padding: 15px 20px;
+  white-space: pre;
+  overflow-y: auto;
+}
+
+::selection {
+  background: #FFF5B8;
+  color: #000;
+  display: block;
+}
+
+::-moz-selection {
+  background: #FFF5B8;
+  color: #000;
+  display: block;
+}
+
+'''
+
+
+def process_mail():
+    final_html = ''
+
+    m = email.message_from_string(sys.stdin.read(), policy=email.policy.default)
+
+    for part in m.walk():
+        if part.get_content_maintype() != 'text':
+            continue
+
+        body = part.get_payload(decode=True).decode()
+
+        html_body = f'<html><head></head><body>{commonmark.commonmark(body)}</body></html>'
+
+        nliner = pynliner.Pynliner()
+        html_body_with_css = nliner.from_string(html_body).with_cssString(css)
+
+        final_html = html_body_with_css.run()
+
+    if final_html:
+        if not m.is_multipart():
+            m.make_alternative()
+        m.add_alternative(final_html, subtype='html')
+
+    return str(m).encode('utf8')
+
+
+mail = process_mail()
+args = sys.argv
+args.pop(0)
+subprocess.run(['msmtp'] + args, input=mail, check=True)

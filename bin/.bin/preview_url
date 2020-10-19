@@ -1,11 +1,18 @@
 #!/usr/bin/bash
 # set -e
 
-# CORE-123
-
 url=$1
+url_lower="$(echo "$1" | tr '[:upper:]' '[:lower:]')"
 
 case $url in
+  OPS-*|OGP-*|USER-*|CUST-*|CORE-*|PREN-*)
+    notify-send "Opening $url"
+    $BROWSER "https://insidedhq.atlassian.net/browse/$url"
+    exit 0
+    ;;
+esac
+
+case $url_lower in
   https://cl.ly*)
     notify-send "Loading $url"
     curl -sL "$url/download" > /tmp/slika
@@ -16,15 +23,11 @@ case $url in
     notify-send "Loading $url"
     curl -sL "$url" > /tmp/slika
     notify-send "Opening $url"
-    imv /tmp/slika
+    eog /tmp/slika
     ;;
-  *.mp4|*.mpg?*|*.mpeg?|*.mp4?*)
+  *youtube.com/*|*.mp4|*.mpg?*|*.mpeg?|*.mp4?*)
     notify-send "Opening $url"
     mpv "$url"
-    ;;
-  OPS-*|OGP-*|USER-*|CUST-*|CORE-*)
-    notify-send "Opening $url"
-    $BROWSER "https://insidedhq.atlassian.net/browse/$url"
     ;;
   *) $BROWSER "$url";;
 esac

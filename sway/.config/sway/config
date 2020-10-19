@@ -74,9 +74,12 @@ bindsym $mod+Control+q exec i3-msg exit
 
 bindsym XF86PowerOff exec systemctl suspend
 
-for_window [app_id="floating_kitty"] floating enable, move position center, border none, resize set 50ppt 50ppt
+for_window [app_id="floating_kitty"] floating enable, move position center, border none, resize set 70ppt 70ppt
+for_window [title="floating_kitty"] floating enable, move position center, border none, resize set 70ppt 70ppt
 
 for_window [app_id="eog"] floating enable, resize set 400px 300px, move position center
+
+for_window [app_id="imv"] floating enable, move position center
 
 for_window [title="Sharing Indicator"] floating enable, border none  # fix the indicator tiling
 
@@ -84,8 +87,8 @@ for_window [title = "Picture-in-Picture"] floating enable
 
 for_window [app_id="ulauncher"] border none
 
-# bindswitch --locked lid:off output eDP-1 dpms on
-# bindswitch --locked lid:on output eDP-1 dpms off
+bindswitch --locked lid:off output eDP-1 dpms on
+bindswitch --locked lid:on output eDP-1 dpms off
 
 titlebar_position bottom
 focus_follows_mouse yes
@@ -96,7 +99,7 @@ mouse_warping output
 #
 bindsym $mod+d exec sway-launcher-desktop.sh
 bindsym $mod+u exec pipe_term emoji_picker_term
-
+bindsym $mod+slash exec kitty --class="floating_kitty" -e t
 bindsym $mod+o exec pipe_term list_pass_entries
 bindsym $mod+grave exec file-brwsr
 bindsym $mod+n exec swaylock
@@ -110,7 +113,6 @@ bindsym $mod+semicolon exec pipe_term wl-clipboard-fzf
 
 # exec redshift
 # exec waybar
-# exec mako
 # exec gebaard
 # exec wl-clipboard-history -t
 # exec kdeconnect-indicator
@@ -124,7 +126,7 @@ bindsym $mod+semicolon exec pipe_term wl-clipboard-fzf
 
 bindsym grave exec kitty
 bindsym $mod+backslash exec start_remote_tmux
-bindsym $mod+minus exec kitty -e aerc
+bindsym $mod+minus exec geary  # termite -e aerc
 bindsym $mod+comma exec playerctl play-pause
 
 # brightness
@@ -164,7 +166,7 @@ workspace 5 output $mon_ext
 output $mon_lap scale 2
 output * background {
     "#000000" solid_color
-    /home/josip/fun_stuff/92f3c888780721.5de069e4ceabb.jpg fill
+    /home/josip/fun_stuff/kazetachinu042.jpg fill
 }
 
 input * {
@@ -185,29 +187,42 @@ client.unfocused        #000000 #000000 #999999 #000000 #458588
 client.focused_inactive #1d2021 #1d2021 #999999 #000000 #458588
 client.urgent           #cc241d #cc241d #999999 #000000 #cc241d
 
+#bar {
+#    font pango:Inter Bold 10
+#
+#    workspace_buttons yes
+#    separator_symbol "   "
+#    status_padding 2
+#    status_command python ~/.config/i3/pystatus.py
+#
+#    colors {
+#        background #1d2021
+#        statusline #eeeeee
+#        separator  #aaaaaa
+#        focused_workspace  #1d2021 #ffffff #1d2021
+#        active_workspace   #1d2021 #ffffff #1d2021
+#        inactive_workspace #1d2021 #1d2021 #ffffff
+#        urgent_workspace   #1d2021 #dc322f #1d2021
+#    }
+#}
+
 bar {
-    font pango:Inter Bold 10
-
-    workspace_buttons yes
-    separator_symbol "   "
-    status_padding 2
-    status_command python ~/.config/i3/pystatus.py
-
-    colors {
-        background #1d2021
-        statusline #eeeeee
-        separator  #aaaaaa
-        focused_workspace  #1d2021 #ffffff #1d2021
-        active_workspace   #1d2021 #ffffff #1d2021
-        inactive_workspace #1d2021 #1d2021 #ffffff
-        urgent_workspace   #1d2021 #dc322f #1d2021
-    }
+    swaybar_command waybar
 }
 
-exec /usr/lib/kdeconnectd
-exec kdeconnect-indicator
+# exec waybar
+# exec /home/josip/code/oss/dynamic-wallpaper/dwall.sh -s street
+# exec /usr/lib/kdeconnectd
+# exec kdeconnect-indicator
+
+exec mako
 exec wob-pipe
-exec ulauncher
-exec "systemctl --user import-environment; systemctl --user start sway-session.target"
+# exec poweralertd
+exec wlsunset -l 52.37 -L 4.89
+exec mopidy --config /home/josip/.config/mopidy/mopidy.conf
+exec wl-clipboard-history -t
+exec systemctl --user import-environment
+
+# exec "systemctl --user start sway-session.target"
 
 # vim:filetype=i3

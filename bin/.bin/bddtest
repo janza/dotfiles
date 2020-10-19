@@ -1,6 +1,12 @@
 #!/usr/bin/bash
 source ~/.virtualenvs/e2e_tests/bin/activate
-export RUN_SPECIFIC_TEST_CASE="$1"
+
+if [ "$1" = "-f" ]; then
+    export RUN_SPECIFIC_FEATURE="$2"
+else
+    export RUN_SPECIFIC_TEST_CASE="$1"
+fi
+
 if [ "$HOST_INSIDED_CONTROL" == '' ]; then
     branch=$(git rev-parse --abbrev-ref HEAD | tr '[:upper:]' '[:lower:]')
     if [ "$branch" != 'master' ] && [ "${use_master:-0}" != '1' ]; then
@@ -10,4 +16,6 @@ if [ "$HOST_INSIDED_CONTROL" == '' ]; then
 fi
 export LOAD_SCENARIOS_FROM_DOCS_MANAGER=yes
 export BROWSER=chrome
+
+export PYTHONPATH=/home/josip/code/insided/dev/e2e_tests
 python -c 'import unittest; from src.tests.bdd.test_bdd import TestBdd; unittest.main()'

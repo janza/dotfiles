@@ -12,6 +12,8 @@ checkbox() {
     find "/home/josip/.mail/$1/inbox/new" -follow  -maxdepth 1 -type f | wc -l
 }
 
+# "$(checkbox insided)"
+
 micon "$(checkbox jjanzic)" "$(checkbox personal)" "$(checkbox insided)" | xargs
 inotifywait -e create -e move -e delete /home/josip/.mail/*/inbox/new -q -m | \
     while read -r; do

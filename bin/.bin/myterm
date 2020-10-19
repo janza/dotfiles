@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 
-# if [[ "$#" == "0" ]]; then
-#     if [ -n "$floating" ]; then
-#         exec alacritty --class "floating_kitty" --title "make_me_floating"
-#     elif [ -n "$fullscreen" ]; then
-#         exec alacritty --class "fullscreenme"
-#     else
-#         exec alacritty
-#     fi
-# else
-#     if [ -n "$floating" ]; then
-#         exec alacritty --class "floating_kitty" --title "make_me_floating" -e "$@"
-#     elif [ -n "$fullscreen" ]; then
-#         exec alacritty --class "fullscreenme" -e "$@"
-#     else
-#         exec alacritty -e "$@"
-#     fi
-# fi
+if [[ "$#" == "0" ]]; then
+    if [ -n "$floating" ]; then
+        exec alacritty --class "floating_kitty" --title "make_me_floating"
+    elif [ -n "$fullscreen" ]; then
+        exec alacritty --class "fullscreenme"
+    else
+        exec alacritty
+    fi
+else
+    if [ -n "$floating" ]; then
+        exec alacritty --class "floating_kitty" --title "make_me_floating" -e $@
+    elif [ -n "$fullscreen" ]; then
+        exec alacritty --class "fullscreenme" -e $@
+    else
+        exec alacritty -e $@
+    fi
+fi
 
 # if [[ "$#" == "0" ]]; then
 #     if [ -n "$floating" ]; then
-#         exec termite --class "floating" --title "make_me_floating"
+#         exec termite --class "floating_kitty" --title "floating_kitty"
 #     elif [ -n "$fullscreen" ]; then
 #         exec termite --class "fullscreenme"
 #     else
@@ -28,7 +28,7 @@
 #     fi
 # else
 #     if [ -n "$floating" ]; then
-#         exec termite --class "floating" --title "make_me_floating" -e "$@"
+#         exec termite --class "floating_kitty" --title "floating_kitty" -e "$@"
 #     elif [ -n "$fullscreen" ]; then
 #         exec termite --class "fullscreenme" -e "$@"
 #     else
@@ -37,16 +37,16 @@
 # fi
 
 
-if [[ "$#" == "0" ]]; then
-    if [ -n "$floating" ]; then
-        exec kitty -1 --class "floating"
-    else
-        exec kitty -1
-    fi
-else
-    if [ -n "$floating" ]; then
-        exec kitty --single-instance --class "floating" $@
-    else
-        exec kitty --single-instance $@
-    fi
-fi
+# if [[ "$#" == "0" ]]; then
+#     if [ -n "$floating" ]; then
+#         exec kitty -1 --class "floating"
+#     else
+#         exec kitty -1
+#     fi
+# else
+#     if [ -n "$floating" ]; then
+#         exec kitty --single-instance --class "floating" $@
+#     else
+#         exec kitty --single-instance $@
+#     fi
+# fi

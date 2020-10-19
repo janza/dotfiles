@@ -8,6 +8,6 @@ view_me() {
     fi
 }
 export -f view_me
-# export floating=1
+export floating=1
 # export fullscreen=1
-exec alacritty -e bash -c 'view_me'
+exec myterm "bash -c 'view_me'"

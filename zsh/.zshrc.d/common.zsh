@@ -8,7 +8,7 @@ export QT_QPA_PLATFORMTHEME=gtk2
 
 export XDG_CURRENT_DESKTOP=sway
 
-export TERM="xterm-256color"
+# export TERM="xterm-256color"
 
 if [[ "$IS_PATH_SET" = "" ]]; then
   export PATH="$HOME/.bin:$PATH"
@@ -18,6 +18,9 @@ if [[ "$IS_PATH_SET" = "" ]]; then
   export PATH="$PATH:./vendors/bin"
   export IS_PATH_SET=1
 fi
+
+# colors
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
 export EXA_COLORS="uu=38;5;249:un=38;5;241:gu=38;5;245:gn=38;5;241:da=38;5;245:sn=38;5;7:sb=38;5;7:ur=38;5;3;1:uw=38;5;5;1:ux=38;5;1;1:ue=38;5;1;1:gr=38;5;249:gw=38;5;249:gx=38;5;249:tr=38;5;249:tw=38;5;249:tx=38;5;249:fi=38;5;248:di=38;5;253:ex=38;5;1:xa=38;5;12:*.png=38;5;4:*.jpg=38;5;4:*.gif=38;5;4"
 
@@ -33,9 +36,10 @@ alias l="exa --group-directories-first -1"
 alias ll="exa --group-directories-first -l"
 alias la="exa --group-directories-first -la"
 alias ls="exa"
+alias tree="exa --group-directories-first --tree"
 
 alias te="todo edit"
-alias t="todo"
+# alias t="todo"
 alias tn="todo new"
 
 alias setkbd="xset r rate 180 65 && setxkbmap -layout hr -variant us -option caps:escape"
@@ -52,7 +56,6 @@ alias open="xdg-open"
 alias y="yay"
 alias git='hub'
 alias mosh='mosh --bind-server=any'
-alias ti='tig --all'
 
 alias vimt='vipe < /dev/null'
 
@@ -64,7 +67,7 @@ function search_and_replace () {
     echo "Usage: search_and_replace TERM_TO_REPLACE TERM_TO_REPLACE_WITH"
     return 1
   fi
-  rg "$1" -l | xargs sed -E -i "s|$1|$2|g"
+  rg "$1" -l | xargs sd "$1" "$2"
 }
 
 # export MOZ_USE_XINPUT2=1 # firefox smooth scroll

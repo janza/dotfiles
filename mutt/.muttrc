@@ -6,7 +6,7 @@ source '~/.mutt/jjanzicrc'
 
 set signature = "~/.mutt/signature"
 
-mailboxes ~/.mail/jjanzic/inbox/ ~/.mail/jjanzic/archive/ ~/.mail/personal/inbox/ ~/.mail/personal/archive/ ~/.mail/insided/inbox/ ~/.mail/insided/archive/ ~/.mail/mnlth/inbox/ ~/.mail/mnlth/archive/
+mailboxes ~/.mail/jjanzic/inbox/ ~/.mail/jjanzic/archive/ ~/.mail/personal/inbox/ ~/.mail/personal/archive/ ~/.mail/insided/inbox/ ~/.mail/insided/archive/
 
 set sleep_time=0
 set spoolfile=+/
@@ -29,7 +29,7 @@ set editor=vim
 
 set tilde
 set smart_wrap
-set wrap=100
+set wrap=0
 set markers=no
 set text_flowed=yes
 
@@ -48,6 +48,8 @@ set pager_context=20
 my_hdr X-PGP-Key: https://keybase.io/jjanzic/pgp_keys.asc
 my_hdr X-Hack-The-Planet: Yes
 my_hdr X-Acid-Burn: Yes
+
+
 
 # set date_format="%d.%m %H:%M"
 # set index_format="%d | %-30.30F %s"
@@ -95,6 +97,12 @@ alternative_order text/plain text/html text/enriched *
 # alternative_order text/html text/enriched text/plain *
 auto_view text/html
 
+subjectrx 'Invitation:' '%L📅%R'
+subjectrx '\- Invitation to edit' '✏️ %L%R'
+subjectrx '\[Bitbucket\] ' '💻 %L%R'
+subjectrx 'Re: Pull Request ' '%LPR%R'
+subjectrx 'Pull Request ' '%LPR%R'
+
 
 bind editor <Tab> complete-query
 bind editor ^T complete
@@ -109,6 +117,8 @@ macro index,pager Ga "<change-folder>=../archive<enter>" "Go to All Mail"
 
 source ~/.mutt/gpg
 source ~/.mutt/colors
+
+macro index ^j '<change-folder>?jj<home>^K=<enter>'
 
 macro index <F8> \
 "<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\

@@ -2,18 +2,21 @@
 export CLUTTER_BACKEND=wayland
 export MOZ_ENABLE_WAYLAND=1
 export GTK_CSD=0
-export QT_QPA_PLATFORM=wayland-egl
+# export QT_QPA_PLATFORM=wayland-egl
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 export SDL_VIDEODRIVER=wayland
 export _JAVA_AWT_WM_NONREPARENTING=1
 # export KITTY_ENABLE_WAYLAND=1
+export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=sway
 # export MESA_LOADER_DRIVER_OVERRIDE=i965
+export QT_STYLE_OVERRIDE=kvantum-dark
+# export GTK_THEME=Arc-Dark
 
 if (( $+commands[gnome-keyring-daemon] )); then
   eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
   export SSH_AUTH_SOCK
 fi
 
-exec sway --debug 2>~/sway.log
+exec sway # --debug # -Dnoatomic # --debug
 # exec sway # -Dnoatomic # 2>~/sway.log

@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-exec kitty mosh --bind-server=any jjanzic.com -- tmux attach -d
+kitty mosh --bind-server=any alarm@10.200.100.2 -- tmux attach -d

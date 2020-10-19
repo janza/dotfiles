@@ -6,16 +6,23 @@
 	gpgSign = false
 [core]
     excludesfile = /home/josip/.gitignore_global
-    pager = diff-so-fancy | less --tabs=4 -RFX
+    ; pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = delta -s
     editor = vim
     attributesfile = ~/.gitattributes
+
+[interactive]
+    diffFilter = delta --color-only -s
+
 [github]
     user = janza
+
 [alias]
     cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     appraise = !/home/josip/.go/bin/git-appraise
 	meld = !/home/josip/.bin/git-meld.pl
+
 [diff]
 	tool = meld
 
@@ -23,22 +30,28 @@
     current = yellow reverse
     local = yellow
     remote = green
+
 [color "diff-highlight"]
     oldNormal = "red bold"
     oldHighlight = "red bold 52"
     newNormal = "green bold"
     newHighlight = "green bold 22"
+
 [color "diff"]
     meta = yellow bold
     frag = magenta bold
     old = red bold
     new = green bold
+
 [color "status"]
     changed = red
+
 [diff "image"]
     command = ~/.bin/git-imgdiff
+
 [credential]
     helper = /usr/lib/git-core/git-credential-gnome-keyring
+
 [rebase]
 	autoStash = true
 [pull]
@@ -56,3 +69,9 @@
     smtpserver = /usr/bin/msmtp
     smtpserveroption=-a
     smtpserveroption=jjanzic
+[branch]
+	sort = -committerdate
+
+[delta]
+    syntax-theme = zenburn
+    line-numbers = false

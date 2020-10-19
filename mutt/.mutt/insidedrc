@@ -6,4 +6,4 @@ unset trash
 set mbox_type=Maildir
 set realname = 'Josip Janzic'
 set from = 'josip.janzic@insided.com'
-set sendmail  = "msmtp -a insided"
+set sendmail  = "sendmdmail -a insided"

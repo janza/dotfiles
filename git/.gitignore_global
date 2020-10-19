@@ -6,6 +6,7 @@ phpstan.neon
 mypy.ini
 .idea
 .vscode
+.vim
 /tags
 
 __pycache__

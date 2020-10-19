@@ -4,11 +4,11 @@ import pickle
 import subprocess
 import argparse
 import json
-
-from jira import JIRA as jira_construct
+import time
 
 
 def get_jira():
+    from jira import JIRA as jira_construct
     auth = (
         'josip.janzic@insided.com',
         str(subprocess.check_output(['pass', 'atlassian/token/josip.janzic@insided.com']).decode()).split('\n')[0])
@@ -16,21 +16,19 @@ def get_jira():
 
 
 def load_issues():
-    query = '''
-project IN ("USER")
-AND status!=Closed
-ORDER BY sprint, Rank
-    '''
-
-# AND sprint IN openSprints()
     jira = get_jira()
-    results = jira.search_issues(
-        query, maxResults=150,
-        # fields=['summary, assignee, status, issuetype'],
-        json_result=True)
-    with open('/tmp/{}_cache'.format(__file__.split('/')[-1]), 'wb') as f:
-        pickle.dump(results, f)
-    return results
+
+    combined_results = []
+    for project in ['USER', 'CORE', 'CUST', 'PREN', 'OPS']:
+        query = f'project IN ("{project}") AND status!=Closed ORDER BY sprint, status, Rank'
+
+        results = jira.search_issues(
+            query, maxResults=100,
+            # fields=['summary, assignee, status, issuetype'],
+            json_result=True)
+        combined_results += results['issues']
+
+    return combined_results
 
 
 user_colors = {'BLACK': '\x1b[30m',
@@ -69,12 +67,16 @@ progress_colors = {'BLACK': '\x1b[30m',
                    'YELLOW': '\x1b[33m'
                    }
 
+
 reset = '\x1b[39m'
 
 taken_colors = dict()
 
 
 def status_color(string):
+    if string in ('Todo', 'Refinement', 'Open'):
+        return user_colors['LIGHTBLACK_EX']
+    return user_colors['YELLOW']
     try:
         return taken_colors[string]
     except KeyError:
@@ -83,6 +85,7 @@ def status_color(string):
 
 
 def color(string):
+    return user_colors['GREEN']
     try:
         return taken_colors[string]
     except KeyError:
@@ -90,27 +93,31 @@ def color(string):
         return taken_colors[string]
 
 
-def main(skip_cache, all_tickets, no_summary):
+def main(skip_cache, no_print, all_tickets, no_summary):
     if skip_cache:
-        load_issues()
-
-    try:
-        with open('/tmp/{}_cache'.format(__file__.split('/')[-1]), 'rb') as f:
-            results = pickle.load(f)
-    except (FileNotFoundError, EOFError):
         results = load_issues()
+    else:
+        try:
+            with open('/tmp/{}_cache'.format(__file__.split('/')[-1]), 'rb') as f:
+                results = pickle.load(f)
+        except (FileNotFoundError, EOFError):
+            results = load_issues()
+            with open('/tmp/{}_cache'.format(__file__.split('/')[-1]), 'wb') as f:
+                pickle.dump(results, f)
 
-    for i in results['issues']:
-        # print(i['fields'].get('customfield_10101', ''))
-        # continue
-        if not all_tickets:
-            if i['fields']['customfield_10007'] is None:
-                continue
-            if 'state=ACTIVE' not in i['fields']['customfield_10007'][0]:
-                continue
+    if no_print:
+        return
 
-        assignee = i['fields']['assignee']['displayName'].split(
-            ' ')[0] if i['fields']['assignee'] else ''
+    for i in results:
+        # if not all_tickets and i['fields']['project']['key'] != 'OPS':
+        #     sprints = i['fields']['customfield_10007']
+        #     if sprints is None:
+        #         continue
+
+        #     if any([s['name'] == 'active' for s in sprints]):
+        #         continue
+
+        assignee = i['fields']['assignee']['displayName'].split(' ')[0] if i['fields']['assignee'] else ''
         status = i['fields']['status']['name'].replace('Ready for ', '').replace('Development', 'Todo')
         print('{key:<9} {status_color}{status:<11}{reset} {assigne_color}{assignee:<10}{reset} {summary} {label} {type}\t{description}'.format(
             summary=i['fields']['summary'],
@@ -131,6 +138,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('action', default='list', choices=['list', 'test-plan', 'comment', 'get-transitions', 'transition'])
     parser.add_argument('--skip-cache', action='store_true')
+    parser.add_argument('--no-print', action='store_true')
     parser.add_argument('--all-tickets', action='store_true')
     parser.add_argument('--no-summary', action='store_true')
     parser.add_argument('--issue', '-i')
@@ -141,7 +149,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.action == 'list':
-        main(args.skip_cache, args.all_tickets, args.no_summary)
+        main(args.skip_cache, args.no_print, args.all_tickets, args.no_summary)
 
     elif args.action == 'test-plan' and args.issue and args.test_plan:
         issue = get_jira().issue(args.issue)

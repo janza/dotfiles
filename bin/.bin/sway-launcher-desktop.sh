@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env dash
 # terminal application launcher for sway, using fzf
 # Based on: https://gitlab.com/FlyingWombat/my-scripts/blob/master/sway-launcher
 # https://gist.github.com/Biont/40ef59652acf3673520c7a03c9f22d2a
-shopt -s nullglob globstar
+# shopt -s nullglob globstar
 set -o pipefail
 # shellcheck disable=SC2154
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR

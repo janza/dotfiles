@@ -60,11 +60,11 @@ color signature  brightmagenta default
 color indicator  brightwhite          default
 color attachment green         default
 color error      red           default
-color message    white   default
+color message    color15   default
 color search     brightwhite   magenta
 color status     default       default
 color tree       white         default
-color normal     white         default
+color normal     color15         default
 color tilde      green         default
 color bold       brightyellow  default
 color underline  magenta       default
