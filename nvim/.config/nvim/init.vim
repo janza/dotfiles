@@ -34,8 +34,10 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lua/diagnostic-nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/completion-treesitter'
+Plug 'steelsojka/completion-buffers'
 
 " Plug 'w0rp/ale'
 " Plug 'junegunn/goyo.vim'
@@ -89,7 +91,7 @@ set backspace=2		" allow backspacing over everything in insert mode
 set nojoinspaces
 set shortmess+=cT
 
-set laststatus=2
+" set laststatus=2
 
 set noswapfile
 set nowritebackup
@@ -108,7 +110,7 @@ set hidden
 
 set ignorecase
 set smartcase
-set completeopt-=preview " disable popup on top
+set completeopt=menuone,noinsert,noselect
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -253,7 +255,7 @@ let g:test#transformation = 'custom'
 let test#custom_runners = {'bddscenario': ['pybdd']}
 
 autocmd Bufenter *.scenario set ft=bddscenario
-autocmd Bufenter *.tsx set ft=typescript
+" autocmd Bufenter *.tsx set ft=typescript.tsx
 
 
 nmap ge :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -347,9 +349,29 @@ vnoremap > >gv
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 
 " LSP-NVIM
-"
+
+
+nmap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nmap <leader>d <cmd>lua vim.lsp.buf.hover()<CR>
+nmap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
+nmap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+
+
+let g:diagnostic_enable_virtual_text = 1
+let g:diagnostic_auto_popup_while_jump = 1
+
+nmap <silent> <A-k> :PrevDiagnostic<CR>
+nmap <silent> <A-j> :NextDiagnostic<CR>
+
 lua <<EOF
+
+local on_attach_vim = function(client)
+  require'completion'.on_attach(client)
+  require'diagnostic'.on_attach(client)
+end
+
 require'nvim_lsp'.pyls.setup{
+on_attach=on_attach_vim;
 settings = {
 plugins = {
         pyls_mypy = {
@@ -358,50 +380,30 @@ plugins = {
     };
 }
 }
-require'nvim_lsp'.tsserver.setup{}
-require'nvim_lsp'.gopls.setup{}
-require'nvim_lsp'.intelephense.setup{}
+require'nvim_lsp'.tsserver.setup{on_attach=on_attach_vim}
+require'nvim_lsp'.gopls.setup{on_attach=on_attach_vim}
+require'nvim_lsp'.intelephense.setup{on_attach=on_attach_vim}
 EOF
 
 let g:completion_chain_complete_list = {
-			\'default' : {
-			\	'default' : [
-			\		{'complete_items' : ['lsp']},
-			\		{'mode' : 'file'}
-			\	],
-			\	'comment' : [],
-			\	'string' : []
-			\	},
-			\'vim' : [
-			\	{'complete_items': ['snippet']},
-			\	{'mode' : 'cmd'}
-			\	],
-			\'typescript' : [
-			\	{'complete_items': ['ts']}
-			\	],
-			\'c' : [
-			\	{'complete_items': ['ts']}
-			\	],
-			\'python' : [
-			\	{'complete_items': ['lsp', 'ts']}
-			\	],
-			\'lua' : [
-			\	{'complete_items': ['ts']}
-			\	],
-			\}
+      \	'default' : [
+      \		{'complete_items' : ['lsp', 'ts']},
+      \		{'complete_items' : ['buffers']},
+      \	]
+      \	}
+
+let g:completion_auto_change_source = 1
 
 " COMPLETION-NVIM
-autocmd BufEnter * lua require'completion'.on_attach()
+" autocmd BufEnter * lua require'completion'.on_attach()
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
 
 " COMPLETION-NVIM-END
-
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -416,6 +418,7 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
+" COC
 
 " nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
 " command! -nargs=0 Format :call CocAction('format')
@@ -452,6 +455,7 @@ EOF
 " nmap <silent> <A-j> <Plug>(coc-diagnostic-next)
 
 
+
 nmap <leader>j :set ft=json<BAR>%!jq .<CR>
 
 " read custom configuration
@@ -464,22 +468,24 @@ let g:html_no_pre = 1
 com! -range=% HtmlPaste <line1>,<line2>call HtmlPaste()
 noremap <silent> gH :HtmlPaste<cr>
 fun! HtmlPaste() range
-  let localPaste = "~/.paste/"
-  let remotePublic = "jjanzic.com:sites/ss"
+  " let localPaste = "~/.paste/"
+  let remotePublic = "jjanzic.com:sites/ss/"
   let remotePasteUrl = "https://puull.pw/s"
 
-  let pasteName = system("cat /dev/urandom | base64 | head -1 | tr -dc 'a-zA-Z0-9'| cut -c'1-10'")
+  let pasteName = trim(system("cat /dev/urandom | base64 | head -1 | tr -dc 'a-zA-Z0-9'| cut -c'1-10'")) . ".txt"
 
-  set clipboard=""
+  " set clipboard=""
 
-  exe ":".a:firstline.",".a:lastline."TOhtml"
-  exe ":%s/font-family: monospace;/font-family: inconsolata, monospace;/"
-  exe ":%s/font-size: 1em;/font-size: 18px;/"
-  exe ":w! " . localPaste . pasteName
-  exe ":close"
-  call system("rsync -a " . localPaste . " " . remotePublic)
-  call system("rm " . localPaste)
-  redraw!
+  " exe ":".a:firstline.",".a:lastline."TOhtml"
+  " exe ":%s/font-family: monospace;/font-family: inconsolata, monospace;/"
+  " exe ":%s/font-size: 1em;/font-size: 18px;/"
+  " exe ":w! " . localPaste . pasteName
+  " exe ":close"
+  " echo "rsync -a " . expand("%:p") . " " . remotePublic . pasteName
+  echo "rsync --chmod=u+rw,g+r,o+r " . expand("%:p") . " " . remotePublic . pasteName
+  call system("rsync --chmod=u+rw,g+r,o+r " . expand("%:p") . " " . remotePublic . pasteName)
+  " call system("rm " . localPaste)
+  " redraw!
 
   let @+ = remotePasteUrl . "/" . pasteName
 
