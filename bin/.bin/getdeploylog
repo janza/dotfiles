@@ -1,0 +1,31 @@
+#!/usr/bin/bash
+
+function highlight() {
+	declare -A fg_color_map
+	fg_color_map[black]=30
+	fg_color_map[red]=31
+	fg_color_map[green]=32
+	fg_color_map[yellow]=33
+	fg_color_map[blue]=34
+	fg_color_map[magenta]=35
+	fg_color_map[cyan]=36
+
+	fg_c=$(echo -e "\e[1;${fg_color_map[$1]}m")
+	c_rs=$'\e[0m'
+	sed -u s"/$2/$fg_c\0$c_rs/ig"
+}
+
+
+start_time=$(date +%Y-%m-%dT%H:%M:%S  -d  "24 hour ago")
+aws deploy list-deployments --max-items 20 --create-time-range "start=${start_time}" | jq -r '.deployments | join(" ")' | xargs aws deploy batch-get-deployments --deployment-ids | jq -r '.deploymentsInfo[] | "\(.deploymentId) \(.applicationName) \(.status)"' \
+    | highlight red FAILED | highlight green SUCCEEDED | highlight green COMPLETED | highlight yellow PROGRESS \
+    | fzf --no-sort --ansi | while read buildid; do
+
+deployment_id="$(echo $buildid | cut -f1 -d' ')"
+
+aws deploy list-deployment-instances --deployment-id "${deployment_id}" | jq '.instancesList[]' -r | while read instanceid; do
+echo "== Instance: $instanceid"
+aws deploy get-deployment-instance --deployment-id "${deployment_id}" --instance-id "${instanceid}" | jq '.instanceSummary.lifecycleEvents[] | "\(.lifecycleEventName) \(.status) \(.diagnostics.message) \(.diagnostics.logTail)"' -r \
+    | highlight red FAILED | highlight green SUCCEEDED | highlight red error | highlight yellow skipped
+done
+ done

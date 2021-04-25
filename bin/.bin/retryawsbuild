@@ -1,0 +1,24 @@
+#!/usr/bin/sh
+
+function highlight() {
+	declare -A fg_color_map
+	fg_color_map[black]=30
+	fg_color_map[red]=31
+	fg_color_map[green]=32
+	fg_color_map[yellow]=33
+	fg_color_map[blue]=34
+	fg_color_map[magenta]=35
+	fg_color_map[cyan]=36
+
+	fg_c=$(echo -e "\e[1;${fg_color_map[$1]}m")
+	c_rs=$'\e[0m'
+	sed -u s"/$2/$fg_c\0$c_rs/ig"
+}
+
+aws codebuild list-builds --max-items 20 | jq -r '.ids | join(" ")' | xargs aws codebuild batch-get-builds --ids \
+    | jq -r '.builds[] | "\(.id) \(.buildStatus) \(.currentPhase) \(.sourceVersion) \(.source.location |split("/") |.[2])"' \
+    | highlight red FAILED | highlight green SUCCEEDED | highlight green COMPLETED | highlight yellow PROGRESS \
+    | fzf --no-sort --ansi | while read buildid; do
+    aws codebuild retry-build --id "$(echo $buildid | cut -f 1 -d' ')"
+done | jq .
+

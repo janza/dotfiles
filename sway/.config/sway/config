@@ -1,4 +1,4 @@
-font pango:Inter Bold 10
+font pango:Inter Bold 8
 
 set $mod Mod4
 floating_modifier $mod
@@ -72,6 +72,8 @@ bindsym $mod+c kill
 bindsym $mod+Control+r reload
 bindsym $mod+Control+q exec i3-msg exit
 
+bindsym $mod+x exec makoctl dismiss -a
+
 bindsym XF86PowerOff exec systemctl suspend
 
 for_window [app_id="floating_kitty"] floating enable, move position center, border none, resize set 70ppt 70ppt
@@ -99,7 +101,7 @@ mouse_warping output
 #
 bindsym $mod+d exec sway-launcher-desktop.sh
 bindsym $mod+u exec pipe_term emoji_picker_term
-bindsym $mod+slash exec kitty --class="floating_kitty" -e t
+# bindsym $mod+slash exec myterm --class="floating_kitty" -e t
 bindsym $mod+o exec pipe_term list_pass_entries
 bindsym $mod+grave exec file-brwsr
 bindsym $mod+n exec swaylock
@@ -116,7 +118,7 @@ bindsym $mod+semicolon exec pipe_term wl-clipboard-fzf
 # exec gebaard
 # exec wl-clipboard-history -t
 # exec kdeconnect-indicator
-# exec swayidle timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+# exec swayidle timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
 
 
 # exec_always import-gsettings \
@@ -124,7 +126,7 @@ bindsym $mod+semicolon exec pipe_term wl-clipboard-fzf
 #     icon-theme:gtk-icon-theme-name \
 #     cursor-theme:gtk-cursor-theme-name
 
-bindsym grave exec kitty
+bindsym grave exec myterm
 bindsym $mod+backslash exec start_remote_tmux
 bindsym $mod+minus exec geary  # termite -e aerc
 bindsym $mod+comma exec playerctl play-pause
@@ -149,7 +151,7 @@ bindsym $mod+button5 exec pamixer --decrease 5 && pamixer --get-volume > /tmp/wo
 # monitors
 
 set $mon_lap eDP-1
-set $mon_ext HDMI-A-2
+set $mon_ext DP-1
 
 workspace 10 output $mon_lap
 workspace 9 output $mon_lap
@@ -157,16 +159,16 @@ workspace 8 output $mon_lap
 workspace 7 output $mon_lap
 workspace 6 output $mon_lap
 
-workspace 1 output $mon_ext
-workspace 2 output $mon_ext
-workspace 3 output $mon_ext
-workspace 4 output $mon_ext
-workspace 5 output $mon_ext
+workspace 1 output $mon_ext $mon_lap
+workspace 2 output $mon_ext $mon_lap
+workspace 3 output $mon_ext $mon_lap
+workspace 4 output $mon_ext $mon_lap
+workspace 5 output $mon_ext $mon_lap
 
-output $mon_lap scale 2
+output * scale 2
 output * background {
     "#000000" solid_color
-    /home/josip/fun_stuff/kazetachinu042.jpg fill
+    /home/josip/fun_stuff/Aenami.jpg fill
 }
 
 input * {
@@ -175,6 +177,13 @@ input * {
     repeat_rate 65
     repeat_delay 180
     xkb_options caps:escape
+    tap on
+}
+
+# usb thinkpad keyboard
+
+input 6127:24647:Lenovo_ThinkPad_Compact_USB_Keyboard_with_TrackPoint {
+    pointer_accel 0.6
 }
 
 input 1452:627:bcm5974 {
@@ -182,46 +191,50 @@ input 1452:627:bcm5974 {
 }
 
 #                       border  bg      text    indctr  chld brdr
-client.focused          #1d2021 #1d2021 #ffffff #000000 #689d6a
+client.focused          "#000000" "#1d2021" "#999999" "#000000" "#458588"
 client.unfocused        #000000 #000000 #999999 #000000 #458588
 client.focused_inactive #1d2021 #1d2021 #999999 #000000 #458588
 client.urgent           #cc241d #cc241d #999999 #000000 #cc241d
 
-#bar {
-#    font pango:Inter Bold 10
+# bar {
+#     font pango:Inter Bold 10
 #
-#    workspace_buttons yes
-#    separator_symbol "   "
-#    status_padding 2
-#    status_command python ~/.config/i3/pystatus.py
+#     workspace_buttons yes
+#     separator_symbol "   "
+#     status_padding 2
+#     status_command python ~/.config/i3/pystatus.py
 #
-#    colors {
-#        background #1d2021
-#        statusline #eeeeee
-#        separator  #aaaaaa
-#        focused_workspace  #1d2021 #ffffff #1d2021
-#        active_workspace   #1d2021 #ffffff #1d2021
-#        inactive_workspace #1d2021 #1d2021 #ffffff
-#        urgent_workspace   #1d2021 #dc322f #1d2021
-#    }
-#}
+#     colors {
+#         background #1d2021
+#         statusline #eeeeee
+#         separator  #aaaaaa
+#         focused_workspace  #1d2021 #ffffff #1d2021
+#         active_workspace   #1d2021 #ffffff #1d2021
+#         inactive_workspace #1d2021 #1d2021 #ffffff
+#         urgent_workspace   #1d2021 #dc322f #1d2021
+#     }
+# }
 
 bar {
     swaybar_command waybar
 }
 
-# exec waybar
-# exec /home/josip/code/oss/dynamic-wallpaper/dwall.sh -s street
-# exec /usr/lib/kdeconnectd
 # exec kdeconnect-indicator
 
+exec /usr/lib/kdeconnectd
+exec kanshi
 exec mako
 exec wob-pipe
+exec solaar --window=hide --battery-icons=symbolic
 # exec poweralertd
 exec wlsunset -l 52.37 -L 4.89
-exec mopidy --config /home/josip/.config/mopidy/mopidy.conf
+exec mopidy
 exec wl-clipboard-history -t
-exec systemctl --user import-environment
+exec gammastep -l manual -l 52.37:4.89
+
+exec "spotifyd -u jjosip -P 'pass show accounts.spotify.com/jjosip' -b pulseaudio -d kraken --no-daemon"
+
+exec "systemctl --user import-environment"
 
 # exec "systemctl --user start sway-session.target"
 

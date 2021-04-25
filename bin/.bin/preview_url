@@ -6,28 +6,28 @@ url_lower="$(echo "$1" | tr '[:upper:]' '[:lower:]')"
 
 case $url in
   OPS-*|OGP-*|USER-*|CUST-*|CORE-*|PREN-*)
-    notify-send "Opening $url"
-    $BROWSER "https://insidedhq.atlassian.net/browse/$url"
+    notify-send "Opening $url" -t 1000
+    brwsr "https://insidedhq.atlassian.net/browse/$url"
     exit 0
     ;;
 esac
 
 case $url_lower in
   https://cl.ly*)
-    notify-send "Loading $url"
+    notify-send "Loading $url" -t 1000
     curl -sL "$url/download" > /tmp/slika
-    notify-send "Opening $url"
+    notify-send "Opening $url" -t 1000
     imv /tmp/slika
     ;;
   *.png|*.png?*|*.jpg|*.jpg?*|*.jpeg|*.jpeg?*|*.gif|*.gif?*)
-    notify-send "Loading $url"
+    notify-send "Loading $url" -t 3000
     curl -sL "$url" > /tmp/slika
-    notify-send "Opening $url"
+    notify-send "Opening $url" -t 1000
     eog /tmp/slika
     ;;
   *youtube.com/*|*.mp4|*.mpg?*|*.mpeg?|*.mp4?*)
-    notify-send "Opening $url"
+    notify-send "Opening $url" -t 1000
     mpv "$url"
     ;;
-  *) $BROWSER "$url";;
+  *) brwsr "$url";;
 esac

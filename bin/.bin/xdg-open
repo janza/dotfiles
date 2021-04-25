@@ -1,0 +1,21 @@
+#!/bin/sh
+
+path="$(echo "$1" | tr '[:upper:]' '[:lower:]')"
+
+case "${path%%:*}" in
+	http|https|*.html)
+		exec preview_url "$1"
+		;;
+	*.js|*.txt|*.tsx|*.ts|*.php|*.css|*.md)
+		exec gnvim "$1"
+		;;
+	*.jpeg|*.jpg|*.png|*.gif|*.JPEG|*.JPG|*.PNG|*.GIF)
+		exec eog "$1"
+		;;
+	mailto)
+		exec aerc "$1"
+		;;
+	*)
+		exec /usr/bin/xdg-open "$@"
+		;;
+esac

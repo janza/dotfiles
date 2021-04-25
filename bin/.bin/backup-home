@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+B2_ACCOUNT_ID=002b0832ce094810000000001 B2_ACCOUNT_KEY=$(pass show b2-backup-key) restic backup \
+  ~ \
+  --exclude-if-present .git \
+  --exclude node_modules \
+  --exclude-caches \
+  -r "b2:jjanzic-backup" \
+  -e Downloads \
+  -e secret \
+  -e "VirtualBox VMs" \
+  -e .mozilla \
+  -e .virtualenvs \
+  -e .vagrant.d \
+  -e tmp \
+  -e smb \
+  -e .tmp \
+  -e .cache \
+  --one-file-system \
+  --password-command "pass show restic"

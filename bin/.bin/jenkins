@@ -1,0 +1,173 @@
+#!/usr/bin/env python
+
+import argparse
+import requests
+import subprocess
+import json
+
+
+# global token
+token = None
+
+
+def request(url, params=None):
+    global token
+    if token is None:
+        token = subprocess.check_output(
+            ['pass', 'show', 'jenkins-token/josip.janzic@insided.com']
+        ).decode().strip()
+
+
+    if params is not None:
+        # print(params)
+        response = requests.post(f'https://jenkins.insided.com{url}', auth=('josipjanzic', token), data={
+            'json': params
+        })
+    else:
+        response = requests.get(f'https://jenkins.insided.com{url}', auth=('josipjanzic', token))
+
+
+    # print(response.status_code)
+    # print(response.text)
+    response.raise_for_status()
+    return response
+
+# https://jenkins.insided.com/job/E2E%20BDD%20Tests/3544/artifact/test_report_insidedhq/rerun_failed_tests.txt
+
+
+def get_job_params(job_id):
+    for action in request(f'/job/E2E%20BDD%20Tests/{job_id}/api/json').json()['actions']:
+        if 'parameters' not in action:
+            continue
+
+        return {param['name']: param['value'] for param in action['parameters']}
+
+
+def check_e2e():
+    job_info = request('/job/E2E%20BDD%20Tests/api/json').json()
+    last_build = job_info['lastBuild']['number']
+
+    number_of_jobs_to_check = 7
+    checked_jobs = -1
+
+    res = []
+    while len(res) < number_of_jobs_to_check:
+        checked_jobs += 1
+        i = last_build - checked_jobs
+        params = get_job_params(i)
+        print(checked_jobs, len(res), number_of_jobs_to_check, params)
+        if params['test_case_id'] == '' and params['functionality_id'] == '' and params['feature_id'] == '' and params['branch'] == 'master':
+            try:
+                res.append((i, request(f'/job/E2E%20BDD%20Tests/{i}/artifact/test_report_insidedhq/rerun_failed_tests.txt').text))
+            except:
+                continue
+
+    tests = {}
+    for idx, job in res:
+        print(f'{idx}: {job}')
+        cases = job.split(',')
+        if len(cases) > 40:
+            # ignore when run has more than 50 failures
+            continue
+        for test in cases:
+            try:
+                tests[test] += 1
+            except KeyError:
+                tests[test] = 1
+
+    for idx, item in enumerate(reversed(sorted(tests.items(), key=lambda item: item[1]))):
+        # if idx >= 30:
+        #     return
+        k, v = item
+        if not k:
+            continue
+        # if v < 1:
+        #     return
+        case = test_case(k)
+        desc = case['title']
+        updated_by = case['updatedBy']['name']
+        pattern = ''.join('x' if k in job.split(',') else '.' for _, job in reversed(res))
+        print(f'{v}/{len(res)}: {pattern} {k} - {updated_by} - {desc}')
+
+
+def test_case(test_case_id):
+    res = requests.post('http://docs-manager.sandboxinsided.com:8000/graphql', json={
+        "operationName": "TestCaseById",
+        "variables": {
+            "testCaseId": test_case_id
+        },
+        "query": "query TestCaseById($testCaseId: Int) {\n  testCase(testCaseId: $testCaseId) {\n    id\n    title\n    description\n    notes\n    testCaseType\n    priority\n    isAutomated\n  updatedBy { name \n }  functionality {\n      id\n      title\n   \n  feature {\n        id\n        title\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"
+    })
+    res.raise_for_status()
+    ret = res.json()['data']['testCase']
+    return ret
+
+
+def build(job, *args, **kwargs):
+    p = json.dumps({
+        'parameter': [{'name': name, 'value': value} for name, value in kwargs.items()]
+    })
+    request(f'/job/{job}/build', p)
+
+
+def build_ti(ticket, branch=None):
+    build('setup-ticket-env-vpc',
+          ticket_number=ticket,
+          community_backend_branch=branch or ticket,
+          api_branch='master',
+          worker_branch='master',
+          worker_export_branch='master',
+          customers='',
+          create_databases='no')
+
+
+def build_backend(ticket, branch=None):
+    build('ticket-instance-community-backend', ticket=ticket, community_backend_branch=branch or ticket)
+
+
+def build_repo(repo, branch):
+    build('deploy-repository-to-staging', REPOSITORY=repo, BRANCH=branch)
+
+def build_repo_for_test(repo, branch):
+    build('deploy-repository-to-test', REPOSITORY=repo, BRANCH=branch)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.set_defaults(func=lambda: parser.print_usage())
+    # parser.add_argument('job', choices=['ticket', 'backend', 'staging'])
+    subparsers = parser.add_subparsers(title='job')
+
+    e2e_parser = subparsers.add_parser('e2e')
+    # e2e_parser.add_argument('ticket')
+    # e2e_parser.add_argument('--branch')
+    e2e_parser.set_defaults(func=check_e2e)
+
+    ticket_parser = subparsers.add_parser('ticket')
+    ticket_parser.add_argument('ticket')
+    ticket_parser.add_argument('--branch')
+    ticket_parser.set_defaults(func=build_ti)
+
+    backend_parser = subparsers.add_parser('backend')
+    backend_parser.add_argument('ticket')
+    backend_parser.add_argument('--branch')
+    backend_parser.set_defaults(func=build_backend)
+
+    staging_parser = subparsers.add_parser('staging')
+    staging_parser.add_argument('repo')
+    staging_parser.add_argument('branch')
+    staging_parser.set_defaults(func=build_repo)
+
+    staging_parser = subparsers.add_parser('test')
+    staging_parser.add_argument('repo')
+    staging_parser.add_argument('branch')
+    staging_parser.set_defaults(func=build_repo_for_test)
+
+    args = parser.parse_args()
+    fn = args.func
+    vargs = vars(args)
+    del vargs['func']
+    fn(**vargs)
+
+
+main()

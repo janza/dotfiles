@@ -1,2 +1,5 @@
 #!/usr/bin/bash -e
-compgen -c | fzf --reverse --sync --tiebreak=begin --print-query --bind=tab:replace-query --prompt='🚀 ' | tail -1 | xargs swaymsg exec
+
+compgen -c | sort -u | fzy -l 30 --prompt='🚀 ' | tail -1 | xargs swaymsg exec
+
+# compgen -c | sort -u | fzf --reverse --border --tiebreak=begin --print-query --bind=tab:replace-query --prompt='🚀 ' | tail -1 | xargs swaymsg exec

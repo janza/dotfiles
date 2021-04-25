@@ -23,34 +23,51 @@ function ec2 () {
     ssh_host=production-usw2.ssh.insided.com
   elif [[ $AWS_PROFILE = 'management' ]]; then
     ssh_host=management-euw1.ssh.insided.com
+  elif [[ $AWS_PROFILE = 'test' ]]; then
+    ssh_host=test-euw1.ssh.insided.com
   else
     ssh_host=ssh.insided.com
   fi
 
-  ssh -tA "$ssh_host" -- ssh -A -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$ip"
+  ssh -tA "jenkins@$ssh_host" -- ssh -A -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$ip"
 }
 
-function getbuildlogs () {
-  aws codebuild list-builds --max-items 10  | jq -r '.ids[]' | fzf | while read buildid; do
-  aws logs get-log-events \
-    --log-group-name "/aws/codebuild/$(echo $buildid | cut -f 1 -d:)" \
-    --log-stream-name "$(echo $buildid | cut -f 2 -d:)"
-done | jq -r '.events[].message'
-  }
+# function getbuildlogs () {
+#   aws codebuild list-builds --max-items 10  | jq -r '.ids[]' | fzf | while read buildid; do
+#   aws logs get-log-events \
+#     --log-group-name "/aws/codebuild/$(echo $buildid | cut -f 1 -d:)" \
+#     --log-stream-name "$(echo $buildid | cut -f 2 -d:)"
+# done | jq -r '.events[].message'
+#   }
+
+# function restartcodebuild () {
+#   aws codebuild list-builds --max-items 10  | jq -r '.ids[]' | fzf | while read buildid; do
+#   aws codebuild retry-build --id $buildid
+#   aws logs get-log-events \
+#     --log-group-name "/aws/codebuild/$(echo $buildid | cut -f 1 -d:)" \
+#     --log-stream-name "$(echo $buildid | cut -f 2 -d:)"
+# done | jq -r '.events[].message'
+#   }
 
 function getcloudformationlogs () {
   stack="$1"
   if [ "$stack" = "" ]; then
     stack="$(aws cloudformation list-stacks | jq -r '.StackSummaries[].StackName' | fzf)"
   fi
-  aws cloudformation describe-stack-events --stack-name "$stack" \
+  aws cloudformation describe-stack-events --stack-name "$stack" --max-items 300 \
     | jq -r '.StackEvents[] | "\(.Timestamp) \(.LogicalResourceId) \(.ResourceType) \(.ResourceStatus) \(.ResourceStatusReason)"' \
+    | tac \
     | highlight red FAILED | highlight green COMPLETE | highlight yellow IN_PROGRESS
 }
 
 alias apseu='AWS_PROFILE=staging'
 alias appeu='AWS_PROFILE=production'
 alias appus='AWS_PROFILE=production-us'
+
+alias apstaging='AWS_PROFILE=staging'
+alias approduction='AWS_PROFILE=production'
+alias approduction-us='AWS_PROFILE=production-us'
+alias apmanagement='AWS_PROFILE=management'
 
 alias awsprod='AWS_PROFILE=production aws'
 alias awsstag='AWS_PROFILE=staging aws'
@@ -70,7 +87,7 @@ function ec2stag () {
 
 # [ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
 
-[ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
+# [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
 
 
 function highlight() {

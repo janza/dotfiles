@@ -1,0 +1,43 @@
+{
+  "diagnostic-languageserver.filetypes": {
+    "email": "languagetool",
+    "markdown": [
+      "write-good"
+    ],
+    "sh": "shellcheck",
+    "php": "phpstan"
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+    "sh": "shfmt",
+    "python": ["black", "isort"]
+    },
+  "languageserver": {
+    "intelephense": {
+      "command": "intelephense",
+      "args": [
+        "--stdio"
+      ],
+      "filetypes": [
+        "php"
+      ],
+      "initializationOptions": {
+        "storagePath": "/tmp/intelephense"
+      }
+    },
+    "golang": {
+      "command": "go-langserver",
+      "filetypes": [
+        "go"
+      ],
+      "initializationOptions": {
+        "gocodeCompletionEnabled": true,
+        "diagnosticsEnabled": true,
+        "lintTool": "golint"
+      }
+    }
+  },
+  "python.jediEnabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.mypyEnabled": true
+}

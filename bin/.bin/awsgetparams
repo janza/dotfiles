@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+set -euo pipefail
+
+aws ssm get-parameters-by-path --path "$1"  --recursive --with-decryption | jq '.Parameters[] | " \(.Type) \(.Version) \(.Name) \(.Value) "' -r | while read param; do
+
+first=$(echo $param | cut -f 1-3 -d' ')
+rest=$(echo $param | cut -f 4- -d' ')
+
+if [ -t 1 ] ; then
+    fg_c=$(echo -e "\e[1;32m")
+    c_rs=$'\e[0m'
+else
+    fg_c=""
+    c_rs=""
+fi
+
+
+echo -e "$first $fg_c$rest$c_rs "
+
+done

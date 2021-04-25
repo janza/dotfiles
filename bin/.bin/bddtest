@@ -14,6 +14,10 @@ if [ "$HOST_INSIDED_CONTROL" == '' ]; then
         export HOST_INSIDED_FORUM=https://insidedhq-forum.$branch.almostinsided.com
     fi
 fi
+
+# export HOST_INSIDED_CONTROL=https://test-community.insidedtest.com
+# export HOST_INSIDED_FORUM=https://test-community-community.insidedtest.com
+
 export LOAD_SCENARIOS_FROM_DOCS_MANAGER=yes
 export BROWSER=chrome
 

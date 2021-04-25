@@ -3,3 +3,20 @@
 *.png diff=image
 npm-shrinkwrap.json merge=npm-merge-driver
 package-lock.json merge=npm-merge-driver
+
+* whitespace=!indent,trail,space
+*.sh whitespace=indent,trail,space eol=lf
+*.py eol=lf diff=python
+*.css   diff=css
+*.html  diff=html
+*.md    diff=markdown
+*.go    diff=golang
+*.php   diff=php
+*.c     diff=cpp
+*.h     diff=cpp
+*.c++   diff=cpp
+*.h++   diff=cpp
+*.cpp   diff=cpp
+*.hpp   diff=cpp
+*.cc    diff=cpp
+*.hh    diff=cpp

@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+wl-clipboard-history -p "$(wl-clipboard-history -l 100 | fzf --with-nth 2.. -d , | cut -d ',' -f1)"

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# expects data in two columns line by line, eg:
+#
+# X1 Y1
+# X2 Y2
+# X3 Y3
+
+gnuplot -p -e "set terminal pngcairo size 1200,800 enhanced font 'Fira Mono,10';set size ratio 0.5; set output '|kitty +kitten icat --stdin yes --align left'; plot '< cat -' u 2:xtic(1) with lines title '${1:-title}'; set output '/dev/null';"

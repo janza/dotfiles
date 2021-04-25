@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+echo -e "connect 70:26:05:DE:48:DD\n" | bluetoothctl

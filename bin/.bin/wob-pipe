@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+rm -f /tmp/wobpipe && mkfifo /tmp/wobpipe && tail -f /tmp/wobpipe | wob

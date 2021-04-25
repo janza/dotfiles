@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+echo -e "connect 64:A2:F9:FB:BE:2C\n" | bluetoothctl

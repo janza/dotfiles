@@ -1,5 +1,7 @@
 let g:python3_host_prog = '/usr/bin/python'
 
+" let g:ale_disable_lsp = 1
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-repeat'
@@ -18,7 +20,7 @@ Plug 'morhetz/gruvbox'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'vimwiki/vimwiki', { 'on':  'VimwikiIndex', 'for': 'wiki' }
+" Plug 'vimwiki/vimwiki', { 'on':  'VimwikiIndex', 'for': 'wiki' }
 
 " Plug 'vim-airline/vim-airline'
 
@@ -32,22 +34,30 @@ Plug 'kassio/neoterm'
 Plug 'airblade/vim-gitgutter'
 " Plug 'sheerun/vim-polyglot'
 
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-Plug 'nvim-lua/diagnostic-nvim'
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-treesitter/completion-treesitter'
-Plug 'steelsojka/completion-buffers'
+" LSP CONFIG
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'nvim-lua/completion-nvim'
+" Plug 'steelsojka/completion-buffers'
+" END LSP CONFIG
 
-" Plug 'w0rp/ale'
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'nvim-treesitter/completion-treesitter'
+" Plug 'p00f/nvim-ts-rainbow'
+" END Treesitter
+
+" disabled Plug 'nvim-lua/diagnostic-nvim'
+
+" Plug 'dense-analysis/ale'
 " Plug 'junegunn/goyo.vim'
 
 Plug 'mhinz/vim-sayonara'
 Plug 'haya14busa/incsearch.vim'
-Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
+" Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 " Plug 'jceb/vim-orgmode'
 
+" Plug 'Yggdroot/indentLine'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
@@ -61,14 +71,14 @@ Plug 'shime/vim-livedown', { 'on':  'LivedownToggle' }
 
 " Plug 'nelsyeung/twig.vim'
 
-Plug 'fatih/vim-go', { 'for': 'go' }
+" Plug 'fatih/vim-go', { 'for': 'go' }
 
-Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
+" Plug 'vim-scripts/php-annotations-syntax', { 'for': 'php' }
 
 Plug 'janko-m/vim-test' " , { 'on': ['TestNearest', 'TestFile'] }
 " Plug 'metakirby5/codi.vim'
 
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plug 'glacambre/firenvim', { 'do': function('firenvim#install') }
 
@@ -153,13 +163,13 @@ endif
 
 " silent! call glaive#Install()
 "
-" let g:gruvbox_sign_column = 'bg0'
-" let g:gruvbox_contrast_dark = 'hard'
-" let g:gruvbox_contrast_light = 'hard'
-" let g:gruvbox_improved_warnings = 0
-" let g:gruvbox_improved_strings = 0
-" let g:gruvbox_invert_selection = 0
-" let g:gruvbox_italic = 1
+let g:gruvbox_sign_column = 'bg0'
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_contrast_light = 'hard'
+let g:gruvbox_improved_warnings = 0
+let g:gruvbox_improved_strings = 0
+let g:gruvbox_invert_selection = 0
+let g:gruvbox_italic = 1
 
 set background=dark
 colorscheme gruvbox
@@ -348,62 +358,104 @@ vnoremap > >gv
 
 autocmd FileType javascript setlocal formatprg=eslint-fix-stdin
 
+" ALE
+
+" let g:ale_completion_enabled = 1
+" let g:ale_set_balloons = 1
+" let g:ale_floating_preview = 1
+" let g:ale_hover_to_preview = 1
+" let g:ale_virtualtext_cursor = 1
+
+" nmap <silent> gd :ALEGoToDefinition<CR>
+" nmap <silent> <A-k> :ALEPreviousWrap<CR>
+" nmap <silent> <A-j> :ALENextWrap<CR>
+
+
+" nmap <leader>f <Plug>(ale_fix)
+
+" let g:ale_typescript_standard_executable = "ts-standard"
+" let g:ale_typescriptreact_standard_executable = "ts-standard"
+" let g:ale_javascript_standard_executable = "ts-standard"
+" let g:ale_typescript_standard_options = '--fix'
+
+" let g:ale_linters = {
+" \   'javascript': ['eslint'],
+" \   'typescript': ['eslint'],
+" \   'typescriptreact': ['eslint'],
+" \}
+
+" let g:ale_fixers = {
+" \   'javascript': [
+" \       'eslint',
+" \   ],
+" \   'typescriptreact': [
+" \       'eslint',
+" \   ],
+" \   'typescript': [
+" \       'eslint',
+" \   ],
+" \   'python': [
+" \       'autopep8',
+" \   ],
+" \}
+
+
 " LSP-NVIM
+"
+" nmap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+" nmap <leader>d <cmd>lua vim.lsp.buf.hover()<CR>
+" nmap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
+" nmap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
 
 
-nmap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nmap <leader>d <cmd>lua vim.lsp.buf.hover()<CR>
-nmap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
-nmap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+" let g:diagnostic_enable_virtual_text = 1
+" let g:diagnostic_auto_popup_while_jump = 1
 
+" nmap <silent> <A-k> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+" nmap <silent> <A-j> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
-let g:diagnostic_enable_virtual_text = 1
-let g:diagnostic_auto_popup_while_jump = 1
+" lua <<EOF
+"
+" local on_attach_vim = function(client)
+"   require'completion'.on_attach(client)
+" end
+"
+" require'lspconfig'.pyls.setup{
+" on_attach=on_attach_vim;
+" settings = {
+" plugins = {
+"         pyls_mypy = {
+"             enabled = true;
+"         };
+"     };
+" }
+" }
+" require'lspconfig'.tsserver.setup{on_attach=on_attach_vim}
+" require'lspconfig'.gopls.setup{on_attach=on_attach_vim}
+" require'lspconfig'.intelephense.setup{on_attach=on_attach_vim}
+" require'lspconfig'.pyls.setup{on_attach=on_attach_vim}
+" EOF
+"
+" LSP-NVIM END
 
-nmap <silent> <A-k> :PrevDiagnostic<CR>
-nmap <silent> <A-j> :NextDiagnostic<CR>
+" let g:completion_chain_complete_list = {
+"       \	'default' : [
+"       \		{'complete_items' : ['lsp', 'ts']},
+"       \		{'complete_items' : ['buffers']},
+"       \	]
+"       \	}
 
-lua <<EOF
-
-local on_attach_vim = function(client)
-  require'completion'.on_attach(client)
-  require'diagnostic'.on_attach(client)
-end
-
-require'nvim_lsp'.pyls.setup{
-on_attach=on_attach_vim;
-settings = {
-plugins = {
-        pyls_mypy = {
-            enabled = true;
-        };
-    };
-}
-}
-require'nvim_lsp'.tsserver.setup{on_attach=on_attach_vim}
-require'nvim_lsp'.gopls.setup{on_attach=on_attach_vim}
-require'nvim_lsp'.intelephense.setup{on_attach=on_attach_vim}
-EOF
-
-let g:completion_chain_complete_list = {
-      \	'default' : [
-      \		{'complete_items' : ['lsp', 'ts']},
-      \		{'complete_items' : ['buffers']},
-      \	]
-      \	}
-
-let g:completion_auto_change_source = 1
-
-" COMPLETION-NVIM
-" autocmd BufEnter * lua require'completion'.on_attach()
+" let g:completion_auto_change_source = 1
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Set completeopt to have a better completion experience
 
 " COMPLETION-NVIM-END
+
+" TREE SITTER
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -412,8 +464,8 @@ require'nvim-treesitter.configs'.setup {
     enable = true,              -- false will disable the whole extension
     disable = { },  -- list of language that will be disabled
   },
-  incremental_selection = {
-      enable = true,
+  indent = {
+    enable = true
   }
 }
 EOF
@@ -421,47 +473,65 @@ EOF
 " COC
 
 " nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
-" command! -nargs=0 Format :call CocAction('format')
-" nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gd <Plug>(coc-definition)
 " nmap <silent> gy <Plug>(coc-type-definition)
 " nmap <silent> gi <Plug>(coc-implementation)
 " nmap <silent> gr <Plug>(coc-references)
-" nmap <leader>rn <Plug>(coc-rename)
-" nmap <leader>d :call CocAction('doHover')<cr>
-" xmap <leader>f  <Plug>(coc-format)
-" nmap <leader>f  <Plug>(coc-format)
-" xmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
-" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" inoremap <silent><expr> <c-space> coc#refresh()
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+nmap <leader>rn <Plug>(coc-rename)
 
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+nmap <leader>d :call CocAction('doHover')<cr>
+xmap <leader>f  <Plug>(coc-fix-current)
+nmap <leader>f  <Plug>(coc-fix-current)
 
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
-" " let g:coc_snippet_next = '<TAB>'
-" " let g:coc_snippet_prev = '<S-TAB>'
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" let g:coc_snippet_next = '<TAB>'
+" let g:coc_snippet_prev = '<S-TAB>'
 " nmap <silent> [l <Plug>(coc-diagnostic-prev)
 " nmap <silent> ]l <Plug>(coc-diagnostic-next)
-" nmap <silent> <A-k> <Plug>(coc-diagnostic-prev)
-" nmap <silent> <A-j> <Plug>(coc-diagnostic-next)
+nmap <silent> <A-k> <Plug>(coc-diagnostic-prev)
+nmap <silent> <A-j> <Plug>(coc-diagnostic-next)
 
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <A-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <A-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <A-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <A-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <A-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <A-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
+" COC END
+
+au BufRead,BufNewFile cloudformation*.yaml set filetype=yaml.cloudformation
+au BufRead,BufNewFile */cloudformation-templates/*.yaml set filetype=yaml.cloudformation
 
 nmap <leader>j :set ft=json<BAR>%!jq .<CR>
 
 " read custom configuration
-if filereadable(".vim.custom")
-  so .vim.custom
-endif
+" if filereadable(".vim.custom")
+"   so .vim.custom
+" endif
 
 let g:html_no_progress = 1
 let g:html_no_pre = 1
